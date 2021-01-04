@@ -1,5 +1,5 @@
 import React, { useRef, useState } from 'react'
-import { Container, Form, Button, Alert } from 'react-bootstrap'
+import { Form, Button, Alert } from 'react-bootstrap'
 import { useAuth } from '../../contexts/AuthContext'
 
 const SignUp = () => {
@@ -29,7 +29,7 @@ const SignUp = () => {
 		}
 	}
 	return (
-		<Container>
+		<>
 			<h1>Sign Up</h1>
 			{error && (
 				<Alert variant="warning">{error}</Alert>
@@ -71,7 +71,7 @@ const SignUp = () => {
 					Create an account
 				</Button>
 			</Form>
-		</Container>
+		</>
 	)
 }
 

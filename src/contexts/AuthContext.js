@@ -19,6 +19,12 @@ const AuthContextProvider = (props) => {
 		return auth.signInWithEmailAndPassword(email, password)
 	}
 
+	const updateUserProfile = (name) => {
+		return currentUser.updateProfile({
+			displayName: name,
+		})
+	}
+
 	useEffect(() => {
 		const unsubscribe = auth.onAuthStateChanged(user => {
 			setCurrentUser(user)
@@ -32,6 +38,7 @@ const AuthContextProvider = (props) => {
 		currentUser,
 		signUp,
 		signIn,
+		updateUserProfile,
 	}
 
 	return (

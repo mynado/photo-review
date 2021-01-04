@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 import {useAuth} from '../../contexts/AuthContext'
 
 const Profile = () => {
@@ -7,7 +8,8 @@ const Profile = () => {
 
 	return (
 		<div>
-			This is my profile
+			<h1>Welcome {currentUser.displayName}</h1>
+			<Link to="/profile/update" className="btn btn-primary">Update</Link>
 		</div>
 	)
 }

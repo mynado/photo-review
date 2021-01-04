@@ -1,5 +1,6 @@
 import React from 'react'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import { Container } from 'react-bootstrap'
 import './assets/scss/App.scss'
 import AuthContextProvider from './contexts/AuthContext'
 import AuthRoute from './components/auth/AuthRoute'
@@ -7,33 +8,40 @@ import Login from './components/auth/Login'
 import SignUp from './components/auth/SignUp'
 import Home from './components/Home'
 import Profile from './components/profile/Profile'
+import ProfileUpdate from './components/profile/ProfileUpdate'
 
 
 const App = () => {
 	return (
 		<BrowserRouter>
 			<AuthContextProvider>
-				<Routes>
+				<Container>
+					<Routes>
 
-					<AuthRoute path="/">
-						<Home />
-					</AuthRoute>
+						<Route path="/">
+							<Home />
+						</Route>
 
-					<AuthRoute path="/profile">
-						<Profile />
-					</AuthRoute>
+						<AuthRoute path="/profile">
+							<AuthRoute path="/">
+								<Profile />
+							</AuthRoute>
 
-					<Route path="/signup">
-						<SignUp />
-					</Route>
+							<AuthRoute path="/update">
+								<ProfileUpdate />
+							</AuthRoute>
+						</AuthRoute>
 
-					<Route path="/login">
-						<Login />
-					</Route>
+						<Route path="/signup">
+							<SignUp />
+						</Route>
 
-					
+						<Route path="/login">
+							<Login />
+						</Route>
 
-				</Routes>
+					</Routes>
+				</Container>
 			</AuthContextProvider>
 		</BrowserRouter>
 	)
