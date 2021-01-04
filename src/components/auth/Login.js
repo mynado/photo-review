@@ -17,7 +17,7 @@ const Login = () => {
 
 		try {
 			await signIn(emailRef.current.value, passwordRef.current.value)
-			navigate('/albums')
+			navigate('/profile')
 		} catch (e) {
 			setError("Login failed. Please check your email address and password.")
 		}

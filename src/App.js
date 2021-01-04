@@ -6,7 +6,7 @@ import AuthRoute from './components/auth/AuthRoute'
 import Login from './components/auth/Login'
 import SignUp from './components/auth/SignUp'
 import Home from './components/Home'
-import Albums from './components/albums/Albums'
+import Profile from './components/profile/Profile'
 
 
 const App = () => {
@@ -19,8 +19,8 @@ const App = () => {
 						<Home />
 					</AuthRoute>
 
-					<AuthRoute path="/albums">
-						<Albums />
+					<AuthRoute path="/profile">
+						<Profile />
 					</AuthRoute>
 
 					<Route path="/signup">
