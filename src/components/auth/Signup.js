@@ -2,8 +2,8 @@ import React, { useRef, useState } from 'react'
 import { Container, Form, Button, Alert } from 'react-bootstrap'
 import { useAuth } from '../../contexts/AuthContext'
 
-const Signup = () => {
-	const { signup } = useAuth()
+const SignUp = () => {
+	const { signUp } = useAuth()
 	const emailRef = useRef()
 	const passwordRef = useRef()
 	const passwordConfirmRef = useRef()
@@ -12,7 +12,6 @@ const Signup = () => {
 
 	const handleSubmit = async (e) => {
 		e.preventDefault()
-		console.log(loading)
 		if (passwordRef.current.value !== passwordConfirmRef.current.value) {
 			return setError("The passwords doesn't match")
 		}
@@ -22,7 +21,7 @@ const Signup = () => {
 		try {
 			setLoading(true)
 			console.log(loading)
-			await signup(emailRef.current.value, passwordRef.current.value)
+			await signUp(emailRef.current.value, passwordRef.current.value)
 		} catch (e) {
 			setError(e.message)
 			setLoading(false)
@@ -76,4 +75,4 @@ const Signup = () => {
 	)
 }
 
-export default Signup
+export default SignUp

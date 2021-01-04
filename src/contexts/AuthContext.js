@@ -9,12 +9,17 @@ const useAuth = () => {
 
 const AuthContextProvider = (props) => {
 
-	const signup = (email, password) => {
+	const signUp = (email, password) => {
 		return auth.createUserWithEmailAndPassword(email, password)
 	}
 
+	const signIn = (email, password) => {
+		return auth.signInWithEmailAndPassword(email, password)
+	}
+
 	const contextValues = {
-		signup
+		signUp,
+		signIn,
 	}
 
 	return (

@@ -3,7 +3,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import './assets/scss/App.scss'
 import AuthContextProvider from './contexts/AuthContext'
 import Login from './components/auth/Login'
-import Signup from './components/auth/Signup'
+import SignUp from './components/auth/SignUp'
 import Home from './components/Home'
 
 const App = () => {
@@ -16,7 +16,7 @@ const App = () => {
 					</Route>
 
 					<Route path="/signup">
-						<Signup />
+						<SignUp />
 					</Route>
 
 					<Route path="/login">
