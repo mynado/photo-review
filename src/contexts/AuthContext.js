@@ -8,6 +8,8 @@ const useAuth = () => {
 }
 
 const AuthContextProvider = (props) => {
+	const [currentUser, setCurrentUser] = useState(null)
+	const [loading, setLoading] = useState(true)
 
 	const signUp = (email, password) => {
 		return auth.createUserWithEmailAndPassword(email, password)
@@ -17,14 +19,25 @@ const AuthContextProvider = (props) => {
 		return auth.signInWithEmailAndPassword(email, password)
 	}
 
+	useEffect(() => {
+		const unsubscribe = auth.onAuthStateChanged(user => {
+			setCurrentUser(user)
+			setLoading(false)
+		})
+
+		return unsubscribe
+	}, [])
+
 	const contextValues = {
+		currentUser,
 		signUp,
 		signIn,
 	}
 
 	return (
 		<AuthContext.Provider value={contextValues}>
-			{props.children}
+			{loading && (<p>Loading...</p>)}
+			{!loading && props.children}
 		</AuthContext.Provider>
 	)
 }

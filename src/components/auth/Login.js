@@ -1,14 +1,26 @@
 import React, { useState, useRef } from 'react'
 import { Container, Form, Button, Alert } from 'react-bootstrap'
+import { useNavigate } from 'react-router-dom'
+import { useAuth } from '../../contexts/AuthContext'
 
 const Login = () => {
 	const emailRef = useRef()
 	const passwordRef = useRef()
 	const [error, setError] = useState(null)
+	const { signIn } = useAuth()
+	const navigate = useNavigate()
 
-	const handleSubmit = (e) => {
+	const handleSubmit = async (e) => {
 		e.preventDefault()
 		console.log('login')
+		setError(null)
+
+		try {
+			await signIn(emailRef.current.value, passwordRef.current.value)
+			navigate('/albums')
+		} catch (e) {
+			setError("Login failed. Please check your email address and password.")
+		}
 	}
 	return (
 		<Container>
