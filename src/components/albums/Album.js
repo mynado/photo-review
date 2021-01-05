@@ -1,5 +1,5 @@
 import React from 'react'
-import { useParams } from 'react-router-dom'
+import { useParams, Link } from 'react-router-dom'
 import useAlbum from '../../hooks/useAlbum'
 import Images from '../images/Images'
 import ImageUpload from '../images/ImageUpload'
@@ -17,6 +17,7 @@ const Album = () => {
 		<>
 			<h1>{album.title}</h1>
 			<p>id: {albumId}</p>
+			<Link to={`/albums/${albumId}/edit`} className="btn btn-primary">Update</Link>
 			<ImageUpload albumId={albumId} />
 
 			{
