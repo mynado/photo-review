@@ -10,6 +10,8 @@ import SignUp from './components/auth/SignUp'
 import Home from './components/Home'
 import Profile from './components/profile/Profile'
 import ProfileUpdate from './components/profile/ProfileUpdate'
+import Albums from './components/albums/Albums'
+import AlbumCreate from './components/albums/AlbumCreate'
 
 
 
@@ -25,6 +27,14 @@ const App = () => {
 							<Home />
 						</Route>
 
+						<Route path="/signup">
+							<SignUp />
+						</Route>
+
+						<Route path="/login">
+							<Login />
+						</Route>
+
 						<AuthRoute path="/profile">
 							<AuthRoute path="/">
 								<Profile />
@@ -35,13 +45,15 @@ const App = () => {
 							</AuthRoute>
 						</AuthRoute>
 
-						<Route path="/signup">
-							<SignUp />
-						</Route>
+						<AuthRoute path="/albums">
+							<AuthRoute path="/">
+								<Albums />
+							</AuthRoute>
 
-						<Route path="/login">
-							<Login />
-						</Route>
+							<AuthRoute path="/add">
+								<AlbumCreate />
+							</AuthRoute>
+						</AuthRoute>
 
 					</Routes>
 				</Container>
