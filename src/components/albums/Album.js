@@ -4,10 +4,13 @@ import useAlbum from '../../hooks/useAlbum'
 import Images from '../images/Images'
 import ImageUpload from '../images/ImageUpload'
 import { useAuth } from '../../contexts/AuthContext'
+import useImages from '../../hooks/useImages'
 
 const Album = () => {
 	const { albumId } = useParams()
-	const { album, images, loading } = useAlbum(albumId)
+	// const { album, images, loading } = useAlbum(albumId)
+	const { album, loading } = useAlbum(albumId)
+	const { images, imgLoading } = useImages(albumId)
 
 	if (loading) {
 		return (<p>Loading...</p>)

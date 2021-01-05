@@ -20,9 +20,7 @@ const useImageUpload = (files, albumId = null) => {
 		setError(null)
 		setIsSuccess(false)
 
-		console.log('files in useImageUpload', files)
 		files.forEach(file => {
-			
 			// create image reference in storage and upload
 			const uploadTask = storage.ref().child(`images/${currentUser.uid}/${file.name}`).put(file);
 

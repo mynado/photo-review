@@ -5,25 +5,24 @@ import useImageUpload from '../../hooks/useImageUpload'
 
 const ImageUpload = ({ albumId }) => {
 	const [files, setFiles] = useState([])
-	const [message, setMessage] = useState(null)
 	const { error, isSuccess, uploadProgress } = useImageUpload(files, albumId)
 
-	useEffect(() => {
-		if (error) {
-			setMessage({
-				type: 'error',
-				text: error,
-			})
-		} else if (isSuccess) {
-			setMessage({
-				success: true,
-				text: 'Image successfully uploaded!',
-			})
-			setFiles([]);
-		} else {
-			setMessage(null)
-		}
-	}, [error, isSuccess])
+	// useEffect(() => {
+	// 	if (error) {
+	// 		setMessage({
+	// 			type: 'error',
+	// 			text: error,
+	// 		})
+	// 	} else if (isSuccess) {
+	// 		setMessage({
+	// 			success: true,
+	// 			text: 'Image successfully uploaded!',
+	// 		})
+	// 		setFiles([]);
+	// 	} else {
+	// 		setMessage(null)
+	// 	}
+	// }, [error, isSuccess])
 
 	const onDrop = useCallback(acceptedFiles => {
 		if (acceptedFiles.length === 0) {
@@ -69,9 +68,17 @@ const ImageUpload = ({ albumId }) => {
 				)
 			}
 			{
-				message && (
-					<Alert variant={message.error ? 'warning' : 'success'}>
-						{message.text}
+				error && (
+					<Alert variant="warning">
+						Something went wrong
+					</Alert>
+				)
+			}
+
+			{
+				isSuccess && (
+					<Alert variant="success">
+						Your upload was successful
 					</Alert>
 				)
 			}

@@ -7,7 +7,7 @@ const useAlbum = (albumId) => {
 	const [loading, setLoading] = useState(true)
 
 	useEffect(() => {
-		db.collection('albums').doc(albumId).get().then(doc => {
+		const unsubscribe = db.collection('albums').doc(albumId).get().then(doc => {
 			setLoading(true)
 			setAlbum({
 				id: doc.id,
@@ -15,27 +15,29 @@ const useAlbum = (albumId) => {
 			})
 			setLoading(false)
 		})
+		return unsubscribe
 	}, [albumId])
 
-	useEffect(() => {
-		db.collection('images')
-			.where('album', '==', db.collection('albums').doc(albumId))
-			.orderBy('name')
-			.onSnapshot(snapshot => {
-				setLoading(true)
-				const imgs = []
+	// useEffect(() => {
+	// 	const unsubscribe = db.collection('images')
+	// 		.where('album', '==', db.collection('albums').doc(albumId))
+	// 		.orderBy('name')
+	// 		.onSnapshot(snapshot => {
+	// 			setLoading(true)
+	// 			const imgs = []
 
-				snapshot.forEach(doc => {
-					imgs.push({
-						id: doc.id,
-						...doc.data()
-					})
-				})
+	// 			snapshot.forEach(doc => {
+	// 				imgs.push({
+	// 					id: doc.id,
+	// 					...doc.data()
+	// 				})
+	// 			})
 
-				setImages(imgs)
-				setLoading(false)
-			})
-	}, [albumId])
+	// 			setImages(imgs)
+	// 			setLoading(false)
+	// 		})
+	// 		return unsubscribe
+	// }, [albumId])
 
 	return { album, images, loading }
 }

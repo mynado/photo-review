@@ -1,14 +1,25 @@
-import React from 'react'
+import { useState } from 'react'
 import { Image } from 'react-bootstrap'
 import { useAuth } from '../../contexts/AuthContext'
+import useImageDelete from '../../hooks/useImageDelete'
 
 const Images = ({ images }) => {
-	console.log(images)
+	const [imageToDelete, setImageToDelete] = useState(null)
+	useImageDelete(imageToDelete)
+
+	const handleDeleteImage = (image) => {
+		setImageToDelete(image)
+	}
+
+	
 	return (
 		<div>
 		{
 			images.map(image => (
-				<Image src={image.url} alt="" fluid key={image.id}/>
+				<li key={image.id}>
+				<Image src={image.url} alt="" fluid/>
+				<button className="btn btn-danger" onClick={() => handleDeleteImage(image)}>X</button>
+				</li>
 			))
 		}
 			
