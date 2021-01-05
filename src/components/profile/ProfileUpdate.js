@@ -41,7 +41,7 @@ const ProfileUpdate = () => {
 				</Form.Group>
 
 				<Button variant="primary" type="submit">
-					Create an account
+					Update
 				</Button>
 			</Form>
 		</>

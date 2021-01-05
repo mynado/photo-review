@@ -4,6 +4,7 @@ import { Container } from 'react-bootstrap'
 import './assets/scss/App.scss'
 import AuthContextProvider from './contexts/AuthContext'
 import AuthRoute from './components/auth/AuthRoute'
+import Navigation from './components/navigation/Navigation'
 import Login from './components/auth/Login'
 import SignUp from './components/auth/SignUp'
 import Home from './components/Home'
@@ -11,10 +12,12 @@ import Profile from './components/profile/Profile'
 import ProfileUpdate from './components/profile/ProfileUpdate'
 
 
+
 const App = () => {
 	return (
 		<BrowserRouter>
 			<AuthContextProvider>
+				<Navigation />
 				<Container>
 					<Routes>
 
