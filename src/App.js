@@ -12,6 +12,7 @@ import Profile from './components/profile/Profile'
 import ProfileUpdate from './components/profile/ProfileUpdate'
 import Albums from './components/albums/Albums'
 import AlbumCreate from './components/albums/AlbumCreate'
+import Album from './components/albums/Album'
 
 
 
@@ -48,6 +49,10 @@ const App = () => {
 						<AuthRoute path="/albums">
 							<AuthRoute path="/">
 								<Albums />
+							</AuthRoute>
+
+							<AuthRoute path="/:albumId">
+								<Album />
 							</AuthRoute>
 
 							<AuthRoute path="/add">
