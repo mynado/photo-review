@@ -1,11 +1,17 @@
 import React, { useState } from 'react'
 import { NavLink } from 'react-router-dom'
+import { useAuth } from '../../contexts/AuthContext'
 
 const Navigation = () => {
 	const [isCollapse, setIsCollapse] = useState(true)
+	const { signOut } = useAuth()
 
 	const handleNavbarCollapse = () => {
 		setIsCollapse(!isCollapse)
+	}
+
+	const handleLogout = () => {
+		signOut()
 	}
 
 	return (
@@ -29,6 +35,9 @@ const Navigation = () => {
 					</li>
 					<li className="nav-item">
 						<NavLink className="nav-link" to="/albums">Albums</NavLink>
+					</li>
+					<li className="nav-item">
+						<NavLink className="nav-link" to="/login" onClick={handleLogout}>Logout</NavLink>
 					</li>
 				</ul>
 			</div>

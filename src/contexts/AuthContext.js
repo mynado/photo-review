@@ -19,6 +19,10 @@ const AuthContextProvider = (props) => {
 		return auth.signInWithEmailAndPassword(email, password)
 	}
 
+	const signOut = () => {
+		return auth.signOut()
+	}
+
 	const updateUserProfile = (name) => {
 		return currentUser.updateProfile({
 			displayName: name,
@@ -36,8 +40,9 @@ const AuthContextProvider = (props) => {
 
 	const contextValues = {
 		currentUser,
-		signUp,
 		signIn,
+		signOut,
+		signUp,
 		updateUserProfile,
 	}
 
