@@ -4,12 +4,13 @@ import { useAuth } from '../contexts/AuthContext'
 
 const useImageUpload = (files, albumId = null) => {
 	const [uploadedFile, setUploadedFile] = useState(null)
+	const [uploadProgress, setUploadProgress] = useState(null)
 	const [error, setError] = useState(null)
 	const [isSuccess, setIsSuccess] = useState(false)
 	const { currentUser } = useAuth()
 
 	useEffect(() => {
-		if (!files.length === 0) {
+		if (files.length === 0) {
 			setUploadedFile(null)
 			setError(null)
 			setIsSuccess(false)
@@ -24,8 +25,9 @@ const useImageUpload = (files, albumId = null) => {
 			
 			// create image reference in storage and upload
 			const uploadTask = storage.ref().child(`images/${currentUser.uid}/${file.name}`).put(file);
+
 			uploadTask.on('state_changed', snapshot => {
-				const progress = ((snapshot.bytesTransferred / snapshot.totalBytes) * 100)
+				setUploadProgress((snapshot.bytesTransferred / snapshot.totalBytes) * 100)
 			})
 
 			uploadTask.then( async snapshot => {
@@ -39,6 +41,17 @@ const useImageUpload = (files, albumId = null) => {
 					type: file.type,
 					url,
 				}
+
+				// get docRef to album id albumId exists
+				if (albumId) {
+					img.album = db.collection('albums').doc(albumId)
+				}
+
+				// add image to firestore collection
+				await db.collection('images').add(img)
+
+				setIsSuccess(true)
+				setUploadProgress(null)
 
 				setUploadedFile(img)
 				setIsSuccess(true)
@@ -55,6 +68,8 @@ const useImageUpload = (files, albumId = null) => {
 	return { 
 		error,
 		isSuccess,
+		uploadedFile,
+		uploadProgress,
 	}
 }
 
