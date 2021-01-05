@@ -1,6 +1,7 @@
 import React from 'react'
 import { useParams } from 'react-router-dom'
 import useAlbum from '../../hooks/useAlbum'
+import ImageUpload from '../images/ImageUpload'
 
 const Album = () => {
 	const { albumId } = useParams()
@@ -10,10 +11,11 @@ const Album = () => {
 		return (<p>Loading...</p>)
 	}
 	return (
-		<div>
+		<>
 			<h1>{album.title}</h1>
 			<p>id: {albumId}</p>
-		</div>
+			<ImageUpload />
+		</>
 	)
 }
 
