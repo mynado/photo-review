@@ -14,7 +14,7 @@ const Album = () => {
 		<>
 			<h1>{album.title}</h1>
 			<p>id: {albumId}</p>
-			<ImageUpload />
+			<ImageUpload albumId={albumId} />
 		</>
 	)
 }

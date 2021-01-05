@@ -1,35 +1,28 @@
 import { useCallback, useEffect, useState } from 'react'
+import { Alert } from 'react-bootstrap'
 import { useDropzone } from 'react-dropzone'
+import { storage } from '../../firebase'
 import useImageUpload from '../../hooks/useImageUpload'
 
-const ImageUpload = () => {
-	const [images, setImages] = useState(null)
-	useImageUpload(images)
 
-	useEffect(() => {
+const ImageUpload = ({ albumId }) => {
+	const [files, setFiles] = useState([])
+	const [message, setMessage] = useState(null)
+	const { error, isSuccess } = useImageUpload(files, albumId)
 
-	}) 
 
-	const onDrop = useCallback(acceptedFiles => {
-		console.log('acceptedFiles', acceptedFiles)
-		if (acceptedFiles.length === 0) {
-			return
-		}
-
-		setImages(acceptedFiles[0])
-	  }, [])
-
-	const {getRootProps, getInputProps, isDragActive} = useDropzone({onDrop})
-
+	const handleFileChange = e => {
+		let filesToAdd = e.target.files
+		// convert object to array
+		filesToAdd = Array.from(filesToAdd).map(file => file)
+		setFiles(filesToAdd);
+	}
+	console.log(isSuccess, error)
 	return (
-		<div {...getRootProps()}>
-			<input {...getInputProps()} />
-			{
-			isDragActive ?
-				<p>Drop the files here ...</p> :
-				<p>Drag 'n' drop some files here, or click to select files</p>
-			}
-		</div>
+		<form>
+			<label>Select Files</label>
+			<input type="file" multiple onChange={handleFileChange} />
+		</form>
 	)
 }
 
