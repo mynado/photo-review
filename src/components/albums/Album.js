@@ -4,12 +4,14 @@ import useAlbum from '../../hooks/useAlbum'
 
 const Album = () => {
 	const { albumId } = useParams()
-	const { album } = useAlbum(albumId)
+	const { album, loading } = useAlbum(albumId)
 
-	console.log(album.title)
+	if (loading) {
+		return (<p>Loading...</p>)
+	}
 	return (
 		<div>
-			{/* <h1>{album.title}</h1> */}
+			<h1>{album.title}</h1>
 			<p>id: {albumId}</p>
 		</div>
 	)
