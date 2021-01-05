@@ -1,15 +1,18 @@
 import React from 'react'
 import useAlbums from '../../hooks/useAlbums'
 import { Link } from 'react-router-dom'
+import { useAuth } from '../../contexts/AuthContext'
 
 const Albums = () => {
-	const { albums, loading } = useAlbums()
+	const { currentUser } = useAuth()
+	const { albums, loading } = useAlbums(currentUser.uid)
+	console.log(currentUser)
 
 	return (
 		<div>
 			<h1>All Albums</h1>
 			{
-				loading
+				loading && currentUser
 					? (<p>Loading...</p>)
 					: (<ul>
 						{albums.map(album => (
