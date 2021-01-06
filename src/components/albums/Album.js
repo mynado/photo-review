@@ -4,11 +4,13 @@ import useAlbum from '../../hooks/useAlbum'
 import Images from '../images/Images'
 import ImageUpload from '../images/ImageUpload'
 import useImages from '../../hooks/useImages'
+import { useAuth } from '../../contexts/AuthContext'
 
 const Album = () => {
 	const { albumId } = useParams()
 	const { album, loading } = useAlbum(albumId)
 	const { images, imgLoading } = useImages(albumId)
+	const { currentUser } = useAuth()
 
 	if (loading) {
 		return (<p>Loading...</p>)
@@ -16,14 +18,21 @@ const Album = () => {
 	return (
 		<>
 			<h1>{album.title}</h1>
-			<p>id: {albumId}</p>
-			<Link to={`/albums/${albumId}/edit`} className="btn btn-primary">Update</Link>
-			<ImageUpload albumId={albumId} />
+			{
+				currentUser
+					? (
+						<>
+						<Link to={`/albums/${albumId}/edit`} className="btn btn-primary">Update</Link>
+						<ImageUpload albumId={albumId} />
+						</>
+					) : ('')
+			}
+			
 
 			{
 				loading
 					? <p>Loading...</p>
-					: <Images images={images} />
+					: (<Images images={images} />)
 			}
 			
 		</>
