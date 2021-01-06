@@ -93,7 +93,7 @@ const ImageContextProvider = (props) => {
 					title: albumTitle,
 					original_title: album.title,
 					owner: user.uid,
-					selection: 'owner'
+					selection: 'you'
 				})
 				navigate(`/albums/${docRef.id}`)
 			} catch (e) {

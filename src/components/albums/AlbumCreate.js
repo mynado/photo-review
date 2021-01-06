@@ -24,6 +24,7 @@ const AlbumCreate = () => {
 				title: titleRef.current.value,
 				original_title: titleRef.current.value,
 				owner: currentUser.uid,
+				selection: 'you'
 			})
 
 			navigate(`/albums/${docRef.id}`)
