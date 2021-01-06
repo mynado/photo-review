@@ -4,7 +4,7 @@ import { useAuth } from '../../contexts/AuthContext'
 
 const Navigation = () => {
 	const [isCollapse, setIsCollapse] = useState(true)
-	const { signOut } = useAuth()
+	const { signOut, currentUser } = useAuth()
 
 	const handleNavbarCollapse = () => {
 		setIsCollapse(!isCollapse)
@@ -29,17 +29,44 @@ const Navigation = () => {
 				<span className="navbar-toggler-icon"></span>
 			</button>
 			<div className={`${isCollapse ? 'collapse' : ''} navbar-collapse`} id="navbarNav">
-				<ul className="navbar-nav">
-					<li className="nav-item active">
-						<NavLink className="nav-link" to="/profile">My Profile</NavLink>
-					</li>
-					<li className="nav-item">
-						<NavLink className="nav-link" to="/albums">Albums</NavLink>
-					</li>
-					<li className="nav-item">
-						<NavLink className="nav-link" to="/login" onClick={handleLogout}>Logout</NavLink>
-					</li>
-				</ul>
+				{
+					currentUser
+						? (
+							<ul className="navbar-nav">
+								<li>
+									<p>{currentUser.displayName}</p>
+								</li>
+								<li className="nav-item">
+									<NavLink className="nav-link" to="/">Home</NavLink>
+								</li>
+								<li className="nav-item">
+									<NavLink className="nav-link" to="/albums">Albums</NavLink>
+								</li>
+								<li className="nav-item">
+									<NavLink className="nav-link" to="/albums/add">Create album</NavLink>
+								</li>
+								<li className="nav-item">
+									<NavLink className="nav-link" to="/settings">Settings</NavLink>
+								</li>
+								<li className="nav-item">
+									<NavLink className="nav-link" to="/login" onClick={handleLogout}>Logout</NavLink>
+								</li>
+							</ul>
+						) : (
+							<ul className="navbar-nav">
+								<li className="nav-item">
+									<NavLink className="nav-link" to="/">Home</NavLink>
+								</li>
+								<li className="nav-item">
+									<NavLink className="nav-link" to="/signup">Sign Up</NavLink>
+								</li>
+								<li className="nav-item">
+									<NavLink className="nav-link" to="/login">Login</NavLink>
+								</li>
+							</ul>
+						)
+				}
+				
 			</div>
 		</nav>
 	)

@@ -8,7 +8,6 @@ import Navigation from './components/navigation/Navigation'
 import Login from './components/auth/Login'
 import SignUp from './components/auth/SignUp'
 import Home from './components/Home'
-import Profile from './components/profile/Profile'
 import ProfileUpdate from './components/profile/ProfileUpdate'
 import Albums from './components/albums/Albums'
 import AlbumCreate from './components/albums/AlbumCreate'
@@ -37,14 +36,8 @@ const App = () => {
 						<Login />
 					</Route>
 
-					<AuthRoute path="/profile">
-						<AuthRoute path="/">
-							<Profile />
-						</AuthRoute>
-
-						<AuthRoute path="/update">
-							<ProfileUpdate />
-						</AuthRoute>
+					<AuthRoute path="/settings">
+						<ProfileUpdate />
 					</AuthRoute>
 
 					<ImageContextProvider>

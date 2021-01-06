@@ -9,11 +9,10 @@ const Albums = () => {
 	const { currentUser } = useAuth()
 	const { albums, loading } = useAlbums(currentUser.uid)
 	const { handleDeleteAlbum } = useImage()
-	console.log(currentUser)
 
 	return (
 		<div>
-			<h1>All Albums</h1>
+			<h2>Hello {currentUser.displayName}</h2>
 			<Link to="/albums/add">
 				<Button>Add a new album</Button>
 			</Link>
