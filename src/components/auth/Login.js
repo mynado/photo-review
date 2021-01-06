@@ -35,6 +35,7 @@ const Login = () => {
 						type="email"
 						placeholder="Enter email"
 						ref={emailRef}
+						autoComplete="on"
 						required
 					/>
 				</Form.Group>
@@ -46,7 +47,7 @@ const Login = () => {
 						placeholder="Password"
 						ref={passwordRef}
 						required
-						autoComplete="off"
+						autoComplete="on"
 					/>
 				</Form.Group>
 

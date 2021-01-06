@@ -1,4 +1,5 @@
 import { createContext, useState, useContext, useEffect } from 'react'
+import { db } from '../firebase'
 
 const RateContext = createContext()
 
@@ -22,11 +23,38 @@ const RateContextProvider = (props) => {
 		}
 	}
 
+	const handleCreateAlbum = async (images, album) => {
+		let docRef
+		try {
+			docRef = await db.collection('albums').add({
+				title: album.title + Date().toLocaleString(),
+				owner: album.owner,
+			})
+		} catch (e) {
+			console.log(e.message)
+		}
 
+		images.forEach(async image => {
+			const img = {
+				name: image.name,
+				owner: image.owner,
+				path: image.path,
+				size: image.size,
+				type: image.type,
+				url: image.url,
+				album: db.collection('albums').doc(docRef.id)
+			}
+			await db.collection('images').add(img)
+			console.log(image)
+		})
+
+	}
 
 	const contextValues = {
+		imageToAdd,
 		handleLike,
 		handleDislike,
+		handleCreateAlbum,
 	}
 
 	return (

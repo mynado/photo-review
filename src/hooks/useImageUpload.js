@@ -44,6 +44,13 @@ const useImageUpload = (files, albumId = null) => {
 				if (albumId) {
 					img.album = db.collection('albums').doc(albumId)
 				}
+				// if (albumId) {
+				// 	const albums = []
+				// 	albums.push(db.collection('albums').doc(albumId))
+				// 	img.albums = albums
+				// }
+
+				console.log('img', img)
 
 				// add image to firestore collection
 				await db.collection('images').add(img)

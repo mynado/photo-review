@@ -6,12 +6,16 @@ import Images from '../images/Images'
 import ImageUpload from '../images/ImageUpload'
 import useImages from '../../hooks/useImages'
 import { useAuth } from '../../contexts/AuthContext'
+import { useRate } from '../../contexts/RateContext'
 
 const Album = () => {
 	const { albumId } = useParams()
 	const { album, loading } = useAlbum(albumId)
 	const { images, imgLoading } = useImages(albumId)
 	const { currentUser } = useAuth()
+	const { imageToAdd, handleCreateAlbum } = useRate()
+
+	console.log('imageToAdd in Album', imageToAdd)
 
 	if (loading) {
 		return (<p>Loading...</p>)
@@ -26,7 +30,7 @@ const Album = () => {
 							<Link to={`/albums/${albumId}/edit`} className="btn btn-primary">Update</Link>
 							<ImageUpload albumId={albumId} />
 						</>
-					) : (<Button>Send selected images</Button>)
+					) : (<Button onClick={() => handleCreateAlbum(imageToAdd, album)}>Send selected images</Button>)
 			}
 			
 
