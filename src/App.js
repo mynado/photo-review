@@ -1,5 +1,5 @@
 import React from 'react'
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import { Routes, Route } from 'react-router-dom'
 import { Container } from 'react-bootstrap'
 import './assets/scss/App.scss'
 import AuthContextProvider from './contexts/AuthContext'
@@ -14,39 +14,40 @@ import Albums from './components/albums/Albums'
 import AlbumCreate from './components/albums/AlbumCreate'
 import Album from './components/albums/Album'
 import AlbumUpdate from './components/albums/AlbumUpdate'
+import { RateContextProvider } from './contexts/RateContext'
 
 
 
 const App = () => {
 	return (
-		<BrowserRouter>
-			<AuthContextProvider>
-				<Navigation />
-				<Container>
-					<Routes>
+		<AuthContextProvider>
+			<Navigation />
+			<Container>
+				<Routes>
 
-						<Route path="/">
-							<Home />
-						</Route>
+					<Route path="/">
+						<Home />
+					</Route>
 
-						<Route path="/signup">
-							<SignUp />
-						</Route>
+					<Route path="/signup">
+						<SignUp />
+					</Route>
 
-						<Route path="/login">
-							<Login />
-						</Route>
+					<Route path="/login">
+						<Login />
+					</Route>
 
-						<AuthRoute path="/profile">
-							<AuthRoute path="/">
-								<Profile />
-							</AuthRoute>
-
-							<AuthRoute path="/update">
-								<ProfileUpdate />
-							</AuthRoute>
+					<AuthRoute path="/profile">
+						<AuthRoute path="/">
+							<Profile />
 						</AuthRoute>
 
+						<AuthRoute path="/update">
+							<ProfileUpdate />
+						</AuthRoute>
+					</AuthRoute>
+
+					<RateContextProvider>
 						<Route path="/albums">
 							<AuthRoute path="/">
 								<Albums />
@@ -66,11 +67,10 @@ const App = () => {
 								</AuthRoute>
 							</Route>
 						</Route>
-
-					</Routes>
-				</Container>
-			</AuthContextProvider>
-		</BrowserRouter>
+					</RateContextProvider>
+				</Routes>
+			</Container>
+		</AuthContextProvider>
 	)
 }
 

@@ -2,9 +2,11 @@ import { useState } from 'react'
 import { Image, Button } from 'react-bootstrap'
 import { useAuth } from '../../contexts/AuthContext'
 import useImageDelete from '../../hooks/useImageDelete'
+import { useRate } from '../../contexts/RateContext'
 
 const Images = ({ images }) => {
 	const [imageToDelete, setImageToDelete] = useState(null)
+	const { handleLike, handleDislike } = useRate()
 	const { currentUser } = useAuth()
 	useImageDelete(imageToDelete)
 
@@ -12,7 +14,6 @@ const Images = ({ images }) => {
 		setImageToDelete(image)
 	}
 
-	
 	return (
 		<>
 		{
@@ -24,12 +25,11 @@ const Images = ({ images }) => {
 							? (<Button variant="danger" onClick={() => handleDeleteImage(image)}>X</Button>)
 							: (
 								<div className="rate-button-wrapper">
-									<Button variant="light">👍🏽</Button>
-									<Button variant="light">👎🏽</Button>
+									<Button variant="light" onClick={() => handleLike(image)}>👍🏽</Button>
+									<Button variant="light" onClick={() => handleDislike(image)}>👎🏽</Button>
 								</div>
 							)
 					}
-
 					
 				</li>
 			))

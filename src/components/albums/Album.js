@@ -1,5 +1,6 @@
 import React from 'react'
 import { useParams, Link } from 'react-router-dom'
+import { Button } from 'react-bootstrap'
 import useAlbum from '../../hooks/useAlbum'
 import Images from '../images/Images'
 import ImageUpload from '../images/ImageUpload'
@@ -22,10 +23,10 @@ const Album = () => {
 				currentUser
 					? (
 						<>
-						<Link to={`/albums/${albumId}/edit`} className="btn btn-primary">Update</Link>
-						<ImageUpload albumId={albumId} />
+							<Link to={`/albums/${albumId}/edit`} className="btn btn-primary">Update</Link>
+							<ImageUpload albumId={albumId} />
 						</>
-					) : ('')
+					) : (<Button>Send selected images</Button>)
 			}
 			
 
