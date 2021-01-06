@@ -1,4 +1,5 @@
 import { createContext, useState, useContext, useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { db, storage } from '../firebase'
 import moment from 'moment'
 
@@ -10,7 +11,9 @@ const useImage = () => {
 
 const ImageContextProvider = (props) => {
 	const [imageToAdd, setImageToAdd] = useState([])
+	const [imageToDelete, setImageToDelete] = useState([])
 	const [imagesInDb, setImagesInDb] = useState([])
+	const navigate = useNavigate()
 
 	const handleDeleteImage = async (image) => {
 		if (!image) {
@@ -42,10 +45,17 @@ const ImageContextProvider = (props) => {
 	}
 
 	const handleLikeImage = (image) => {
+		if (imageToAdd.includes(image)) {
+			return
+		}
 		setImageToAdd(imageToAdd => [...imageToAdd, image])
 	}
 
 	const handleDislikeImage = (image) => {
+		if (imageToDelete.includes(image)) {
+			return
+		}
+		setImageToDelete(imageToDelete => [...imageToDelete, image])
 		const index = imageToAdd.indexOf(image);
 		if (index > -1) {
 			imageToAdd.splice(index, 1);
@@ -66,6 +76,7 @@ const ImageContextProvider = (props) => {
 					owner: album.owner,
 					selection: 'guest'
 				})
+				navigate(`/albums/${docRef.id}/thank-you`)
 			} catch (e) {
 				console.log(e.message)
 			}
@@ -79,6 +90,7 @@ const ImageContextProvider = (props) => {
 					owner: user.uid,
 					selection: 'owner'
 				})
+				navigate(`/albums/${docRef.id}`)
 			} catch (e) {
 				console.log(e.message)
 			}
@@ -118,6 +130,7 @@ const ImageContextProvider = (props) => {
 
 	const contextValues = {
 		imageToAdd,
+		imageToDelete,
 		handleCreateAlbum,
 		handleDeleteAlbum,
 		handleDeleteImage,
