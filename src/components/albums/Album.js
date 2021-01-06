@@ -1,19 +1,20 @@
 import React from 'react'
 import { useParams, Link } from 'react-router-dom'
-import { Button } from 'react-bootstrap'
+import { Button, Row } from 'react-bootstrap'
 import useAlbum from '../../hooks/useAlbum'
 import Images from '../images/Images'
 import ImageUpload from '../images/ImageUpload'
 import useImages from '../../hooks/useImages'
 import { useAuth } from '../../contexts/AuthContext'
 import { useImage } from '../../contexts/ImageContext'
+import ThumbNail from '../images/ThumbNail'
 
 const Album = () => {
 	const { albumId } = useParams()
 	const { album, loading } = useAlbum(albumId)
 	const { images, imgLoading } = useImages(albumId)
 	const { currentUser } = useAuth()
-	const { imageToAdd, handleCreateAlbum } = useImage()
+	const { imageToAdd, imageToDelete, handleCreateAlbum } = useImage()
 
 	if (loading) {
 		return (<p>Loading...</p>)
@@ -36,6 +37,20 @@ const Album = () => {
 				loading
 					? <p>Loading...</p>
 					: (<Images images={images} />)
+			}
+			<h2>Liked photos</h2>
+			<p>{imageToAdd.length + '/' + images.length}</p>
+			{
+				<Row>
+					<ThumbNail images={imageToAdd} />
+				</Row>
+			}
+			<h2>Disliked photos</h2>
+			<p>{imageToDelete.length + '/' + images.length}</p>
+			{
+				<Row>
+					<ThumbNail images={imageToDelete} />
+				</Row>
 			}
 		</>
 	)
