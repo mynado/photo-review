@@ -28,9 +28,10 @@ const Album = () => {
 					? (
 						<>
 							<Link to={`/albums/${albumId}/edit`} className="btn btn-primary">Update</Link>
+							<Button onClick={() => handleCreateAlbum(imageToAdd, album, currentUser)}>Create new album from selected images</Button>
 							<ImageUpload albumId={albumId} />
 						</>
-					) : (<Button onClick={() => handleCreateAlbum(imageToAdd, album)}>Send selected images</Button>)
+					) : (<Button onClick={() => handleCreateAlbum(imageToAdd, album, currentUser)}>Send selected images</Button>)
 			}
 			
 

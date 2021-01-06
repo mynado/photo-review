@@ -22,8 +22,12 @@ const Images = ({ images }) => {
 					<Image src={image.url} alt="" fluid/>
 					{
 						currentUser
-							? (<Button variant="danger" onClick={() => handleDeleteImage(image)}>X</Button>)
-							: (
+							? (
+								<div>
+									<Button variant="success" onClick={() => handleLike(image)}>✔</Button>
+									<Button variant="danger" onClick={() => handleDeleteImage(image)}>𐄂</Button>
+								</div>
+							) : (
 								<div className="rate-button-wrapper">
 									<Button variant="light" onClick={() => handleLike(image)}>👍🏽</Button>
 									<Button variant="light" onClick={() => handleDislike(image)}>👎🏽</Button>

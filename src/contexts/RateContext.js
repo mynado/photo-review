@@ -23,15 +23,31 @@ const RateContextProvider = (props) => {
 		}
 	}
 
-	const handleCreateAlbum = async (images, album) => {
+	const handleCreateAlbum = async (images, album, user) => {
 		let docRef
-		try {
-			docRef = await db.collection('albums').add({
-				title: album.title + Date().toLocaleString(),
-				owner: album.owner,
-			})
-		} catch (e) {
-			console.log(e.message)
+		setImageToAdd([])
+
+		if (!user) {
+			try {
+				docRef = await db.collection('albums').add({
+					title: album.title + Date().toLocaleString(),
+					owner: album.owner,
+					note: 'guest selection'
+				})
+			} catch (e) {
+				console.log(e.message)
+			}
+		}
+
+		if (user) {
+			try {
+				docRef = await db.collection('albums').add({
+					title: album.title + Date().toLocaleString(),
+					owner: user.uid,
+				})
+			} catch (e) {
+				console.log(e.message)
+			}
 		}
 
 		images.forEach(async image => {
@@ -45,9 +61,7 @@ const RateContextProvider = (props) => {
 				album: db.collection('albums').doc(docRef.id)
 			}
 			await db.collection('images').add(img)
-			console.log(image)
 		})
-
 	}
 
 	const contextValues = {
