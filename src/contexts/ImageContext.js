@@ -49,6 +49,10 @@ const ImageContextProvider = (props) => {
 			return
 		}
 		setImageToAdd(imageToAdd => [...imageToAdd, image])
+		const index = imageToDelete.indexOf(image);
+		if (index > -1) {
+			imageToDelete.splice(index, 1);
+		}
 	}
 
 	const handleDislikeImage = (image) => {
@@ -65,6 +69,7 @@ const ImageContextProvider = (props) => {
 	const handleCreateAlbum = async (images, album, user) => {
 		let docRef
 		setImageToAdd([])
+		setImageToDelete([])
 
 		const albumTitle = `${album.original_title} ${moment().format('LLL')}`
 
