@@ -1,16 +1,29 @@
 @import "~bootstrap/scss/bootstrap";
 
-.album-list {
-  padding-left: 0;
-  margin-left: 0;
+a {
+  color: black;
+}
 
-  &-item {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    list-style-type: none;
-    margin: 1rem;
-    border-bottom: 1px solid #eee;
+.button-wrapper {
+  text-align: right;
+}
+
+.album-list {
+  padding: 0;
+  margin: 0;
+
+  &-guest {
+    background-color: bisque;
+  }
+
+  &-you {
+    background-color: rgb(241, 162, 105);
+  }
+
+  &-title {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 }
 

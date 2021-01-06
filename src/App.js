@@ -46,7 +46,7 @@ const App = () => {
 								<Albums />
 							</AuthRoute>
 
-							<AuthRoute path="/add">
+							<AuthRoute path="/create">
 								<AlbumCreate />
 							</AuthRoute>
 
