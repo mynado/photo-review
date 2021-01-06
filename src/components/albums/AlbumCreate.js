@@ -22,6 +22,7 @@ const AlbumCreate = () => {
 		try {
 			const docRef = await db.collection('albums').add({
 				title: titleRef.current.value,
+				original_title: titleRef.current.value,
 				owner: currentUser.uid,
 			})
 

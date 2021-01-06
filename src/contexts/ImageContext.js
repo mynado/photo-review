@@ -1,5 +1,6 @@
 import { createContext, useState, useContext, useEffect } from 'react'
 import { db, storage } from '../firebase'
+import moment from 'moment'
 
 const ImageContext = createContext()
 
@@ -55,12 +56,15 @@ const ImageContextProvider = (props) => {
 		let docRef
 		setImageToAdd([])
 
+		const albumTitle = `${album.original_title} ${moment().format('LLL')}`
+
 		if (!user) {
 			try {
 				docRef = await db.collection('albums').add({
-					title: album.title + Date().toLocaleString(),
+					title: albumTitle,
+					original_title: album.title,
 					owner: album.owner,
-					note: 'guest selection'
+					selection: 'guest'
 				})
 			} catch (e) {
 				console.log(e.message)
@@ -70,8 +74,10 @@ const ImageContextProvider = (props) => {
 		if (user) {
 			try {
 				docRef = await db.collection('albums').add({
-					title: album.title + Date().toLocaleString(),
+					title: albumTitle,
+					original_title: album.title,
 					owner: user.uid,
+					selection: 'owner'
 				})
 			} catch (e) {
 				console.log(e.message)
