@@ -1,5 +1,19 @@
 @import "~bootstrap/scss/bootstrap";
 
+.album-list {
+  padding-left: 0;
+  margin-left: 0;
+
+  &-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    list-style-type: none;
+    margin: 1rem;
+    border-bottom: 1px solid #eee;
+  }
+}
+
 .image-list-item {
   list-style-type: none;
   margin-bottom: 1rem;

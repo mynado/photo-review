@@ -98,12 +98,31 @@ const ImageContextProvider = (props) => {
 		})
 	}
 
+	const handleDeleteAlbum = async (album) => {
+		if (!album) {
+			return
+		}
+
+		const query = db.collection('images').where('album','==', db.collection('albums').doc(album.id));
+
+		query.get().then((querySnapshot) => {
+			querySnapshot.forEach((doc) => {
+				doc.ref.delete();
+			});
+		});
+
+		console.log('queryImage', query)
+		await db.collection('albums').doc(album.id).delete()
+
+	}
+
 	const contextValues = {
 		imageToAdd,
+		handleCreateAlbum,
+		handleDeleteAlbum,
 		handleDeleteImage,
 		handleLikeImage,
 		handleDislikeImage,
-		handleCreateAlbum,
 	}
 
 	return (
