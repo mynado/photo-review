@@ -1,4 +1,5 @@
 import React from 'react'
+import { Button } from 'react-bootstrap'
 import useAlbums from '../../hooks/useAlbums'
 import { Link } from 'react-router-dom'
 import { useAuth } from '../../contexts/AuthContext'
@@ -11,6 +12,9 @@ const Albums = () => {
 	return (
 		<div>
 			<h1>All Albums</h1>
+			<Link to="/albums/add">
+				<Button>Add a new album</Button>
+			</Link>
 			{
 				loading && currentUser
 					? (<p>Loading...</p>)
