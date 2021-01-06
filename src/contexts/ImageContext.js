@@ -1,22 +1,50 @@
 import { createContext, useState, useContext, useEffect } from 'react'
-import { db } from '../firebase'
+import { db, storage } from '../firebase'
 
-const RateContext = createContext()
+const ImageContext = createContext()
 
-const useRate = () => {
-	return useContext(RateContext)
+const useImage = () => {
+	return useContext(ImageContext)
 }
 
-const RateContextProvider = (props) => {
+const ImageContextProvider = (props) => {
 	const [imageToAdd, setImageToAdd] = useState([])
+	const [imagesInDb, setImagesInDb] = useState([])
 
-	const handleLike = (image) => {
-		console.log('Yes I like: ', image)
+	const handleDeleteImage = async (image) => {
+		if (!image) {
+			return
+		}
+
+		const unsubscribe = db.collection('images')
+		.where('path', '==', image.path)
+		.onSnapshot(snapshot => {
+			const snapShotImages = []
+
+			snapshot.forEach(doc => {
+				snapShotImages.push({
+					id: doc.id,
+					...doc.data()
+				})
+			})
+			setImagesInDb(snapShotImages)
+		})
+		
+		await db.collection('images').doc(image.id).delete()
+
+		if (imagesInDb.length === 1) {
+			await storage.ref(image.path).delete()
+		}
+
+		return unsubscribe
+
+	}
+
+	const handleLikeImage = (image) => {
 		setImageToAdd(imageToAdd => [...imageToAdd, image])
 	}
 
-	const handleDislike = (image) => {
-		console.log('No I dislike: ', image)
+	const handleDislikeImage = (image) => {
 		const index = imageToAdd.indexOf(image);
 		if (index > -1) {
 			imageToAdd.splice(index, 1);
@@ -66,20 +94,21 @@ const RateContextProvider = (props) => {
 
 	const contextValues = {
 		imageToAdd,
-		handleLike,
-		handleDislike,
+		handleDeleteImage,
+		handleLikeImage,
+		handleDislikeImage,
 		handleCreateAlbum,
 	}
 
 	return (
-		<RateContext.Provider value={contextValues}>
+		<ImageContext.Provider value={contextValues}>
 			{props.children}
-		</RateContext.Provider>
+		</ImageContext.Provider>
 	)
 }
 
 export {
-	RateContext,
-	useRate,
-	RateContextProvider
+	ImageContext,
+	useImage,
+	ImageContextProvider
 }

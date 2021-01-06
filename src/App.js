@@ -14,7 +14,7 @@ import Albums from './components/albums/Albums'
 import AlbumCreate from './components/albums/AlbumCreate'
 import Album from './components/albums/Album'
 import AlbumUpdate from './components/albums/AlbumUpdate'
-import { RateContextProvider } from './contexts/RateContext'
+import { ImageContextProvider } from './contexts/ImageContext'
 
 
 
@@ -47,7 +47,7 @@ const App = () => {
 						</AuthRoute>
 					</AuthRoute>
 
-					<RateContextProvider>
+					<ImageContextProvider>
 						<Route path="/albums">
 							<AuthRoute path="/">
 								<Albums />
@@ -67,7 +67,7 @@ const App = () => {
 								</AuthRoute>
 							</Route>
 						</Route>
-					</RateContextProvider>
+					</ImageContextProvider>
 				</Routes>
 			</Container>
 		</AuthContextProvider>
