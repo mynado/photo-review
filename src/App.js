@@ -47,25 +47,25 @@ const App = () => {
 							</AuthRoute>
 						</AuthRoute>
 
-						<AuthRoute path="/albums">
+						<Route path="/albums">
 							<AuthRoute path="/">
 								<Albums />
-							</AuthRoute>
-
-							<AuthRoute path="/:albumId">
-								<AuthRoute path="/">
-									<Album />
-								</AuthRoute>
-
-								<AuthRoute path="/edit">
-									<AlbumUpdate />
-								</AuthRoute>
 							</AuthRoute>
 
 							<AuthRoute path="/add">
 								<AlbumCreate />
 							</AuthRoute>
-						</AuthRoute>
+
+							<Route path="/:albumId">
+								<Route path="/">
+									<Album />
+								</Route>
+
+								<AuthRoute path="/edit">
+									<AlbumUpdate />
+								</AuthRoute>
+							</Route>
+						</Route>
 
 					</Routes>
 				</Container>
