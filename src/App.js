@@ -15,8 +15,8 @@ import AlbumCreate from './components/albums/AlbumCreate'
 import Album from './components/albums/Album'
 import AlbumUpdate from './components/albums/AlbumUpdate'
 import { ImageContextProvider } from './contexts/ImageContext'
-
-
+import ThankYou from './components/ThankYou'
+import NotFound from './components/NotFound'
 
 const App = () => {
 	return (
@@ -62,12 +62,17 @@ const App = () => {
 									<Album />
 								</Route>
 
+								<Route path="/thank-you">
+									<ThankYou />
+								</Route>
+
 								<AuthRoute path="/edit">
 									<AlbumUpdate />
 								</AuthRoute>
 							</Route>
 						</Route>
 					</ImageContextProvider>
+					<Route path="*" element={<NotFound />} />
 				</Routes>
 			</Container>
 		</AuthContextProvider>
