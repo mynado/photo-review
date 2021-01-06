@@ -1,4 +1,4 @@
-import React from 'react'
+import { useState, useEffect } from 'react'
 import { useParams, Link } from 'react-router-dom'
 import { Button, Row } from 'react-bootstrap'
 import useAlbum from '../../hooks/useAlbum'
@@ -10,15 +10,25 @@ import { useImage } from '../../contexts/ImageContext'
 import ThumbNail from '../images/ThumbNail'
 
 const Album = () => {
+	const [btnDisabled, setBtnDisabled] = useState(true)
 	const { albumId } = useParams()
 	const { album, loading } = useAlbum(albumId)
-	const { images, imgLoading } = useImages(albumId)
+	const { images } = useImages(albumId)
 	const { currentUser } = useAuth()
 	const { imageToAdd, imageToDelete, handleCreateAlbum } = useImage()
+
+	useEffect(() => {
+		if (imageToDelete.length + imageToAdd.length === images.length) {
+			setBtnDisabled(false)
+		} else {
+			setBtnDisabled(true)
+		}
+	}, [images, imageToAdd, imageToDelete])
 
 	if (loading) {
 		return (<p>Loading...</p>)
 	}
+
 	return (
 		<>
 			<h1>{album.title}</h1>
@@ -27,10 +37,9 @@ const Album = () => {
 					? (
 						<>
 							<Link to={`/albums/${albumId}/edit`} className="btn btn-primary">Update</Link>
-							<Button onClick={() => handleCreateAlbum(imageToAdd, album, currentUser)}>Create new album from selected images</Button>
 							<ImageUpload albumId={albumId} />
 						</>
-					) : (<Button onClick={() => handleCreateAlbum(imageToAdd, album, currentUser)}>Send selected images</Button>)
+					) : ('')
 			}
 
 			{
@@ -51,6 +60,11 @@ const Album = () => {
 				<Row>
 					<ThumbNail images={imageToDelete} />
 				</Row>
+			}
+			{
+				currentUser
+					? (<Button onClick={() => handleCreateAlbum(imageToAdd, album, currentUser)}>Create new album from selected images</Button>)
+					: (<Button disabled={btnDisabled} onClick={() => handleCreateAlbum(imageToAdd, album, currentUser)}>Send selected images</Button>)
 			}
 		</>
 	)
