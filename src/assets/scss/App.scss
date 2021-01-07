@@ -1,29 +1,71 @@
 @import "~bootstrap/scss/bootstrap";
 
-a {
-  color: black;
-}
+// a {
+//   color: black;
+// }
 
 .button-wrapper {
   text-align: right;
+}
+
+.button-round {
+  border-radius: 50%;
 }
 
 .album-list {
   padding: 0;
   margin: 0;
 
+  .col-padding {
+    padding: 0 0.5rem 0 0.5rem;
+  }
+
+  .card {
+    border: none;
+    border-radius: 0.75rem;
+
+    &-img-top {
+      border: none;
+      border-radius: 0.75rem;
+    }
+
+    &-subtitle {
+      font-size: 0.75rem;
+    }
+
+    &-footer {
+      background-color: rgba(0, 0, 0, 0.4);
+      border: none;
+      border-radius: 0 0 calc(0.75rem - 1px) calc(0.75rem - 1px);
+      padding: 0.75rem;
+      position: absolute;
+      width: 100%;
+      bottom: 0;
+    }
+  }
+
+  &-card {
+    position: relative;
+  }
+
   &-guest {
     background-color: bisque;
   }
 
   &-you {
-    background-color: rgb(241, 162, 105);
+    background-color: rgb(0, 0, 0);
   }
 
   &-title {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+    font-weight: 700;
+    color: #fff;
+  }
+
+  &-date {
+    color: #ddd;
   }
 }
 
