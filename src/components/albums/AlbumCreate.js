@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import { Alert, Form, Button } from 'react-bootstrap'
 import { db } from '../../firebase'
 import { useAuth } from '../../contexts/AuthContext'
+import moment from 'moment'
 
 const AlbumCreate = () => {
 	const titleRef = useRef()
@@ -22,9 +23,9 @@ const AlbumCreate = () => {
 		try {
 			const docRef = await db.collection('albums').add({
 				title: titleRef.current.value,
-				original_title: titleRef.current.value,
 				owner: currentUser.uid,
-				selection: 'you'
+				created_by: 'you',
+				date: moment().format('L HH:mm'),
 			})
 
 			navigate(`/albums/${docRef.id}`)

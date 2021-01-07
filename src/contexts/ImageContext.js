@@ -13,6 +13,7 @@ const ImageContextProvider = (props) => {
 	const [imageToAdd, setImageToAdd] = useState([])
 	const [imageToDelete, setImageToDelete] = useState([])
 	const [imagesInDb, setImagesInDb] = useState([])
+	const [error, setError] = useState()
 	const navigate = useNavigate()
 
 	const handleDeleteImage = async (image) => {
@@ -71,37 +72,35 @@ const ImageContextProvider = (props) => {
 		setImageToAdd([])
 		setImageToDelete([])
 
-		const albumTitle = `${album.original_title} ${moment().format('LLL')}`
-
 		if (!user) {
 			try {
 				docRef = await db.collection('albums').add({
-					title: albumTitle,
-					original_title: album.title,
+					title: album.title,
 					owner: album.owner,
-					selection: 'guest'
+					created_by: 'guest',
+					date: moment().format('L HH:mm'),
 				})
 				navigate(`/albums/${docRef.id}/thank-you`)
 			} catch (e) {
-				console.log(e.message)
+				setError(e.message)
 			}
 		}
 
 		if (user) {
 			try {
 				docRef = await db.collection('albums').add({
-					title: albumTitle,
-					original_title: album.title,
+					title: album.title,
 					owner: user.uid,
-					selection: 'you'
+					created_by: 'you',
+					date: moment().format('L HH:mm')
 				})
 				navigate(`/albums/${docRef.id}`)
 			} catch (e) {
-				console.log(e.message)
+				setError(e.message)
 			}
 		}
 
-		images.forEach(async image => {
+		images.forEach(async (image, index) => {
 			const img = {
 				name: image.name,
 				owner: image.owner,
@@ -112,6 +111,13 @@ const ImageContextProvider = (props) => {
 				album: db.collection('albums').doc(docRef.id)
 			}
 			await db.collection('images').add(img)
+
+			// add first image's url in array to album
+			if (index === 0) {
+				await db.collection('albums').doc(docRef.id).update({
+					img_url: img.url,
+				})
+			}
 		})
 	}
 
@@ -134,6 +140,7 @@ const ImageContextProvider = (props) => {
 	}
 
 	const contextValues = {
+		error,
 		imageToAdd,
 		imageToDelete,
 		handleCreateAlbum,

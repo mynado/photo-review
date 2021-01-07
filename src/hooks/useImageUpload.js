@@ -20,7 +20,13 @@ const useImageUpload = (files, albumId = null) => {
 		setError(null)
 		setIsSuccess(false)
 
-		files.forEach(file => {
+		
+
+		// db.collection('albums').doc(albumId).update({
+		// 	img_url: files[0].url,
+		// })
+
+		files.forEach((file, index) => {
 			// create image reference in storage and upload
 			const uploadTask = storage.ref().child(`images/${currentUser.uid}/${file.name}`).put(file);
 
@@ -44,16 +50,20 @@ const useImageUpload = (files, albumId = null) => {
 				if (albumId) {
 					img.album = db.collection('albums').doc(albumId)
 				}
-				// if (albumId) {
-				// 	const albums = []
-				// 	albums.push(db.collection('albums').doc(albumId))
-				// 	img.albums = albums
-				// }
+				
 
 				console.log('img', img)
 
 				// add image to firestore collection
 				await db.collection('images').add(img)
+
+				// add first image's url in array to album
+				if (index === 0) {
+					await db.collection('albums').doc(albumId).update({
+						img_url: img.url,
+					})
+				}
+				
 
 				setIsSuccess(true)
 				setUploadProgress(null)

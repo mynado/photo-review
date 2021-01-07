@@ -8,7 +8,6 @@ const useImages = (albumId) => {
 	useEffect(() => {
 		const unsubscribe = db.collection('images')
 			.where('album', '==', db.collection('albums').doc(albumId))
-			// .where('albums', 'array-contains', db.collection('albums').doc(albumId))
 			.orderBy('name')
 			.onSnapshot(snapshot => {
 				setImgLoading(true)
