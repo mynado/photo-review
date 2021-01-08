@@ -14,7 +14,16 @@ const ImageContextProvider = (props) => {
 	const [imageToDelete, setImageToDelete] = useState([])
 	const [imagesInDb, setImagesInDb] = useState([])
 	const [error, setError] = useState()
+	const [showEdit, setShowEdit] = useState(false)
 	const navigate = useNavigate()
+
+	const handleShowEdit = () => {
+		setShowEdit(!showEdit)
+		if (!showEdit) {
+			setImageToAdd([])
+			setImageToDelete([])
+		}
+	}
 
 	const handleDeleteImage = async (image) => {
 		if (!image) {
@@ -45,14 +54,27 @@ const ImageContextProvider = (props) => {
 
 	}
 
-	const handleLikeImage = (image) => {
-		if (imageToAdd.includes(image)) {
-			return
-		}
-		setImageToAdd(imageToAdd => [...imageToAdd, image])
-		const index = imageToDelete.indexOf(image);
-		if (index > -1) {
-			imageToDelete.splice(index, 1);
+	const handleLikeImage = (checked, image) => {
+		if (checked) {
+			if (imageToAdd.includes(image)) {
+				return
+			}
+			// setIsChecked(checked)
+			setImageToAdd(imageToAdd => [...imageToAdd, image])
+			const index = imageToDelete.indexOf(image);
+			if (index > -1) {
+				imageToDelete.splice(index, 1);
+			}
+		} else {
+			if (imageToDelete.includes(image)) {
+				return
+			}
+			// setIsChecked(checked)
+			setImageToDelete(imageToDelete => [...imageToDelete, image])
+			const index = imageToAdd.indexOf(image);
+			if (index > -1) {
+				imageToAdd.splice(index, 1);
+			}
 		}
 	}
 
@@ -148,6 +170,8 @@ const ImageContextProvider = (props) => {
 		handleDeleteImage,
 		handleLikeImage,
 		handleDislikeImage,
+		handleShowEdit,
+		showEdit
 	}
 
 	return (
