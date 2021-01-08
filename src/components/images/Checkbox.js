@@ -5,13 +5,11 @@ import './Checkbox.scss'
 
 const Checkbox = ({image}) => {
 	const [isChecked, setIsChecked] = useState(false)
-	const { handleSelectedImages, isRemoved } = useImage()
+	const { handleSelectedImages } = useImage()
 
 	const handleChange = () => {
 		setIsChecked(!isChecked)
 	}
-
-	console.log(isRemoved)
 	return (
 		<>
 			<label className="checkbox-container" onClick={(e) => handleSelectedImages(e.target.checked, image)}>
@@ -24,7 +22,7 @@ const Checkbox = ({image}) => {
 			</label>
 			<span className="checkbox-checkmark">
 				{
-					isChecked && !isRemoved
+					isChecked
 						? (<ImCheckboxChecked className="checkbox-icon"/>)
 						: (<ImCheckboxUnchecked className="checkbox-icon" />)
 				}
