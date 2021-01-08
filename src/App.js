@@ -36,6 +36,10 @@ const App = () => {
 						<Login />
 					</Route>
 
+					<Route path="/thank-you">
+						<ThankYou />
+					</Route>
+
 					<AuthRoute path="/settings">
 						<ProfileUpdate />
 					</AuthRoute>
@@ -46,22 +50,20 @@ const App = () => {
 								<Albums />
 							</AuthRoute>
 
+							<AuthRoute path="/:albumId">
+								<Album />
+							</AuthRoute>
+
+							<AuthRoute path="/edit">
+								<AlbumUpdate />
+							</AuthRoute>
+
 							<AuthRoute path="/create">
 								<AlbumCreate />
 							</AuthRoute>
 
-							<Route path="/:albumId">
-								<Route path="/">
-									<Album />
-								</Route>
-
-								<Route path="/thank-you">
-									<ThankYou />
-								</Route>
-
-								<AuthRoute path="/edit">
-									<AlbumUpdate />
-								</AuthRoute>
+							<Route path="/review/:albumId">
+								<Album />
 							</Route>
 						</Route>
 					</ImageContextProvider>
