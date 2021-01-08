@@ -1,9 +1,11 @@
 import React, { useState } from 'react'
-import './Images.scss'
-import { Image, Button } from 'react-bootstrap'
+import { Image, Button, Row, Col } from 'react-bootstrap'
+import SimpleReactLightbox, { SRLWrapper } from "simple-react-lightbox";
+import { IoTrashBin } from 'react-icons/io5'
 import { useAuth } from '../../contexts/AuthContext'
 import { useImage } from '../../contexts/ImageContext'
 import Checkbox from './Checkbox'
+import './Images.scss'
 
 const Images = ({ images, showedit }) => {
 	const { handleLikeImage, handleDislikeImage, handleDeleteImage } = useImage()
@@ -11,50 +13,43 @@ const Images = ({ images, showedit }) => {
 
 	return (
 		<>
-		{
-			images.map(image => (
-				<li key={image.id} className="image-list-item">
-				
-					<Image src={image.url} alt="" fluid/>
-					{
-						currentUser
-							? (
-								<div className="image-list-item-buttons d-flex flex-column align-items-center">
-								{
-									showedit
-										? (
-											<>
-												<Checkbox image={image} />
-												<button className="btn btn-light image-list-item-button mt-4" onClick={() => handleDeleteImage(image)}>𐄂</button>
-											</>
-										) : ('')
-								}
-								
-									
-								</div>
-							) : (
-								''
-							)
-					}
-					
-					{/* {
-						currentUser
-							? (
-								<div className="image-list-item-buttons">
-									<button className="btn image-list-item-button" onClick={() => handleLikeImage(image)}>✔</button>
-									<button className="btn image-list-item-button" onClick={() => handleDeleteImage(image)}>𐄂</button>
-								</div>
-							) : (
-								<div className="image-list-item-buttons">
-									<button className="image-list-item-button" onClick={() => handleLikeImage(image)}>👍🏽</button>
-									<button className="image-list-item-button" onClick={() => handleDislikeImage(image)}>👎🏽</button>
-								</div>
-							)
-					} */}
-					
-				</li>
-			))
-		}
+			<SimpleReactLightbox>
+				<SRLWrapper>
+					<Row className="album-list">
+						{
+							
+							images.map(image => (
+								<Col xs={12} sm={6} md={6} lg={4} key={image.id} className="col-padding image-list-item">
+									<Image src={image.url} alt="" fluid/>
+									{
+										currentUser
+											? (
+												<div className="image-list-item-buttons d-flex flex-column align-items-center">
+												{
+													showedit
+														? (
+															<>
+																<Checkbox image={image} />
+																<button className="btn image-list-item-button mt-4" onClick={() => handleDeleteImage(image)}>
+																	<IoTrashBin />
+																</button>
+															</>
+														) : ('')
+												}
+												</div>
+											) : (
+													<div className="image-list-item-buttons">
+														<button className="image-list-item-button" onClick={() => handleLikeImage(image)}>👍🏽</button>
+														<button className="image-list-item-button" onClick={() => handleDislikeImage(image)}>👎🏽</button>
+													</div>
+											)
+									}
+								</Col>
+							))	
+						}
+					</Row>
+				</SRLWrapper>
+			</SimpleReactLightbox>
 		</>
 	)
 }
