@@ -1,6 +1,8 @@
 import React from 'react'
-import { Button, Image, Col } from 'react-bootstrap'
+import { Image, Col } from 'react-bootstrap'
+import { IoRemoveCircle } from 'react-icons/io5'
 import { useImage } from '../../contexts/ImageContext'
+import './ThumbNail.scss'
 
 const ThumbNail = ({ images }) => {
 	const { handleDislikeImage, handleLikeImage, imageToAdd, imageToDelete } = useImage()
@@ -9,16 +11,16 @@ const ThumbNail = ({ images }) => {
 		<>
 		{
 			images.map(image => (
-				<Col xs={6} md={4} key={image.id}>
-					<Image src={image.url} alt="" fluid thumbnail/>
+				<Col xs={4} md={3} key={image.id}>
+					<Image className="thumbnail" src={image.url} alt="" fluid thumbnail/>
 					{
 						imageToAdd.includes(image)
-							? (<Button variant="danger" onClick={() => handleDislikeImage(image)}>X</Button>)
+							? (<button className="remove-button custom-btn" variant="danger" onClick={() => handleDislikeImage(image)}><IoRemoveCircle className="custom-btn-remove" /></button>)
 							: ('')
 					}
 					{
 						imageToDelete.includes(image)
-							? (<Button variant="danger" onClick={() => handleLikeImage(image)}>X</Button>)
+							? (<button className="remove-button custom-btn" variant="danger" onClick={() => handleLikeImage(image)}><IoRemoveCircle className="custom-btn-remove" /></button>)
 							: ('')
 					}
 				</Col>

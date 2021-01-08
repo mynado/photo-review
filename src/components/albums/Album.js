@@ -89,7 +89,22 @@ const Album = () => {
 
 			{
 				currentUser
-					? showEdit ? (<Button variant="light" disabled={btnDisabled} onClick={() => handleCreateAlbum(imageToAdd, album, currentUser)}>Create new album</Button>) : ('')
+					? showEdit ? 
+						(
+							<>
+								{
+									imageToAdd.length > 0
+										? (
+											<>
+												<h5>Selected Images</h5>
+												<p>{imageToAdd.length + '/' + images.length}</p>
+											</>
+										) : ('')
+								}
+								<Row><ThumbNail images={imageToAdd} /></Row>
+								<Button variant="light" disabled={btnDisabled} onClick={() => handleCreateAlbum(imageToAdd, album, currentUser)}>Create album</Button>
+							</>
+						) : ('')
 					: (
 						<>
 							<h2>Liked photos</h2>

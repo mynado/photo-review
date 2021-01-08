@@ -1,0 +1,15 @@
+/*
+* ThumbNail Styles
+*/
+
+.thumbnail {
+  position: relative;
+}
+
+.remove {
+  &-button {
+    position: absolute;
+    top: -0.875rem;
+    right: 0.175rem;
+  }
+}

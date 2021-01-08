@@ -1,1 +1,25 @@
 @import "~bootstrap/scss/bootstrap";
+
+/* Buttons */
+
+.custom-btn {
+  outline: none;
+  background: transparent;
+  border: 1px solid transparent;
+
+  :hover {
+    outline: none;
+    background: transparent;
+    border: 1px solid transparent;
+  }
+
+  :active {
+    outline: none;
+    background: transparent;
+    border: 1px solid grey;
+  }
+
+  &-remove {
+    color: red;
+  }
+}
