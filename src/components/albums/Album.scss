@@ -5,3 +5,14 @@
 .button-wrapper {
   margin: 1rem 0.5rem 1rem auto;
 }
+
+.review-url {
+  &-wrapper {
+    margin-bottom: 0.75rem;
+  }
+  &-text {
+    background-color: rgb(208, 238, 208);
+    border-radius: 3px;
+    padding: 0.25rem 0.5rem;
+  }
+}

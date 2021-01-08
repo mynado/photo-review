@@ -1,8 +1,9 @@
 import { useState, useEffect } from 'react'
 import { useParams, Link } from 'react-router-dom'
 import { AiFillEdit } from 'react-icons/ai'
-import { IoMdSettings } from 'react-icons/io'
-import { Alert, Button, Row, Tooltip, OverlayTrigger, Form } from 'react-bootstrap'
+import { IoMdSettings, IoMdShare } from 'react-icons/io'
+import {CopyToClipboard} from 'react-copy-to-clipboard'
+import { Alert, Button, Row } from 'react-bootstrap'
 import { useAuth } from '../../contexts/AuthContext'
 import { useImage } from '../../contexts/ImageContext'
 import useAlbum from '../../hooks/useAlbum'
@@ -14,12 +15,12 @@ import './Album.scss'
 
 const Album = () => {
 	const [btnDisabled, setBtnDisabled] = useState(true)
+	const [showReviewUrl, setShowReviewUrl] = useState(false)
 	const { albumId } = useParams()
 	const { album, loading } = useAlbum(albumId)
 	const { images } = useImages(albumId)
 	const { currentUser } = useAuth()
 	const { imageToAdd, imageToDelete, handleCreateAlbum, handleShowEdit, showEdit, error } = useImage()
-	
 
 	useEffect(() => {
 		if (currentUser) {
@@ -39,36 +40,47 @@ const Album = () => {
 
 	}, [images, imageToAdd, imageToDelete, currentUser])
 
-	// const renderTooltip = (props) => (
-	// 	<Tooltip id="button-tooltip" {...props}>
-	// 	  {console.log(props)}
-	// 	</Tooltip>
-	// )
+	const handleShowReviewUrl = () => {
+		setShowReviewUrl(!showReviewUrl)
+	}
 
 	if (loading) {
 		return (<p>Loading...</p>)
 	}
 
-	console.log(imageToAdd)
-
 	return (
 		<>
-			<h1>{album.title}</h1>
+			<div className="d-flex justify-content-between align-items-center">
+				<h1>{album.title}</h1>
+				{
+					currentUser
+						? (
+							<>
+								<div className="button-wrapper">
+									<CopyToClipboard text={`${process.env.REACT_APP_BASE_URL}/albums/review/${albumId}`}>
+										<button className="btn btn-light mr-1" onClick={handleShowReviewUrl}>
+											<IoMdShare />
+										</button>
+									</CopyToClipboard>
+									
+									<Link to={`/albums/${albumId}/edit`} className="btn btn-light mr-1"><IoMdSettings /></Link>
+									{
+										images.length > 0 
+											? (
+												<button className="btn btn-light" onClick={handleShowEdit} data-toggle="tooltip" data-placement="top" title="Edit"><AiFillEdit /></button>
+											) : ('')
+									}
+								</div>
+							</>
+						) : ('')
+				}
+			</div>
 			{
-				currentUser
+				showReviewUrl
 					? (
-						<>
-							<ImageUpload albumId={albumId} />
-							<div className="button-wrapper">
-								<Link to={`/albums/${albumId}/edit`} className="btn btn-light mr-1"><IoMdSettings /></Link>
-								{
-									images.length > 0 
-										? (
-											<button className="btn btn-light" onClick={handleShowEdit} data-toggle="tooltip" data-placement="top" title="Edit"><AiFillEdit /></button>
-										) : ('')
-								}
-							</div>
-						</>
+						<div className="text-right mr-1 review-url-wrapper">
+							<small className="review-url-text"muted>{`${process.env.REACT_APP_BASE_URL}/albums/review/${albumId}`}</small>
+						</div>
 					) : ('')
 			}
 
@@ -76,7 +88,8 @@ const Album = () => {
 				showEdit
 					? (
 						<div className="text-right mr-1">
-							<small muted>Select and delete images. Create a new album containing the selected images.</small>
+							<small muted>Add, select and delete images. Create a new album containing the selected images.</small>
+							<ImageUpload albumId={albumId}/>
 						</div>
 					) : ('')
 			}
@@ -89,23 +102,29 @@ const Album = () => {
 
 			{
 				currentUser
-					? showEdit ? 
-						(
-							<>
-								{
-									imageToAdd.length > 0
-										? (
-											<>
-												<h5>Selected Images</h5>
-												<p>{imageToAdd.length + '/' + images.length}</p>
-											</>
-										) : ('')
-								}
-								<Row><ThumbNail images={imageToAdd} /></Row>
-								<Button variant="light" disabled={btnDisabled} onClick={() => handleCreateAlbum(imageToAdd, album, currentUser)}>Create album</Button>
-							</>
-						) : ('')
-					: (
+					? (
+						<>
+							{
+								showEdit ? 
+									(
+										<>
+											{
+												imageToAdd.length > 0
+													? (
+														<>
+															<h5>Selected Images</h5>
+															<p>{imageToAdd.length + '/' + images.length}</p>
+														</>
+													) : ('')
+											}
+											<Row><ThumbNail images={imageToAdd} /></Row>
+											<Button variant="light" disabled={btnDisabled} onClick={() => handleCreateAlbum(imageToAdd, album, currentUser)}>Create album</Button>
+										</>
+									) : ('')
+							}
+
+						</>
+					) : (
 						<>
 							<h2>Liked photos</h2>
 							<p>{imageToAdd.length + '/' + images.length}</p>
