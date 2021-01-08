@@ -1,11 +1,12 @@
 import React from 'react'
 import { Button, Row, Col, Card } from 'react-bootstrap'
+import './Albums.scss'
 import { IoTrashBin } from 'react-icons/io5'
 import { AiFillEdit } from 'react-icons/ai'
-import useAlbums from '../../hooks/useAlbums'
 import { Link } from 'react-router-dom'
 import { useAuth } from '../../contexts/AuthContext'
 import { useImage } from '../../contexts/ImageContext'
+import useAlbums from '../../hooks/useAlbums'
 
 const Albums = () => {
 	const { currentUser } = useAuth()
