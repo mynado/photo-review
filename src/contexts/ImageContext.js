@@ -105,6 +105,7 @@ const ImageContextProvider = (props) => {
 		let docRef
 		setImageToAdd([])
 		setImageToDelete([])
+		setShowEdit(false)
 
 		if (!user) {
 			try {
