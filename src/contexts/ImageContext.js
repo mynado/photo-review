@@ -59,7 +59,6 @@ const ImageContextProvider = (props) => {
 			if (imageToAdd.includes(image)) {
 				return
 			}
-			// setIsChecked(checked)
 			setImageToAdd(imageToAdd => [...imageToAdd, image])
 			const index = imageToDelete.indexOf(image);
 			if (index > -1) {
@@ -69,7 +68,6 @@ const ImageContextProvider = (props) => {
 			if (imageToDelete.includes(image)) {
 				return
 			}
-			// setIsChecked(checked)
 			setImageToDelete(imageToDelete => [...imageToDelete, image])
 			const index = imageToAdd.indexOf(image);
 			if (index > -1) {
