@@ -51,11 +51,13 @@ const App = () => {
 							</AuthRoute>
 
 							<AuthRoute path="/:albumId">
-								<Album />
-							</AuthRoute>
+								<AuthRoute path="/">
+									<Album />
+								</AuthRoute>
 
-							<AuthRoute path="/edit">
-								<AlbumUpdate />
+								<AuthRoute path="/edit">
+									<AlbumUpdate />
+								</AuthRoute>
 							</AuthRoute>
 
 							<AuthRoute path="/create">
