@@ -5,7 +5,7 @@ import './Checkbox.scss'
 
 const Checkbox = ({image}) => {
     const [isChecked, setIsChecked] = useState(false)
-    const { handleLikeImage } = useImage()
+    const { handleSelectedImages } = useImage()
 
     const handleChange = (e) => {
         setIsChecked(!isChecked)
@@ -13,7 +13,7 @@ const Checkbox = ({image}) => {
     }
     return (
         <>
-            <label className="checkbox-container" onClick={(e) => handleLikeImage(e.target.checked, image)}>
+            <label className="checkbox-container" onClick={(e) => handleSelectedImages(e.target.checked, image)}>
                 <input
                     className={`checkbox-input`}
                     name={image.name}

@@ -54,7 +54,7 @@ const ImageContextProvider = (props) => {
 
 	}
 
-	const handleLikeImage = (checked, image) => {
+	const handleSelectedImages = (checked, image) => {
 		if (checked) {
 			if (imageToAdd.includes(image)) {
 				return
@@ -75,6 +75,18 @@ const ImageContextProvider = (props) => {
 			if (index > -1) {
 				imageToAdd.splice(index, 1);
 			}
+		}
+	}
+
+	const handleLikeImage = (image) => {
+		if (imageToAdd.includes(image)) {
+			return
+		}
+
+		setImageToAdd(imageToAdd => [...imageToAdd, image])
+		const index = imageToDelete.indexOf(image);
+		if (index > -1) {
+			imageToDelete.splice(index, 1);
 		}
 	}
 
@@ -170,6 +182,7 @@ const ImageContextProvider = (props) => {
 		handleDeleteImage,
 		handleLikeImage,
 		handleDislikeImage,
+		handleSelectedImages,
 		handleShowEdit,
 		showEdit
 	}
