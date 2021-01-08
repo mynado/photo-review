@@ -2,7 +2,7 @@
 * Images Style
 */
 
-.image-list-item {
+.image-item {
   list-style-type: none;
   margin-bottom: 1rem;
   position: relative;
@@ -13,7 +13,7 @@
     right: 0.5rem;
   }
 
-  &-button {
+  &-select-button {
     padding: 0;
     outline: none;
     background: transparent;

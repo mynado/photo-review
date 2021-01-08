@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Image, Button, Row, Col } from 'react-bootstrap'
+import { Image, Row, Col } from 'react-bootstrap'
 import SimpleReactLightbox, { SRLWrapper } from "simple-react-lightbox";
 import { IoTrashBin } from 'react-icons/io5'
 import { useAuth } from '../../contexts/AuthContext'
@@ -19,19 +19,19 @@ const Images = ({ images, showedit }) => {
 						{
 							
 							images.map(image => (
-								<Col xs={12} sm={6} md={6} lg={4} key={image.id} className="col-padding image-list-item">
+								<Col xs={12} sm={6} md={6} lg={4} key={image.id} className="col-padding image-item">
 									<Image src={image.url} alt="" fluid/>
 									{
 										currentUser
 											? (
-												<div className="image-list-item-buttons d-flex flex-column align-items-center">
+												<div className="image-item-buttons d-flex flex-column align-items-center">
 												{
 													showedit
 														? (
 															<>
 																<Checkbox image={image} />
-																<button className="btn image-list-item-button mt-4" onClick={() => handleDeleteImage(image)}>
-																	<IoTrashBin />
+																<button className="image-item-select-button" onClick={() => handleDeleteImage(image)}>
+																	<IoTrashBin className="trash-icon" />
 																</button>
 															</>
 														) : ('')
