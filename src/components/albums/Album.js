@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useParams, Link } from 'react-router-dom'
 import { AiFillEdit } from 'react-icons/ai'
-import { IoMdSettings, IoMdShare } from 'react-icons/io'
+import { IoMdSettings, IoMdShare, IoIosCopy } from 'react-icons/io'
 import {CopyToClipboard} from 'react-copy-to-clipboard'
 import { Alert, Button, Row } from 'react-bootstrap'
 import { useAuth } from '../../contexts/AuthContext'
@@ -50,18 +50,28 @@ const Album = () => {
 
 	return (
 		<>
-			<div className="d-flex justify-content-between align-items-center">
-				<h1>{album.title}</h1>
+			{
+					showReviewUrl
+						? (
+							<div className="text-right mr-1 review-url-wrapper">
+								<textarea rows="1" className="review-url-text"muted>{`${process.env.REACT_APP_BASE_URL}/albums/review/${albumId}`}</textarea>
+								<CopyToClipboard text={`${process.env.REACT_APP_BASE_URL}/albums/review/${albumId}`}>
+									<button className="btn btn-light"><IoIosCopy /></button>
+								</CopyToClipboard>
+							</div>
+						) : ('')
+				}
+			<div className="album-header-wrapper">
 				{
 					currentUser
 						? (
 							<>
 								<div className="button-wrapper">
-									<CopyToClipboard text={`${process.env.REACT_APP_BASE_URL}/albums/review/${albumId}`}>
+									
 										<button className="btn btn-light mr-1" onClick={handleShowReviewUrl}>
 											<IoMdShare />
 										</button>
-									</CopyToClipboard>
+								
 									
 									<Link to={`/albums/${albumId}/edit`} className="btn btn-light mr-1"><IoMdSettings /></Link>
 									{
@@ -74,15 +84,9 @@ const Album = () => {
 							</>
 						) : ('')
 				}
+				<h1>{album.title}</h1>
 			</div>
-			{
-				showReviewUrl
-					? (
-						<div className="text-right mr-1 review-url-wrapper">
-							<small className="review-url-text"muted>{`${process.env.REACT_APP_BASE_URL}/albums/review/${albumId}`}</small>
-						</div>
-					) : ('')
-			}
+			
 
 			{
 				showEdit

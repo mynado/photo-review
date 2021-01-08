@@ -3,16 +3,39 @@
 */
 
 .button-wrapper {
-  margin: 1rem 0.5rem 1rem auto;
+  margin: 0.5rem 0.275rem;
 }
 
 .review-url {
   &-wrapper {
+    margin-top: 1rem;
     margin-bottom: 0.75rem;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
   }
   &-text {
-    background-color: rgb(208, 238, 208);
+    background-color: #eee;
     border-radius: 3px;
+    border: none;
     padding: 0.25rem 0.5rem;
+    display: inline-block;
+    overflow: auto;
+    white-space: nowrap;
+    width: 100%;
+    margin-right: 0.5rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .album-header-wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: row-reverse;
+  }
+
+  .button-wrapper {
+    margin-top: 0.5rem;
   }
 }
