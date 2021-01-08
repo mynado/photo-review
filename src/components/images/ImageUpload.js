@@ -2,6 +2,7 @@ import { useCallback, useEffect, useState } from 'react'
 import { Alert, ProgressBar } from 'react-bootstrap'
 import { useDropzone } from 'react-dropzone'
 import useImageUpload from '../../hooks/useImageUpload'
+import './ImageUpload.scss'
 
 const ImageUpload = ({ albumId }) => {
 	const [files, setFiles] = useState([])
@@ -37,39 +38,23 @@ const ImageUpload = ({ albumId }) => {
 		onDrop 
 	})
 	return (
-		<div {...getRootProps()}>
-			<input {...getInputProps()}/>
-			{
-				isDragActive ?
-				<p>Drop the files here ...</p> :
-				<p>Drag 'n' drop some files here, or click to select files</p>
-			}
-
-			{
-				acceptedFiles && (
-					<div>
-						<ul>
-							{
-								acceptedFiles.map(file => (
-									<li key={file.name}>
-										<img src={URL.createObjectURL(file)} className="img-fluid w-25" alt="preview"/>
-										<small>{file.name} ({Math.round(file.size / 1024)} kb)</small>
-									</li>
-								))
-							}
-						</ul>
-						
-					</div>
-				)
-			}
-			{
-				uploadProgress !== null && (
-					<ProgressBar variant="success" animated now={uploadProgress} />
-				)
-			}
+		<>
+			<div {...getRootProps()} className="dropzone-container">
+				<input {...getInputProps()} className="dropzone-input"/>
+				{
+					isDragActive 
+						? <p className="dropzone-text">Drag 'n' drop some files here, or click to select files</p>
+						: <p className="dropzone-text">Click to select files</p>
+				}
+				{
+					uploadProgress !== null && (
+						<ProgressBar variant="success" animated now={uploadProgress} className="dropzone-progress"/>
+					)
+				}
+			</div>
 			{
 				error && (
-					<Alert variant="warning">
+					<Alert variant="warning" className="dropzone-alert">
 						Something went wrong
 					</Alert>
 				)
@@ -77,12 +62,12 @@ const ImageUpload = ({ albumId }) => {
 
 			{
 				isSuccess && (
-					<Alert variant="success">
+					<Alert variant="success" className="dropzone-alert">
 						Your upload was successful
 					</Alert>
 				)
 			}
-		</div>
+		</>
 	)
 }
 
