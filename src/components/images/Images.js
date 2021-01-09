@@ -30,7 +30,7 @@ const Images = ({ images, showedit }) => {
 														? (
 															<>
 																<Checkbox image={image} />
-																<button className="image-item-select-button" onClick={() => handleDeleteImage(image)}>
+																<button className="custom-btn image-item-trash-button" onClick={() => handleDeleteImage(image)}>
 																	<IoTrashBin className="trash-icon" />
 																</button>
 															</>

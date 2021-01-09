@@ -20,11 +20,11 @@ const Checkbox = ({image}) => {
 					onChange={handleChange}
 					/>
 			</label>
-			<span className="checkbox-checkmark">
+			<span className="checkbox-uncheck">
 				{
 					isChecked
 						? (<ImCheckboxChecked className="checkbox-icon"/>)
-						: (<ImCheckboxUnchecked className="checkbox-icon" />)
+						: ('')
 				}
 			</span>
 		</>

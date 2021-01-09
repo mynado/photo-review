@@ -13,29 +13,14 @@
     right: 0.5rem;
   }
 
-  &-select-button {
+  &-trash-button {
     padding: 0;
-    outline: none;
-    background: transparent;
-    border: 0px solid transparent;
     width: 24px;
     height: 24px;
     position: absolute;
     top: 2rem;
     right: 0.6rem;
     background-color: #eee;
-    border-radius: 0.25rem;
-
-    :hover {
-      width: 20px;
-      height: 20px;
-    }
-
-    :active {
-      outline: none;
-      background: transparent;
-      border: 1px solid grey;
-    }
   }
 }
 

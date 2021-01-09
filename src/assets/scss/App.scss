@@ -1,22 +1,29 @@
 @import "~bootstrap/scss/bootstrap";
+@import url("https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap");
 
+body {
+  color: rgb(56, 56, 56);
+  font-family: "Quicksand", sans-serif;
+}
 /* Buttons */
-
 .custom-btn {
   outline: none;
-  background: transparent;
-  border: 1px solid transparent;
+  // background-color: #eee;
+  background-color: transparent;
+  border: 1px solid rgb(56, 56, 56);
+  // border: none;
+  padding: 0.175rem 0.4rem;
+  border-radius: 3px;
+  color: rgb(56, 56, 56);
 
-  :hover {
-    outline: none;
-    background: transparent;
-    border: 1px solid transparent;
+  &:hover {
+    // background-color: #ddd;
+    border: 1px solid rgb(85, 85, 85);
+    color: rgb(85, 85, 85);
   }
-
-  :active {
+  &:active,
+  &:focus {
     outline: none;
-    background: transparent;
-    border: 1px solid grey;
   }
 
   &-remove {

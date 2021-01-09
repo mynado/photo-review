@@ -44,10 +44,12 @@ const Album = () => {
 
 	const handleShowReviewUrl = () => {
 		setShowReviewUrl(!showReviewUrl)
+		setShowUpload(false)
 	}
 
 	const handleShowUpload = () => {
 		setShowUpload(!showUpload)
+		setShowReviewUrl(false)
 	}
 
 	if (loading) {
@@ -62,7 +64,7 @@ const Album = () => {
 							<div className="text-right mr-1 review-url-wrapper">
 								<textarea rows="1" className="review-url-text"muted>{`${process.env.REACT_APP_BASE_URL}/albums/review/${albumId}`}</textarea>
 								<CopyToClipboard text={`${process.env.REACT_APP_BASE_URL}/albums/review/${albumId}`}>
-									<button className="btn btn-light"><IoIosCopy /></button>
+									<button className="custom-btn" title="Copy url" aria-label="Copy public url to clipboard"><IoIosCopy /></button>
 								</CopyToClipboard>
 							</div>
 						) : ('')
@@ -73,14 +75,16 @@ const Album = () => {
 						? (
 							<>
 								<div className="button-wrapper">
-									<button className="btn btn-light mr-1" onClick={handleShowUpload} title="Upload image" aria-label="Show upload image input"><RiImageAddFill /></button>
-									<button className="btn btn-light mr-1" onClick={handleShowReviewUrl} title="Share url" aria-label="Show album url">
+									<button className="custom-btn mr-1" onClick={handleShowUpload} title="Upload image" aria-label="Show upload image input"><RiImageAddFill /></button>
+									<button className="custom-btn mr-1" onClick={handleShowReviewUrl} title="Share url" aria-label="Show album url">
 										<IoMdShare />
 									</button>
-									<Link to={`/albums/${albumId}/edit`} className="btn btn-light mr-1" title="Album settings" aria-label="Go to edit album">
-										<IoMdSettings />
+									<Link to={`/albums/${albumId}/edit`}>
+										<button className="custom-btn mr-1" title="Album settings" aria-label="Go to edit album">
+											<IoMdSettings />
+										</button>
 									</Link>
-									<button className="btn btn-light" onClick={handleShowEdit} data-toggle="tooltip" data-placement="top" title="Edit album" aria-label="Show select, delete images and create album">
+									<button className="custom-btn" onClick={handleShowEdit} data-toggle="tooltip" data-placement="top" title="Edit album" aria-label="Show select, delete images and create album">
 										<AiFillEdit />
 									</button>
 								</div>
@@ -129,7 +133,9 @@ const Album = () => {
 													) : ('')
 											}
 											<Row><ThumbNail images={imageToAdd} /></Row>
-											<Button variant="light" disabled={btnDisabled} onClick={() => handleCreateAlbum(imageToAdd, album, currentUser)}>Create album</Button>
+											<div className="d-flex justify-content-end">
+												<button className="custom-btn mt-2 mb-3 ml-auto" disabled={btnDisabled} onClick={() => handleCreateAlbum(imageToAdd, album, currentUser)}>Create album</button>
+											</div>
 										</>
 									) : ('')
 							}
