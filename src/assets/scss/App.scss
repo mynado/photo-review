@@ -5,6 +5,14 @@ body {
   color: rgb(56, 56, 56);
   font-family: "Quicksand", sans-serif;
 }
+
+a {
+  color: rgb(56, 56, 56);
+
+  &:hover {
+    color: rgb(85, 85, 85);
+  }
+}
 /* Buttons */
 .custom-btn {
   outline: none;
