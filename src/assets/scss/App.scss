@@ -16,16 +16,13 @@ a {
 /* Buttons */
 .custom-btn {
   outline: none;
-  // background-color: #eee;
   background-color: transparent;
   border: 1px solid rgb(56, 56, 56);
-  // border: none;
   padding: 0.175rem 0.4rem;
   border-radius: 3px;
   color: rgb(56, 56, 56);
 
   &:hover {
-    // background-color: #ddd;
     border: 1px solid rgb(85, 85, 85);
     color: rgb(85, 85, 85);
   }
@@ -34,7 +31,29 @@ a {
     outline: none;
   }
 
+  &:disabled {
+    border: 1px solid #aaa;
+    color: #aaa;
+  }
+
   &-remove {
     color: red;
+  }
+}
+
+.rate-btn {
+  width: 48%;
+
+  &-selected-like {
+    background-color: rgb(57, 204, 64);
+  }
+
+  &-selected-dislike {
+    background-color: rgb(255, 59, 59);
+  }
+
+  &-like,
+  &-dislike {
+    color: #eee;
   }
 }
