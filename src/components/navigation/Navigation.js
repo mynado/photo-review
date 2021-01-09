@@ -35,10 +35,7 @@ const Navigation = () => {
 				{
 					currentUser
 						? (
-							<ul className="navbar-nav">
-								<li className="nav-item">
-									<NavLink className="nav-link" to="/" onClick={handleNavbarCollapse}>Home</NavLink>
-								</li>
+							<ul className="navbar-nav ml-auto">
 								<li className="nav-item">
 									<NavLink className="nav-link" to="/albums" onClick={handleNavbarCollapse}>Albums</NavLink>
 								</li>
@@ -53,12 +50,9 @@ const Navigation = () => {
 								</li>
 							</ul>
 						) : (
-							<ul className="navbar-nav">
+							<ul className="navbar-nav ml-auto">
 								<li className="nav-item">
-									<NavLink className="nav-link" to="/" onClick={handleNavbarCollapse}>Home</NavLink>
-								</li>
-								<li className="nav-item">
-									<NavLink className="nav-link" to="/signup" onClick={handleNavbarCollapse}>Sign Up</NavLink>
+									<NavLink className="nav-link" to="/" onClick={handleNavbarCollapse}>Sign Up</NavLink>
 								</li>
 								<li className="nav-item">
 									<NavLink className="nav-link" to="/login" onClick={handleNavbarCollapse}>Login</NavLink>

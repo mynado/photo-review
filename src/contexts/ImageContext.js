@@ -113,7 +113,7 @@ const ImageContextProvider = (props) => {
 					created_by: 'guest',
 					date: moment().format('L HH:mm'),
 				})
-				navigate(`/albums/${docRef.id}/thank-you`)
+				navigate(`/thank-you`)
 			} catch (e) {
 				setError(e.message)
 			}

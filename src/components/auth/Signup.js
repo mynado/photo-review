@@ -1,5 +1,6 @@
 import React, { useRef, useState } from 'react'
-import { Form, Button, Alert } from 'react-bootstrap'
+import { Link } from 'react-router-dom'
+import { Form, Alert, Row, Col } from 'react-bootstrap'
 import { useAuth } from '../../contexts/AuthContext'
 
 const SignUp = () => {
@@ -29,49 +30,55 @@ const SignUp = () => {
 		}
 	}
 	return (
-		<>
-			<h1>Sign Up</h1>
-			{error && (
-				<Alert variant="warning">{error}</Alert>
-			)}
-			<Form onSubmit={handleSubmit}>
-				<Form.Group>
-					<Form.Label>Email</Form.Label>
-					<Form.Control
-						type="email"
-						placeholder="Enter email"
-						ref={emailRef}
-						required
-					/>
-				</Form.Group>
+		<Row className="justify-content-md-center">
+			<Col xs={12} md={6} lg={4}>
+				<h2>Sign Up</h2>
+				{error && (
+					<Alert variant="warning">{error}</Alert>
+				)}
+				<Form onSubmit={handleSubmit}>
+					<Form.Group>
+						<Form.Label>Email</Form.Label>
+						<Form.Control
+							type="email"
+							placeholder="Enter email"
+							ref={emailRef}
+							required
+						/>
+					</Form.Group>
 
-				<Form.Group>
-					<Form.Label>Password</Form.Label>
-					<Form.Control
-						type="password"
-						placeholder="Password"
-						ref={passwordRef}
-						required
-						autoComplete="off"
-					/>
-				</Form.Group>
+					<Form.Group>
+						<Form.Label>Password</Form.Label>
+						<Form.Control
+							type="password"
+							placeholder="Password"
+							ref={passwordRef}
+							required
+							autoComplete="off"
+						/>
+					</Form.Group>
 
-				<Form.Group>
-					<Form.Label>Password Confirmation</Form.Label>
-					<Form.Control
-						type="password"
-						placeholder="Password"
-						ref={passwordConfirmRef}
-						required
-						autoComplete="off"
-					/>
-				</Form.Group>
+					<Form.Group>
+						<Form.Label>Password Confirmation</Form.Label>
+						<Form.Control
+							type="password"
+							placeholder="Password"
+							ref={passwordConfirmRef}
+							required
+							autoComplete="off"
+						/>
+					</Form.Group>
 
-				<Button disabled={loading} variant="primary" type="submit">
-					Create an account
-				</Button>
-			</Form>
-		</>
+					<button disabled={loading} className="custom-btn signup-btn" type="submit">
+						Signup
+					</button>
+				</Form>
+				<div className="text-center mt-1">
+					<small><Link to="/login"><u>Login</u></Link> if you already have an account</small>
+				</div>
+				
+			</Col>
+		</Row>
 	)
 }
 
