@@ -1,6 +1,6 @@
 import { useState, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { Alert, Form } from 'react-bootstrap'
+import { Alert, Form, Row, Col } from 'react-bootstrap'
 import { db } from '../../firebase'
 import { useAuth } from '../../contexts/AuthContext'
 import moment from 'moment'
@@ -35,29 +35,31 @@ const AlbumCreate = () => {
 	}
 
 	return (
-		<>
-			<h1>Create album</h1>
-			{error && (
-				<Alert variant="warning">{error}</Alert>
-			)}
-			<Form onSubmit={handleSubmit}>
-				<Form.Group>
-					<Form.Label>Title</Form.Label>
-					<Form.Control
-						type="text"
-						placeholder="Enter Album Title"
-						ref={titleRef}
-						required
-					/>
-				</Form.Group>
+		<Row className="justify-content-md-center">
+			<Col xs={12} md={6} lg={4}>
+				<h1>Create album</h1>
+				{error && (
+					<Alert variant="warning">{error}</Alert>
+				)}
+				<Form onSubmit={handleSubmit}>
+					<Form.Group>
+						<Form.Label>Title</Form.Label>
+						<Form.Control
+							type="text"
+							placeholder="Enter Album Title"
+							ref={titleRef}
+							required
+						/>
+					</Form.Group>
 
-				<div className="d-flex justify-content-end">
-					<button className="custom-btn" type="submit">
-						Create Album
-					</button>
-				</div>
-			</Form>
-		</>
+					<div className="d-flex justify-content-end">
+						<button className="custom-btn btn-100" type="submit">
+							Create Album
+						</button>
+					</div>
+				</Form>
+			</Col>
+		</Row>
 	)
 }
 

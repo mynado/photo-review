@@ -31,7 +31,7 @@ const Navigation = () => {
 				aria-label="Toggle navigation">
 				<IoMdMenu className="navbar-toggler-icon" />
 			</button>
-			<div className={`${isCollapse ? 'collapse' : ''} navbar-collapse`} id="navbarNav">
+			<div className={`text-right ${isCollapse ? 'collapse' : ''} navbar-collapse`} id="navbarNav">
 				{
 					currentUser
 						? (

@@ -53,7 +53,7 @@ const Login = () => {
 						/>
 					</Form.Group>
 
-					<button className="custom-btn login-btn" type="submit">
+					<button className="custom-btn btn-100" type="submit">
 						Login
 					</button>
 				</Form>

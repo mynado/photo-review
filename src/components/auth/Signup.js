@@ -69,7 +69,7 @@ const SignUp = () => {
 						/>
 					</Form.Group>
 
-					<button disabled={loading} className="custom-btn signup-btn" type="submit">
+					<button disabled={loading} className="custom-btn btn-100" type="submit">
 						Signup
 					</button>
 				</Form>
