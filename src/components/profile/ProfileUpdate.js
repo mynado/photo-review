@@ -47,7 +47,7 @@ const ProfileUpdate = () => {
 	return (
 		<Row className="justify-content-md-center">
 			<Col xs={12} md={6} lg={4}>
-				<h1>Update Profile</h1>
+				<h1>Settings</h1>
 				{error && (
 					<Alert variant="warning">{error}</Alert>
 				)}
