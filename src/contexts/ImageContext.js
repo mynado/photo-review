@@ -163,11 +163,30 @@ const ImageContextProvider = (props) => {
 
 		query.get().then((querySnapshot) => {
 			querySnapshot.forEach((doc) => {
+				const imgs = []
+				const unsubscribe = db.collection('images')
+					.where('url', '==', doc.data().url)
+					.onSnapshot(snapshot => {
+						snapshot.forEach(doc => {
+							if (imgs.includes(doc.data())) {
+								return
+							}
+							imgs.push({
+								id: doc.id,
+								...doc.data()
+							})
+						})
+						setImagesInDb(imgs)
+					})
+				
+				if (imagesInDb.length === 1) {
+					storage.ref(doc.data().path).delete()
+				}
 				doc.ref.delete();
+				return unsubscribe
 			});
 		});
 
-		console.log('queryImage', query)
 		await db.collection('albums').doc(album.id).delete()
 
 	}
