@@ -38,6 +38,12 @@ const Album = () => {
 				setBtnDisabled(true)
 			}
 		}
+
+		if (images.length === 0) {
+			setShowUpload(true)
+		} else {
+			setShowUpload(false)
+		}
 		
 
 	}, [images, imageToAdd, imageToDelete, currentUser])

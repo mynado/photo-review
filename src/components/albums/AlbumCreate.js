@@ -36,7 +36,7 @@ const AlbumCreate = () => {
 
 	return (
 		<>
-			<h1>Add a new album</h1>
+			<h1>Create album</h1>
 			{error && (
 				<Alert variant="warning">{error}</Alert>
 			)}
@@ -51,9 +51,11 @@ const AlbumCreate = () => {
 					/>
 				</Form.Group>
 
-				<Button variant="primary" type="submit">
-					Create Album
-				</Button>
+				<div className="d-flex justify-content-end">
+					<button className="custom-btn" type="submit">
+						Create Album
+					</button>
+				</div>
 			</Form>
 		</>
 	)

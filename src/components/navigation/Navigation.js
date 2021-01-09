@@ -43,7 +43,7 @@ const Navigation = () => {
 									<NavLink className="nav-link" to="/albums" onClick={handleNavbarCollapse}>Albums</NavLink>
 								</li>
 								<li className="nav-item">
-									<NavLink className="nav-link" to="/albums/add" onClick={handleNavbarCollapse}>Create album</NavLink>
+									<NavLink className="nav-link" to="/albums/create" onClick={handleNavbarCollapse}>Create album</NavLink>
 								</li>
 								<li className="nav-item">
 									<NavLink className="nav-link" to="/settings" onClick={handleNavbarCollapse}>Settings</NavLink>
