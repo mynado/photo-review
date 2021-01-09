@@ -159,33 +159,34 @@ const ImageContextProvider = (props) => {
 			return
 		}
 
-		const query = db.collection('images').where('album','==', db.collection('albums').doc(album.id));
+		const imagesInAlbum = db.collection('images').where('album','==', db.collection('albums').doc(album.id))
+		
+		imagesInAlbum.get().then((imagesInAlbumDoc) => {
+		
+			imagesInAlbumDoc.forEach((imageDoc) => {
+				imageDoc.ref.delete();
 
-		query.get().then((querySnapshot) => {
-			querySnapshot.forEach((doc) => {
-				const imgs = []
-				const unsubscribe = db.collection('images')
-					.where('url', '==', doc.data().url)
-					.onSnapshot(snapshot => {
+				db.collection('images')
+					.where('path', '==', imageDoc.data().path)
+					.onSnapshot(async snapshot => {
+						const snapshotImgs = []
+
 						snapshot.forEach(doc => {
-							if (imgs.includes(doc.data())) {
+							if (snapshotImgs.includes(doc.data())) {
 								return
 							}
-							imgs.push({
+							snapshotImgs.push({
 								id: doc.id,
 								...doc.data()
 							})
 						})
-						setImagesInDb(imgs)
+
+						if (snapshotImgs.length === 0 ) {
+							storage.ref(imageDoc.data().path).delete()
+						}
 					})
-				
-				if (imagesInDb.length === 1) {
-					storage.ref(doc.data().path).delete()
-				}
-				doc.ref.delete();
-				return unsubscribe
-			});
-		});
+			})
+		})
 
 		await db.collection('albums').doc(album.id).delete()
 
