@@ -1,50 +1,87 @@
 import { useState, useRef } from 'react'
-import { useNavigate } from 'react-router-dom'
-import { Alert, Button, Form } from 'react-bootstrap'
+import { Link } from 'react-router-dom'
+import { Alert, Form, Row, Col } from 'react-bootstrap'
 import { useAuth } from '../../contexts/AuthContext'
 
 const ProfileUpdate = () => {
-	const { updateUserProfile } = useAuth()
+	const { updateUserProfile, currentUser, updateUserEmail, updateUserPassword } = useAuth()
 	const nameRef = useRef()
+	const emailRef = useRef()
+	const passwordRef = useRef()
+	const passwordConfirmRef = useRef()
 	const [error, setError] = useState(null)
-	const navigate = useNavigate()
+	const [loading, setLoading] = useState(false)
+	const [message, setMessage] = useState(null)
 
 	const handleSubmit = async (e) => {
 		e.preventDefault()
-		console.log('update')
+
+		if (passwordRef.current.value !== passwordConfirmRef.current.value) {
+			return setError("The passwords does not match")
+		}
+
 		setError(null)
-		
 
 		try {
-			await updateUserProfile(nameRef.current.value)
-			navigate('/profile')
+			setLoading(true)
+			if (nameRef.current.value !== currentUser.displayName) {
+				await updateUserProfile(nameRef.current.value)
+			}
+
+			if (emailRef.current.value !== currentUser.email) {
+				await updateUserEmail(emailRef.current.value)
+			}
+
+			if (passwordRef.current.value) {
+				await updateUserPassword(passwordRef.current.value)
+			}
+			
+			setMessage("Profile successfully updated")
 		} catch (e) {
-			setError(e.message)
+			setLoading(true)
+			setError("Error updating profile.")
+			setLoading(false)
 		}
 	}
 
 	return (
-			<>
-			<h1>Update Profile</h1>
-			{error && (
-				<Alert variant="warning">{error}</Alert>
-			)}
-			<Form onSubmit={handleSubmit}>
-				<Form.Group>
-					<Form.Label>Name</Form.Label>
-					<Form.Control
-						type="text"
-						placeholder="Enter name"
-						ref={nameRef}
-						required
-					/>
-				</Form.Group>
+		<Row className="justify-content-md-center">
+			<Col xs={12} md={6} lg={4}>
+				<h1>Update Profile</h1>
+				{error && (
+					<Alert variant="warning">{error}</Alert>
+				)}
+				{message && (
+					<Alert variant="success">{message}</Alert>
+				)}
+				<Form onSubmit={handleSubmit}>
+					<Form.Group>
+						<Form.Label>Name</Form.Label>
+						<Form.Control type="text" defaultValue={currentUser.displayName ? currentUser.displayName : 'Enter your name'} ref={nameRef} required
+						/>
+					</Form.Group>
 
-				<Button variant="primary" type="submit">
-					Update
-				</Button>
-			</Form>
-		</>
+					<Form.Group id="email">
+						<Form.Label>Email</Form.Label>
+						<Form.Control type="email" defaultValue={currentUser.email} ref={emailRef} required />
+					</Form.Group>
+
+					<Form.Group id="password">
+						<Form.Label>Password</Form.Label>
+						<Form.Control type="password" ref={passwordRef} />
+					</Form.Group>
+
+					<Form.Group id="password-confirm">
+						<Form.Label>Password Confirmation</Form.Label>
+						<Form.Control type="password" ref={passwordConfirmRef} />
+					</Form.Group>
+
+					<button className="custom-btn btn-100" type="submit">
+						Update
+					</button>
+				</Form>
+			</Col>
+		</Row>
 	)
 }
 
