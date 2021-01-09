@@ -73,14 +73,14 @@ const Album = () => {
 						? (
 							<>
 								<div className="button-wrapper">
-									<button className="btn btn-light mr-1" onClick={handleShowUpload}><RiImageAddFill /></button>
-									<button className="btn btn-light mr-1" onClick={handleShowReviewUrl}>
+									<button className="btn btn-light mr-1" onClick={handleShowUpload} title="Upload image" aria-label="Show upload image input"><RiImageAddFill /></button>
+									<button className="btn btn-light mr-1" onClick={handleShowReviewUrl} title="Share url" aria-label="Show album url">
 										<IoMdShare />
 									</button>
-									<Link to={`/albums/${albumId}/edit`} className="btn btn-light mr-1">
+									<Link to={`/albums/${albumId}/edit`} className="btn btn-light mr-1" title="Album settings" aria-label="Go to edit album">
 										<IoMdSettings />
 									</Link>
-									<button className="btn btn-light" onClick={handleShowEdit} data-toggle="tooltip" data-placement="top" title="Edit">
+									<button className="btn btn-light" onClick={handleShowEdit} data-toggle="tooltip" data-placement="top" title="Edit album" aria-label="Show select, delete images and create album">
 										<AiFillEdit />
 									</button>
 								</div>
@@ -100,7 +100,7 @@ const Album = () => {
 				showEdit
 					? (
 						<div className="text-right mr-1">
-							<small muted>Add, select and delete images. Create a new album containing the selected images.</small>
+							<small muted>Select and delete images. Create a new album containing the selected images.</small>
 						</div>
 					) : ('')
 			}

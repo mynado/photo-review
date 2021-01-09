@@ -15,7 +15,7 @@ const Navigation = () => {
 	}
 
 	return (
-		<nav className="navbar navbar-expand-lg navbar-light bg-light">
+		<nav className="navbar navbar-expand-lg navbar-light bg-light mb-3">
 			<NavLink className="navbar-brand" to="/">Photo Review App</NavLink>
 			<button
 				className="navbar-toggler"
