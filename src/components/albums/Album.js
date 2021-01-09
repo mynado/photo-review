@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import { useParams, Link } from 'react-router-dom'
 import { AiFillEdit } from 'react-icons/ai'
 import { IoMdSettings, IoMdShare, IoIosCopy } from 'react-icons/io'
+import { RiImageAddFill } from 'react-icons/ri'
 import {CopyToClipboard} from 'react-copy-to-clipboard'
 import { Alert, Button, Row } from 'react-bootstrap'
 import { useAuth } from '../../contexts/AuthContext'
@@ -16,6 +17,7 @@ import './Album.scss'
 const Album = () => {
 	const [btnDisabled, setBtnDisabled] = useState(true)
 	const [showReviewUrl, setShowReviewUrl] = useState(false)
+	const [showUpload, setShowUpload] = useState(false)
 	const { albumId } = useParams()
 	const { album, loading } = useAlbum(albumId)
 	const { images } = useImages(albumId)
@@ -44,6 +46,10 @@ const Album = () => {
 		setShowReviewUrl(!showReviewUrl)
 	}
 
+	const handleShowUpload = () => {
+		setShowUpload(!showUpload)
+	}
+
 	if (loading) {
 		return (<p>Loading...</p>)
 	}
@@ -67,33 +73,34 @@ const Album = () => {
 						? (
 							<>
 								<div className="button-wrapper">
-									
-										<button className="btn btn-light mr-1" onClick={handleShowReviewUrl}>
-											<IoMdShare />
-										</button>
-								
-									
-									<Link to={`/albums/${albumId}/edit`} className="btn btn-light mr-1"><IoMdSettings /></Link>
-									{
-										images.length > 0 
-											? (
-												<button className="btn btn-light" onClick={handleShowEdit} data-toggle="tooltip" data-placement="top" title="Edit"><AiFillEdit /></button>
-											) : ('')
-									}
+									<button className="btn btn-light mr-1" onClick={handleShowUpload}><RiImageAddFill /></button>
+									<button className="btn btn-light mr-1" onClick={handleShowReviewUrl}>
+										<IoMdShare />
+									</button>
+									<Link to={`/albums/${albumId}/edit`} className="btn btn-light mr-1">
+										<IoMdSettings />
+									</Link>
+									<button className="btn btn-light" onClick={handleShowEdit} data-toggle="tooltip" data-placement="top" title="Edit">
+										<AiFillEdit />
+									</button>
 								</div>
 							</>
 						) : ('')
 				}
 				<h1>{album.title}</h1>
 			</div>
-			
+
+			{
+				showUpload
+					? <ImageUpload albumId={albumId}/>
+					: ''
+			}
 
 			{
 				showEdit
 					? (
 						<div className="text-right mr-1">
 							<small muted>Add, select and delete images. Create a new album containing the selected images.</small>
-							<ImageUpload albumId={albumId}/>
 						</div>
 					) : ('')
 			}
