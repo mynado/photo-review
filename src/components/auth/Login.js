@@ -1,5 +1,6 @@
 import React, { useState, useRef } from 'react'
-import { Container, Form, Button, Alert } from 'react-bootstrap'
+import { Link } from 'react-router-dom'
+import { Col, Row, Form, Button, Alert } from 'react-bootstrap'
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../../contexts/AuthContext'
 
@@ -23,39 +24,44 @@ const Login = () => {
 		}
 	}
 	return (
-		<Container>
-			<h1>Login</h1>
-			{error && (
-				<Alert variant="warning">{error}</Alert>
-			)}
-			<Form onSubmit={handleSubmit}>
-				<Form.Group>
-					<Form.Label>Email</Form.Label>
-					<Form.Control
-						type="email"
-						placeholder="Enter email"
-						ref={emailRef}
-						autoComplete="on"
-						required
-					/>
-				</Form.Group>
+		<Row className="justify-content-md-center">
+			<Col xs={12} md={6} lg={4}>
+				<h1>Login</h1>
+				{error && (
+					<Alert variant="warning">{error}</Alert>
+				)}
+				<Form onSubmit={handleSubmit}>
+					<Form.Group>
+						<Form.Label>Email</Form.Label>
+						<Form.Control
+							type="email"
+							placeholder="Enter email"
+							ref={emailRef}
+							autoComplete="on"
+							required
+						/>
+					</Form.Group>
 
-				<Form.Group>
-					<Form.Label>Password</Form.Label>
-					<Form.Control
-						type="password"
-						placeholder="Password"
-						ref={passwordRef}
-						required
-						autoComplete="on"
-					/>
-				</Form.Group>
+					<Form.Group>
+						<Form.Label>Password</Form.Label>
+						<Form.Control
+							type="password"
+							placeholder="Password"
+							ref={passwordRef}
+							required
+							autoComplete="on"
+						/>
+					</Form.Group>
 
-				<Button variant="primary" type="submit">
-					Login
-				</Button>
-			</Form>
-		</Container>
+					<button className="custom-btn login-btn" type="submit">
+						Login
+					</button>
+				</Form>
+				<div className="text-center mt-1">
+					<small><Link to="/"><u>Signup</u></Link> if you don't have an account</small>
+				</div>
+			</Col>
+		</Row>
 	)
 }
 
