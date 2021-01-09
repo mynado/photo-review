@@ -15,12 +15,12 @@ const ThumbNail = ({ images }) => {
 					<Image className="thumbnail" src={image.url} alt="" fluid thumbnail/>
 					{
 						imageToAdd.includes(image)
-							? (<button className="remove-button custom-btn" variant="danger" onClick={() => handleDislikeImage(image)}><IoRemoveCircle className="custom-btn-remove" /></button>)
+							? (<button className="remove-button" onClick={() => handleDislikeImage(image)}><IoRemoveCircle className="custom-btn-remove" /></button>)
 							: ('')
 					}
 					{
 						imageToDelete.includes(image)
-							? (<button className="remove-button custom-btn" variant="danger" onClick={() => handleLikeImage(image)}><IoRemoveCircle className="custom-btn-remove" /></button>)
+							? (<button className="remove-button" onClick={() => handleLikeImage(image)}><IoRemoveCircle className="custom-btn-remove" /></button>)
 							: ('')
 					}
 				</Col>
