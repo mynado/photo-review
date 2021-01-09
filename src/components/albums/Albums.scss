@@ -25,6 +25,9 @@
     &-img-top {
       border: none;
       border-radius: 0.75rem;
+      width: 100%;
+      height: 300px;
+      object-fit: cover;
     }
 
     &-subtitle {
