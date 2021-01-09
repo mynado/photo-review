@@ -7,10 +7,21 @@
   margin-bottom: 1rem;
   position: relative;
 
-  &-buttons {
+  &-edit-buttons {
     position: absolute;
     top: 0.5rem;
     right: 0.5rem;
+  }
+
+  &-rate-buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 0.5rem;
+  }
+
+  &-like,
+  &-dislike {
+    width: 48%;
   }
 
   &-trash-button {
