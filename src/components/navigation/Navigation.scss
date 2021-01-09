@@ -1,0 +1,16 @@
+/*
+* Navigation Styles
+*/
+
+.navbar-toggler {
+  border: none;
+  padding: 0;
+
+  &-icon {
+    font-size: 2rem;
+  }
+
+  &:hover {
+    border: none;
+  }
+}

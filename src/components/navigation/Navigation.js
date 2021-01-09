@@ -1,6 +1,8 @@
 import React, { useState } from 'react'
 import { NavLink } from 'react-router-dom'
 import { useAuth } from '../../contexts/AuthContext'
+import { IoMdMenu } from 'react-icons/io'
+import './Navigation.scss'
 
 const Navigation = () => {
 	const [isCollapse, setIsCollapse] = useState(true)
@@ -12,13 +14,14 @@ const Navigation = () => {
 
 	const handleLogout = () => {
 		signOut()
+		setIsCollapse(true)
 	}
 
 	return (
-		<nav className="navbar navbar-expand-lg navbar-light bg-light mb-3">
+		<nav className="navbar navbar-expand-lg mb-3">
 			<NavLink className="navbar-brand" to="/">Photo Review App</NavLink>
 			<button
-				className="navbar-toggler"
+				className="navbar-toggler custom-btn"
 				type="button"
 				onClick={handleNavbarCollapse}
 				data-toggle="collapse"
@@ -26,27 +29,24 @@ const Navigation = () => {
 				aria-controls="navbarNav"
 				aria-expanded={isCollapse}
 				aria-label="Toggle navigation">
-				<span className="navbar-toggler-icon"></span>
+				<IoMdMenu className="navbar-toggler-icon" />
 			</button>
 			<div className={`${isCollapse ? 'collapse' : ''} navbar-collapse`} id="navbarNav">
 				{
 					currentUser
 						? (
 							<ul className="navbar-nav">
-								<li>
-									<p>{currentUser.displayName}</p>
+								<li className="nav-item">
+									<NavLink className="nav-link" to="/" onClick={handleNavbarCollapse}>Home</NavLink>
 								</li>
 								<li className="nav-item">
-									<NavLink className="nav-link" to="/">Home</NavLink>
+									<NavLink className="nav-link" to="/albums" onClick={handleNavbarCollapse}>Albums</NavLink>
 								</li>
 								<li className="nav-item">
-									<NavLink className="nav-link" to="/albums">Albums</NavLink>
+									<NavLink className="nav-link" to="/albums/add" onClick={handleNavbarCollapse}>Create album</NavLink>
 								</li>
 								<li className="nav-item">
-									<NavLink className="nav-link" to="/albums/add">Create album</NavLink>
-								</li>
-								<li className="nav-item">
-									<NavLink className="nav-link" to="/settings">Settings</NavLink>
+									<NavLink className="nav-link" to="/settings" onClick={handleNavbarCollapse}>Settings</NavLink>
 								</li>
 								<li className="nav-item">
 									<NavLink className="nav-link" to="/login" onClick={handleLogout}>Logout</NavLink>
@@ -55,13 +55,13 @@ const Navigation = () => {
 						) : (
 							<ul className="navbar-nav">
 								<li className="nav-item">
-									<NavLink className="nav-link" to="/">Home</NavLink>
+									<NavLink className="nav-link" to="/" onClick={handleNavbarCollapse}>Home</NavLink>
 								</li>
 								<li className="nav-item">
-									<NavLink className="nav-link" to="/signup">Sign Up</NavLink>
+									<NavLink className="nav-link" to="/signup" onClick={handleNavbarCollapse}>Sign Up</NavLink>
 								</li>
 								<li className="nav-item">
-									<NavLink className="nav-link" to="/login">Login</NavLink>
+									<NavLink className="nav-link" to="/login" onClick={handleNavbarCollapse}>Login</NavLink>
 								</li>
 							</ul>
 						)
