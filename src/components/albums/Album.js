@@ -149,17 +149,34 @@ const Album = () => {
 						</>
 					) : (
 						<>
-							<h2>Liked photos</h2>
-							<p>{imageToAdd.length + '/' + images.length}</p>
-							<Row>
+							{
+								imageToAdd.length > 0
+									? (
+										<div className="mb-1">
+											<h5>Liked photos</h5>
+											<p>{imageToAdd.length + '/' + images.length}</p>
+										</div>
+									) : ('')
+							}
+							<Row className="mb-3">
 								<ThumbNail images={imageToAdd} />
 							</Row>
-							<h2>Disliked photos</h2>
-							<p>{imageToDelete.length + '/' + images.length}</p>	
-							<Row>
+
+							{
+								imageToDelete.length > 0
+									? (
+										<div className="mb-1">
+											<h5>Disliked photos</h5>
+											<p>{imageToDelete.length + '/' + images.length}</p>	
+										</div>
+									) : ('')
+							}
+							<Row className="mb-3">
 								<ThumbNail images={imageToDelete} />
 							</Row>
-							<Button disabled={btnDisabled} onClick={() => handleCreateAlbum(imageToAdd, album, currentUser)}>Send selected images</Button>
+							<div className="d-flex justify-content-end mb-5">
+								<button className="custom-btn" disabled={btnDisabled} onClick={() => handleCreateAlbum(imageToAdd, album, currentUser)}>Send selected images</button>
+							</div>
 						</>
 					)
 			}
