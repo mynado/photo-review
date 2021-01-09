@@ -31,7 +31,7 @@ const Albums = () => {
 								<Col xs={12} sm={6} md={6} lg={4} key={album.id} className="col-padding">
 									<Card className="mb-3 album-list-card">
 										<Link to={`/albums/${album.id}`}>
-											<Card.Img variant="top" src={album.img_url} />
+											<Card.Img variant="top" src={album.img_url} width="100%" height="300px" />
 										</Link>
 										<Card.Footer className="text-muted d-flex justify-content-between align-items-center">
 											<div className="d-flex flex-column">
