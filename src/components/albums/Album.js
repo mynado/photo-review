@@ -60,6 +60,17 @@ const Album = () => {
 		setShowReviewUrl(false)
 	}
 
+	const clearState = () => {
+		setShowEdit(false)
+		setShowUpload(false)
+		setShowReviewUrl(false)
+	}
+
+	const handleCreateSelected = () => {
+		handleCreateAlbum(imageToAdd, album, currentUser)
+		clearState()
+	}
+
 	if (loading) {
 		return (<p>Loading...</p>)
 	}
@@ -149,7 +160,7 @@ const Album = () => {
 											}
 											<Row><ThumbNail images={imageToAdd} /></Row>
 											<div className="d-flex justify-content-end">
-												<button className="custom-btn mt-2 mb-3 ml-auto" disabled={btnDisabled} onClick={() => handleCreateAlbum(imageToAdd, album, currentUser)}>Create album</button>
+												<button className="custom-btn mt-2 mb-3 ml-auto" disabled={btnDisabled} onClick={handleCreateSelected}>Create album</button>
 											</div>
 										</>
 									) : ('')
@@ -184,7 +195,7 @@ const Album = () => {
 								<ThumbNail images={imageToDelete} />
 							</Row>
 							<div className="d-flex justify-content-end mb-5">
-								<button className="custom-btn" disabled={btnDisabled} onClick={() => handleCreateAlbum(imageToAdd, album, currentUser)}>Send selected images</button>
+								<button className="custom-btn" disabled={btnDisabled} onClick={handleCreate}>Send selected images</button>
 							</div>
 						</>
 					)
