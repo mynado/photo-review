@@ -195,7 +195,7 @@ const Album = () => {
 								<ThumbNail images={imageToDelete} />
 							</Row>
 							<div className="d-flex justify-content-end mb-5">
-								<button className="custom-btn" disabled={btnDisabled} onClick={handleCreate}>Send selected images</button>
+								<button className="custom-btn" disabled={btnDisabled} onClick={handleCreateSelected}>Send selected images</button>
 							</div>
 						</>
 					)
