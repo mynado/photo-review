@@ -54,28 +54,6 @@ const ImageContextProvider = (props) => {
 
 	}
 
-	const handleSelectedImages = (checked, image) => {
-		if (checked) {
-			if (imageToAdd.includes(image)) {
-				return
-			}
-			setImageToAdd(imageToAdd => [...imageToAdd, image])
-			const index = imageToDelete.indexOf(image);
-			if (index > -1) {
-				imageToDelete.splice(index, 1);
-			}
-		} else {
-			if (imageToDelete.includes(image)) {
-				return
-			}
-			setImageToDelete(imageToDelete => [...imageToDelete, image])
-			const index = imageToAdd.indexOf(image);
-			if (index > -1) {
-				imageToAdd.splice(index, 1);
-			}
-		}
-	}
-
 	const handleLikeImage = (image) => {
 		if (imageToAdd.includes(image)) {
 			return
@@ -269,7 +247,6 @@ const ImageContextProvider = (props) => {
 		handleDeleteImage,
 		handleLikeImage,
 		handleDislikeImage,
-		handleSelectedImages,
 		handleNavigateToAlbum,
 		uploadProgress,
 		isSuccess
