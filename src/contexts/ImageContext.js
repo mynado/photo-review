@@ -14,15 +14,15 @@ const ImageContextProvider = (props) => {
 	const [imageToDelete, setImageToDelete] = useState([])
 	const [imagesInDb, setImagesInDb] = useState([])
 	const [error, setError] = useState()
-	const [showEdit, setShowEdit] = useState(false)
+	const [uploadProgress, setUploadProgress] = useState(null)
+	const [albumId, setAlbumId] = useState(false)
+	const [isSuccess, setIsSuccess] = useState(false)
 	const navigate = useNavigate()
 
-	const handleShowEdit = () => {
-		setShowEdit(!showEdit)
-		if (!showEdit) {
-			setImageToAdd([])
-			setImageToDelete([])
-		}
+
+	const handleNavigateToAlbum = () => {
+		setIsSuccess(false)
+		navigate(`/albums/${albumId}`)
 	}
 
 	const handleDeleteImage = async (image) => {
@@ -103,7 +103,6 @@ const ImageContextProvider = (props) => {
 		let docRef
 		setImageToAdd([])
 		setImageToDelete([])
-		setShowEdit(false)
 
 		if (!user) {
 			try {
@@ -154,6 +153,73 @@ const ImageContextProvider = (props) => {
 		})
 	}
 
+	const handleCreateNewAlbum = async (files, albumTitle, user) => {
+			if (files.length === 0) {
+				setError(null)
+				setIsSuccess(false)
+	
+				return
+			}
+			setError(null)
+			setIsSuccess(false)
+
+			const docRef = await db.collection('albums').add({
+				title: albumTitle,
+				owner: user.uid,
+				created_by: 'you',
+				date: 'no date yet',
+			})
+
+			setAlbumId(docRef.id)
+
+			files.forEach((file, index) => {
+				// create image reference in storage and upload
+				const uploadTask = storage.ref().child(`images/${user.uid}/${file.name}`).put(file);
+	
+				const unsubscribe = uploadTask.on('state_changed', snapshot => {
+					setUploadProgress((snapshot.bytesTransferred / snapshot.totalBytes) * 100)
+				})
+	
+				uploadTask.then( async snapshot => {
+					const url = await snapshot.ref.getDownloadURL()
+	
+					const img = {
+						name: file.name,
+						owner: user.uid,
+						path: snapshot.ref.fullPath,
+						size: file.size,
+						type: file.type,
+						url,
+					}
+	
+					// get docRef to album id albumId exists
+					if (docRef.id) {
+						img.album = db.collection('albums').doc(docRef.id)
+					}
+	
+					// add image to firestore collection
+					await db.collection('images').add(img)
+	
+					// add first image's url in array to album
+					if (index === 0) {
+						db.collection('albums').doc(docRef.id).update({
+							img_url: img.url,
+						})
+					}
+
+					setUploadProgress(null)
+					setIsSuccess(true)
+				}).catch(err => {
+					setError({
+						type: 'warning',
+						msg: `Oops, could not upload the image due to an error (${err.message})`
+					})
+				})
+				return unsubscribe
+			})
+		}
+
+
 	const handleDeleteAlbum = async (album) => {
 		if (!album) {
 			return
@@ -198,13 +264,15 @@ const ImageContextProvider = (props) => {
 		imageToAdd,
 		imageToDelete,
 		handleCreateAlbum,
+		handleCreateNewAlbum,
 		handleDeleteAlbum,
 		handleDeleteImage,
 		handleLikeImage,
 		handleDislikeImage,
 		handleSelectedImages,
-		handleShowEdit,
-		showEdit
+		handleNavigateToAlbum,
+		uploadProgress,
+		isSuccess
 	}
 
 	return (

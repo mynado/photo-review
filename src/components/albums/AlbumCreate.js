@@ -1,37 +1,25 @@
 import { useState, useRef } from 'react'
-import { useNavigate } from 'react-router-dom'
-import { Alert, Form, Row, Col } from 'react-bootstrap'
-import { db } from '../../firebase'
+import { Alert, Form, Row, Col, ProgressBar } from 'react-bootstrap'
 import { useAuth } from '../../contexts/AuthContext'
-import moment from 'moment'
+import { useImage } from '../../contexts/ImageContext'
 
 const AlbumCreate = () => {
 	const titleRef = useRef()
-	const [error, setError] = useState(false)
+	const [files, setFiles] = useState([])
 	const { currentUser } = useAuth()
-	const navigate = useNavigate()
+	const { handleCreateNewAlbum, uploadProgress, isSuccess, error, handleNavigateToAlbum } = useImage()
 
-	const handleSubmit = async (e) => {
+	const handleSubmit = (e) => {
 		e.preventDefault()
+		handleCreateNewAlbum(files, titleRef.current.value, currentUser)
+	}
 
-		if (titleRef.current.value.length < 3) {
-			return setError('The title must be at least 3 charachters')
-		}
-
-		setError(false)
-
-		try {
-			const docRef = await db.collection('albums').add({
-				title: titleRef.current.value,
-				owner: currentUser.uid,
-				created_by: 'you',
-				date: moment().format('L HH:mm'),
-			})
-
-			navigate(`/albums/${docRef.id}`)
-		} catch (e) {
-			setError(e.message)
-		}
+	const handleFileInput = (e) => {
+		const imgs = []
+		Array.from(e.target.files).map(file => {
+			return imgs.push(file)
+		})
+		setFiles(imgs)
 	}
 
 	return (
@@ -51,13 +39,55 @@ const AlbumCreate = () => {
 							required
 						/>
 					</Form.Group>
-
+					<Form.Group>
+					<div>
+						<input 
+							type="file"
+							id="file"
+							className="custom-input-file"
+							label="Custom file input"
+							onChange={handleFileInput}
+							multiple
+						/>
+						<label htmlFor="file" className="file-label">
+						<p className="input-file-text">Select images to upload</p>
+						</label>	
+					</div>
+						
+						<ul className="list-group">
+					{
+						files.map(file => (
+							<li key={file.name} className=" list-group-item d-flex justify-content-between align-items-center">
+								<img src={URL.createObjectURL(file)} className="img-fluid w-25" alt="preview"/>
+								<small>{file.name} ({Math.round(file.size / 1024)} kb)</small>
+							</li>
+						))
+					}
+					</ul>
+					</Form.Group>
 					<div className="d-flex justify-content-end">
 						<button className="custom-btn btn-100" type="submit">
 							Create Album
 						</button>
 					</div>
 				</Form>
+					{
+						uploadProgress !== null && (
+							<ProgressBar variant="success" animated now={uploadProgress} className="dropzone-progress"/>
+						)
+					}
+
+					{
+						isSuccess && (
+							<>
+								<Alert variant="success" className="dropzone-alert">
+									Your upload was successful
+								</Alert>
+							
+								<button className="custom-btn" onClick={handleNavigateToAlbum}>Go to album</button>
+							</>
+						)
+					}
 			</Col>
 		</Row>
 	)

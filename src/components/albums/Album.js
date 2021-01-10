@@ -2,7 +2,7 @@ import { useState, useEffect, useCallback } from 'react'
 import { useParams, Link } from 'react-router-dom'
 import { AiFillEdit } from 'react-icons/ai'
 import { IoMdSettings, IoMdShare, IoIosCopy } from 'react-icons/io'
-import { RiImageAddFill } from 'react-icons/ri'
+import { RiImageAddFill, RiImageFill } from 'react-icons/ri'
 import {CopyToClipboard} from 'react-copy-to-clipboard'
 import { Alert, Button, Row } from 'react-bootstrap'
 import { useAuth } from '../../contexts/AuthContext'
@@ -18,11 +18,12 @@ const Album = () => {
 	const [btnDisabled, setBtnDisabled] = useState(true)
 	const [showReviewUrl, setShowReviewUrl] = useState(false)
 	const [showUpload, setShowUpload] = useState(false)
+	const [showEdit, setShowEdit] = useState(false)
 	const { albumId } = useParams()
 	const { album, loading } = useAlbum(albumId)
 	const { images } = useImages(albumId)
 	const { currentUser } = useAuth()
-	const { imageToAdd, imageToDelete, handleCreateAlbum, handleShowEdit, showEdit, error } = useImage()
+	const { imageToAdd, imageToDelete, handleCreateAlbum, error } = useImage()
 
 	useEffect(() => {
 		if (currentUser) {
@@ -39,19 +40,23 @@ const Album = () => {
 			}
 		}
 
-		if (images.length === 0) {
-			setShowUpload(true)
-		}
-
 	}, [images, imageToAdd, imageToDelete, currentUser])
 
 	const handleShowReviewUrl = () => {
 		setShowReviewUrl(!showReviewUrl)
 		setShowUpload(false)
+		setShowEdit(false)
 	}
 
 	const handleShowUpload = () => {
 		setShowUpload(!showUpload)
+		setShowReviewUrl(false)
+		setShowEdit(false)
+	}
+
+	const handleShowEdit = () => {
+		setShowEdit(!showEdit)
+		setShowUpload(false)
 		setShowReviewUrl(false)
 	}
 
@@ -96,7 +101,6 @@ const Album = () => {
 				}
 				<h1>{album.title}</h1>
 			</div>
-
 			{
 				showUpload
 					? <ImageUpload albumId={albumId}/>
@@ -116,6 +120,14 @@ const Album = () => {
 				loading
 					? <p>Loading...</p>
 					: (<Images images={images} showedit={showEdit}/>)
+			}
+
+			{
+				images.length === 0 && (
+					<div>
+						Click the icon above to add image.
+					</div>
+				)
 			}
 
 			{
