@@ -20,17 +20,11 @@ const useImageUpload = (files, albumId = null) => {
 		setError(null)
 		setIsSuccess(false)
 
-		
-
-		// db.collection('albums').doc(albumId).update({
-		// 	img_url: files[0].url,
-		// })
-
 		files.forEach((file, index) => {
 			// create image reference in storage and upload
 			const uploadTask = storage.ref().child(`images/${currentUser.uid}/${file.name}`).put(file);
 
-			uploadTask.on('state_changed', snapshot => {
+			const unsubscribe = uploadTask.on('state_changed', snapshot => {
 				setUploadProgress((snapshot.bytesTransferred / snapshot.totalBytes) * 100)
 			})
 
@@ -50,16 +44,13 @@ const useImageUpload = (files, albumId = null) => {
 				if (albumId) {
 					img.album = db.collection('albums').doc(albumId)
 				}
-				
-
-				console.log('img', img)
 
 				// add image to firestore collection
 				await db.collection('images').add(img)
 
 				// add first image's url in array to album
 				if (index === 0) {
-					await db.collection('albums').doc(albumId).update({
+					db.collection('albums').doc(albumId).update({
 						img_url: img.url,
 					})
 				}
@@ -70,12 +61,14 @@ const useImageUpload = (files, albumId = null) => {
 
 				setUploadedFile(img)
 				setIsSuccess(true)
+
 			}).catch(err => {
 				setError({
 					type: 'warning',
 					msg: `Oops, could not upload the image due to an error (${err.message})`
 				})
 			})
+			return unsubscribe
 		})
 
 	}, [files, currentUser, albumId])

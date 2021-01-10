@@ -8,23 +8,6 @@ const ImageUpload = ({ albumId }) => {
 	const [files, setFiles] = useState([])
 	const { error, isSuccess, uploadProgress } = useImageUpload(files, albumId)
 
-	// useEffect(() => {
-	// 	if (error) {
-	// 		setMessage({
-	// 			type: 'error',
-	// 			text: error,
-	// 		})
-	// 	} else if (isSuccess) {
-	// 		setMessage({
-	// 			success: true,
-	// 			text: 'Image successfully uploaded!',
-	// 		})
-	// 		setFiles([]);
-	// 	} else {
-	// 		setMessage(null)
-	// 	}
-	// }, [error, isSuccess])
-
 	const onDrop = useCallback(acceptedFiles => {
 		if (acceptedFiles.length === 0) {
 			return

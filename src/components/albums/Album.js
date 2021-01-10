@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { useParams, Link } from 'react-router-dom'
 import { AiFillEdit } from 'react-icons/ai'
 import { IoMdSettings, IoMdShare, IoIosCopy } from 'react-icons/io'
@@ -41,10 +41,7 @@ const Album = () => {
 
 		if (images.length === 0) {
 			setShowUpload(true)
-		} else {
-			setShowUpload(false)
 		}
-		
 
 	}, [images, imageToAdd, imageToDelete, currentUser])
 

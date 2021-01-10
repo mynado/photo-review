@@ -166,7 +166,7 @@ const ImageContextProvider = (props) => {
 			imagesInAlbumDoc.forEach((imageDoc) => {
 				imageDoc.ref.delete();
 
-				db.collection('images')
+				const unsubscribe = db.collection('images')
 					.where('path', '==', imageDoc.data().path)
 					.onSnapshot(async snapshot => {
 						const snapshotImgs = []
@@ -185,6 +185,7 @@ const ImageContextProvider = (props) => {
 							storage.ref(imageDoc.data().path).delete()
 						}
 					})
+				return unsubscribe
 			})
 		})
 
