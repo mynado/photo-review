@@ -1,9 +1,9 @@
 import React from 'react'
 import { AiFillLike, AiFillDislike, AiOutlineLike, AiOutlineDislike } from 'react-icons/ai'
-import { useImage } from '../../contexts/ImageContext'
+import { useImageContext } from '../../contexts/ImageContext'
 
 const Checkbox = ({image}) => {
-	const { handleLikeImage, handleDislikeImage, imageToAdd, imageToDelete } = useImage()
+	const { handleLikeImage, handleDislikeImage, imageToAdd, imageToDelete } = useImageContext()
 
 	return (
 		<>

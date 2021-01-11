@@ -1,11 +1,11 @@
 import React from 'react'
 import { Image, Col } from 'react-bootstrap'
 import { IoRemoveCircle } from 'react-icons/io5'
-import { useImage } from '../../contexts/ImageContext'
+import { useImageContext } from '../../contexts/ImageContext'
 import './ThumbNail.scss'
 
 const ThumbNail = ({ images }) => {
-	const { handleDislikeImage, handleLikeImage, imageToAdd, imageToDelete } = useImage()
+	const { handleDislikeImage, handleLikeImage, imageToAdd, imageToDelete } = useImageContext()
 
 	return (
 		<>

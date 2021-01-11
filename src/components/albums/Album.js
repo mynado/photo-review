@@ -3,16 +3,17 @@ import { useParams, Link } from 'react-router-dom'
 import { AiFillEdit } from 'react-icons/ai'
 import { IoMdSettings, IoMdShare, IoIosCopy } from 'react-icons/io'
 import { RiImageAddFill } from 'react-icons/ri'
-import {CopyToClipboard} from 'react-copy-to-clipboard'
+import { CopyToClipboard } from 'react-copy-to-clipboard'
 import { Alert, Button, Row } from 'react-bootstrap'
 import { useAuth } from '../../contexts/AuthContext'
-import { useImage } from '../../contexts/ImageContext'
+import { useImageContext } from '../../contexts/ImageContext'
+import { useAlbumContext } from '../../contexts/AlbumContext'
 import useAlbum from '../../hooks/useAlbum'
 import Images from '../images/Images'
 import useImages from '../../hooks/useImages'
 import ThumbNail from '../images/ThumbNail'
-import './Album.scss'
 import ImageUpload from '../images/ImageUpload'
+import './Album.scss'
 
 const Album = () => {
 	const [btnDisabled, setBtnDisabled] = useState(true)
@@ -23,7 +24,8 @@ const Album = () => {
 	const { album, loading } = useAlbum(albumId)
 	const { images } = useImages(albumId)
 	const { currentUser } = useAuth()
-	const { imageToAdd, imageToDelete, handleCreateAlbum, error } = useImage()
+	const { imageToAdd, imageToDelete, error, clearSelectedImages } = useImageContext()
+	const { handleCreateAlbum } = useAlbumContext()
 
 	useEffect(() => {
 		if (currentUser) {
@@ -69,6 +71,7 @@ const Album = () => {
 	const handleCreateSelected = () => {
 		handleCreateAlbum(imageToAdd, album, currentUser)
 		clearState()
+		clearSelectedImages()
 	}
 
 	if (loading) {
@@ -81,7 +84,7 @@ const Album = () => {
 				showReviewUrl
 					? (
 						<div className="text-right mr-1 review-url-wrapper">
-							<textarea rows="1" className="review-url-text"muted>{`${process.env.REACT_APP_BASE_URL}/albums/review/${albumId}`}</textarea>
+							<textarea rows="1" className="review-url-text" defaultValue={`${process.env.REACT_APP_BASE_URL}/albums/review/${albumId}`} muted></textarea>
 							<CopyToClipboard text={`${process.env.REACT_APP_BASE_URL}/albums/review/${albumId}`}>
 								<button className="custom-btn" title="Copy url" aria-label="Copy public url to clipboard"><IoIosCopy /></button>
 							</CopyToClipboard>
@@ -117,11 +120,6 @@ const Album = () => {
 					? <ImageUpload albumId={albumId} />
 					: ''
 			}
-			{/* {
-				showUpload
-					? <ImageUpload albumId={albumId}/>
-					: ''
-			} */}
 
 			{
 				showEdit

@@ -15,6 +15,7 @@ import AlbumUpdate from './components/albums/AlbumUpdate'
 import { ImageContextProvider } from './contexts/ImageContext'
 import ThankYou from './components/ThankYou'
 import NotFound from './components/NotFound'
+import { AlbumContextProvider } from './contexts/AlbumContext'
 
 const App = () => {
 	return (
@@ -39,31 +40,33 @@ const App = () => {
 						<ProfileUpdate />
 					</AuthRoute>
 
-					<ImageContextProvider>
-						<Route path="/albums">
-							<AuthRoute path="/">
-								<Albums />
-							</AuthRoute>
-
-							<AuthRoute path="/:albumId">
+					<AlbumContextProvider>
+						<ImageContextProvider>
+							<Route path="/albums">
 								<AuthRoute path="/">
+									<Albums />
+								</AuthRoute>
+
+								<AuthRoute path="/:albumId">
+									<AuthRoute path="/">
+										<Album />
+									</AuthRoute>
+
+									<AuthRoute path="/edit">
+										<AlbumUpdate />
+									</AuthRoute>
+								</AuthRoute>
+
+								<AuthRoute path="/create">
+									<AlbumCreate />
+								</AuthRoute>
+
+								<Route path="/review/:albumId">
 									<Album />
-								</AuthRoute>
-
-								<AuthRoute path="/edit">
-									<AlbumUpdate />
-								</AuthRoute>
-							</AuthRoute>
-
-							<AuthRoute path="/create">
-								<AlbumCreate />
-							</AuthRoute>
-
-							<Route path="/review/:albumId">
-								<Album />
+								</Route>
 							</Route>
-						</Route>
-					</ImageContextProvider>
+						</ImageContextProvider>
+					</AlbumContextProvider>
 					<Route path="*" element={<NotFound />} />
 				</Routes>
 			</Container>

@@ -3,13 +3,13 @@ import { Image, Row, Col } from 'react-bootstrap'
 import SimpleReactLightbox, { SRLWrapper } from "simple-react-lightbox";
 import { IoTrashBin } from 'react-icons/io5'
 import { useAuth } from '../../contexts/AuthContext'
-import { useImage } from '../../contexts/ImageContext'
+import { useImageContext } from '../../contexts/ImageContext'
 import Checkbox from './Checkbox'
 import LikeDislikeButtons from './LikeDislikeButtons'
 import './Images.scss'
 
 const Images = ({ images, showedit }) => {
-	const { handleDeleteImage } = useImage()
+	const { handleDeleteImage } = useImageContext()
 	const { currentUser } = useAuth()
 
 	return (

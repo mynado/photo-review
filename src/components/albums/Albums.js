@@ -6,13 +6,13 @@ import { AiFillEdit } from 'react-icons/ai'
 import { FaCheck } from 'react-icons/fa'
 import { Link } from 'react-router-dom'
 import { useAuth } from '../../contexts/AuthContext'
-import { useImage } from '../../contexts/ImageContext'
+import { useAlbumContext } from '../../contexts/AlbumContext'
 import useAlbums from '../../hooks/useAlbums'
 
 const Albums = () => {
 	const { currentUser } = useAuth()
 	const { albums, loading } = useAlbums(currentUser.uid)
-	const { handleDeleteAlbum } = useImage()
+	const { handleDeleteAlbum } = useAlbumContext()
 
 	return (
 		<div>
