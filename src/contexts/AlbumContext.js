@@ -15,21 +15,6 @@ const AlbumContextProvider = (props) => {
 	const [albumId, setAlbumId] = useState(null)
 	const navigate = useNavigate()
 
-	const createNewAlbum = async (title, user) => {
-		try {
-			const docRef = await db.collection('albums').add({
-				title: title,
-				owner: user.uid,
-				created_by: `${user ? 'you' : 'guest'}`,
-				date: moment().format('L HH:mm'),
-			})
-			setAlbumId(docRef.id)
-			setAlbumMessage('Album created!')
-		} catch (e) {
-			setAlbumError(e.message)
-		}
-	}
-
 	const handleCreateSelectionAlbum = async (images, album, user, createdBy) => {
 
 		try {
@@ -120,7 +105,6 @@ const AlbumContextProvider = (props) => {
 		albumMessage,
 		handleCreateSelectionAlbum,
 		handleDeleteAlbum,
-		createNewAlbum,
 		albumId
 	}
 
