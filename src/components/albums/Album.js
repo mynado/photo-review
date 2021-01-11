@@ -1,8 +1,6 @@
 import { useState, useEffect } from 'react'
-import { useParams, Link } from 'react-router-dom'
-import { AiFillEdit } from 'react-icons/ai'
-import { IoMdSettings, IoMdShare, IoIosCopy } from 'react-icons/io'
-import { RiImageAddFill } from 'react-icons/ri'
+import { useParams } from 'react-router-dom'
+import { IoIosCopy } from 'react-icons/io'
 import { CopyToClipboard } from 'react-copy-to-clipboard'
 import { Alert, Button, Row } from 'react-bootstrap'
 import { useAuth } from '../../contexts/AuthContext'
@@ -14,6 +12,7 @@ import useImages from '../../hooks/useImages'
 import ThumbNail from '../images/ThumbNail'
 import ImageUpload from '../images/ImageUpload'
 import './Album.scss'
+import AlbumHeader from './AlbumHeader'
 
 const Album = () => {
 	const [btnDisabled, setBtnDisabled] = useState(true)
@@ -97,28 +96,7 @@ const Album = () => {
 					) : ('')
 			}
 			<div className="album-header-wrapper">
-				{
-					currentUser
-						? (
-							<>
-								<div className="button-wrapper">
-									<button className="custom-btn mr-1" onClick={handleShowUpload} title="Upload image" aria-label="Show upload image input"><RiImageAddFill /></button>
-									<button className="custom-btn mr-1" onClick={handleShowReviewUrl} title="Share url" aria-label="Show album url">
-										<IoMdShare />
-									</button>
-									<Link to={`/albums/${albumId}/edit`}>
-										<button className="custom-btn mr-1" title="Album settings" aria-label="Go to edit album">
-											<IoMdSettings />
-										</button>
-									</Link>
-									<button className="custom-btn" onClick={handleShowEdit} data-toggle="tooltip" data-placement="top" title="Edit album" aria-label="Show select, delete images and create album">
-										<AiFillEdit />
-									</button>
-								</div>
-							</>
-						) : ('')
-				}
-				<h1>{album.title}</h1>
+				<AlbumHeader album={album} onShowUpload={handleShowUpload} onShowReview={handleShowReviewUrl} onShowEdit={handleShowEdit}/>
 			</div>
 			{
 				showUpload
