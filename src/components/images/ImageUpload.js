@@ -1,5 +1,5 @@
-import { useState, useRef } from 'react'
-import { Alert, Form, Row, Col, ProgressBar } from 'react-bootstrap'
+import { useState } from 'react'
+import { Alert, Form, ProgressBar } from 'react-bootstrap'
 import useImageUpload from '../../hooks/useImageUpload'
 
 const ImageUpload2 = ({ albumId }) => {

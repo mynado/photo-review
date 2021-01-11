@@ -25,7 +25,7 @@ const Album = () => {
 	const { images } = useImages(albumId)
 	const { currentUser } = useAuth()
 	const { imageToAdd, imageToDelete, error, clearSelectedImages } = useImageContext()
-	const { handleCreateAlbum } = useAlbumContext()
+	const { handleCreateSelectionAlbum } = useAlbumContext()
 
 	useEffect(() => {
 		if (currentUser) {
@@ -69,7 +69,7 @@ const Album = () => {
 	}
 
 	const handleCreateSelected = () => {
-		handleCreateAlbum(imageToAdd, album, currentUser)
+		handleCreateSelectionAlbum(imageToAdd, album, currentUser)
 		clearState()
 		clearSelectedImages()
 	}

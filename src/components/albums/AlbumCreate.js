@@ -2,38 +2,26 @@ import { useState, useRef } from 'react'
 import { Link } from 'react-router-dom'
 import { Alert, Form, Row, Col } from 'react-bootstrap'
 import { useAuth } from '../../contexts/AuthContext'
-import { db } from '../../firebase'
+import { useAlbumContext } from '../../contexts/AlbumContext'
 import ImageUpload from '../images/ImageUpload'
 
 const AlbumCreate = () => {
 	const titleRef = useRef()
 	const [error, setError] = useState(null)
-	const [albumId, setAlbumId] = useState(null)
 	const { currentUser } = useAuth()
+	const { createNewAlbum, albumId } = useAlbumContext()
 
-	const handleSubmitAlbum = async (e) => {
+	const handleSubmitAlbum = (e) => {
 		e.preventDefault()
 		if (titleRef.current.value.length < 3) {
 			return setError('the title need to be at least 3 characters')
 		}
+		createNewAlbum(titleRef.current.value, currentUser)
 		setError(null)
-
-		try {
-			const docRef = await db.collection('albums').add({
-				title: titleRef.current.value,
-				owner: currentUser.uid,
-				created_by: 'you',
-				date: 'new data'
-			})
-			setAlbumId(docRef.id)
-			console.log('Successfully created an album with id: ', docRef.id)
-		} catch (e) {
-			setError(e.message)
-		}
 	}
 
 	return (
-		<Row className="justify-content-md-center">
+		<Row className="justify-content-md-center mb-5">
 			<Col xs={12} md={6} lg={4}>
 				<h1 className="mb-4">Create album</h1>
 				{error && (
