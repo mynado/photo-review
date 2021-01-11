@@ -19,7 +19,7 @@ const AlbumContextProvider = (props) => {
 			const docRef = await db.collection('albums').add({
 				title: title,
 				owner: user.uid,
-				created_by: 'you',
+				created_by: `${user ? 'you' : 'guest'}`,
 				date: moment().format('L HH:mm'),
 			})
 			setAlbumId(docRef.id)
@@ -31,33 +31,22 @@ const AlbumContextProvider = (props) => {
 
 	const handleCreateSelectionAlbum = async (images, album, user) => {
 		let docRef
+		try {
+			docRef = await db.collection('albums').add({
+				title: album.title,
+				owner: `${user ? user.id : album.owner}`,
+				created_by: `${user ? 'you' : 'guest'}`,
+				date: moment().format('L HH:mm')
+			})
 
-		if (!user) {
-			try {
-				docRef = await db.collection('albums').add({
-					title: album.title,
-					owner: album.owner,
-					created_by: 'guest',
-					date: moment().format('L HH:mm'),
-				})
-				navigate(`/thank-you`)
-			} catch (e) {
-				setError(e.message)
-			}
-		}
-
-		if (user) {
-			try {
-				docRef = await db.collection('albums').add({
-					title: album.title,
-					owner: user.uid,
-					created_by: 'you',
-					date: moment().format('L HH:mm')
-				})
+			if (user) {
 				navigate(`/albums/${docRef.id}`)
-			} catch (e) {
-				setError(e.message)
+			} else {
+				navigate(`/thank-you`)	
 			}
+			
+		} catch (e) {
+			setError(e.message)
 		}
 
 		images.forEach(async (image, index) => {
