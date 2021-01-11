@@ -12,7 +12,6 @@ const useAlbumContext = () => {
 const AlbumContextProvider = (props) => {
 	const [albumError, setAlbumError] = useState(null)
 	const [albumMessage, setAlbumMessage] = useState(null)
-	const [albumId, setAlbumId] = useState(null)
 	const navigate = useNavigate()
 
 	const handleCreateSelectionAlbum = async (images, album, user, createdBy) => {
@@ -66,33 +65,39 @@ const AlbumContextProvider = (props) => {
 			const imagesInAlbum = db.collection('images').where('album','==', db.collection('albums').doc(album.id))
 		
 			imagesInAlbum.get().then((imagesInAlbumDoc) => {
-			
-				imagesInAlbumDoc.forEach((imageDoc) => {
+				imagesInAlbumDoc.forEach( async (imageDoc) => {
+
+					// delete image from firestore
 					imageDoc.ref.delete();
 
-					const unsubscribe = db.collection('images')
-						.where('path', '==', imageDoc.data().path)
-						.onSnapshot(async snapshot => {
-							const snapshotImgs = []
-
-							snapshot.forEach(doc => {
-								if (snapshotImgs.includes(doc.data())) {
-									return
-								}
-								snapshotImgs.push({
-									id: doc.id,
-									...doc.data()
-								})
-							})
-
-							if (snapshotImgs.length === 0 ) {
-								storage.ref(imageDoc.data().path).delete()
-							}
+					// query matching path 
+					const snapshot = await db.collection('images').where('path', '==', imageDoc.data().path).get();
+					const snapshotImgs = []
+					snapshot.forEach(doc => {
+						if (snapshotImgs.includes(doc.data())) {
+							return
+						}
+						console.log('snapshotimgs', snapshotImgs)
+						snapshotImgs.push({
+							id: doc.id,
+							...doc.data()
 						})
-					return unsubscribe
+					});
+
+					// if no image exist with the queried path exist in firestore
+					if (snapshotImgs.length === 0) {
+						// delete the image from storage
+						storage.ref(imageDoc.data().path)
+						.delete()
+						.then(() => {
+							setAlbumMessage('deleted successfully')
+						}).catch((error) => {
+							setAlbumError('Error occurd', error.message)
+						})
+					}
 				})
 			})
-
+			// delete album with id
 			await db.collection('albums').doc(album.id).delete()
 
 		} catch (e) {
@@ -104,8 +109,7 @@ const AlbumContextProvider = (props) => {
 		albumError,
 		albumMessage,
 		handleCreateSelectionAlbum,
-		handleDeleteAlbum,
-		albumId
+		handleDeleteAlbum
 	}
 
 	return (
