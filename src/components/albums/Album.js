@@ -1,18 +1,18 @@
-import { useState, useEffect, useCallback } from 'react'
+import { useState, useEffect } from 'react'
 import { useParams, Link } from 'react-router-dom'
 import { AiFillEdit } from 'react-icons/ai'
 import { IoMdSettings, IoMdShare, IoIosCopy } from 'react-icons/io'
-import { RiImageAddFill, RiImageFill } from 'react-icons/ri'
+import { RiImageAddFill } from 'react-icons/ri'
 import {CopyToClipboard} from 'react-copy-to-clipboard'
 import { Alert, Button, Row } from 'react-bootstrap'
 import { useAuth } from '../../contexts/AuthContext'
 import { useImage } from '../../contexts/ImageContext'
 import useAlbum from '../../hooks/useAlbum'
 import Images from '../images/Images'
-import ImageUpload from '../images/ImageUpload'
 import useImages from '../../hooks/useImages'
 import ThumbNail from '../images/ThumbNail'
 import './Album.scss'
+import ImageUpload from '../images/ImageUpload'
 
 const Album = () => {
 	const [btnDisabled, setBtnDisabled] = useState(true)
@@ -78,16 +78,16 @@ const Album = () => {
 	return (
 		<>
 			{
-					showReviewUrl
-						? (
-							<div className="text-right mr-1 review-url-wrapper">
-								<textarea rows="1" className="review-url-text"muted>{`${process.env.REACT_APP_BASE_URL}/albums/review/${albumId}`}</textarea>
-								<CopyToClipboard text={`${process.env.REACT_APP_BASE_URL}/albums/review/${albumId}`}>
-									<button className="custom-btn" title="Copy url" aria-label="Copy public url to clipboard"><IoIosCopy /></button>
-								</CopyToClipboard>
-							</div>
-						) : ('')
-				}
+				showReviewUrl
+					? (
+						<div className="text-right mr-1 review-url-wrapper">
+							<textarea rows="1" className="review-url-text"muted>{`${process.env.REACT_APP_BASE_URL}/albums/review/${albumId}`}</textarea>
+							<CopyToClipboard text={`${process.env.REACT_APP_BASE_URL}/albums/review/${albumId}`}>
+								<button className="custom-btn" title="Copy url" aria-label="Copy public url to clipboard"><IoIosCopy /></button>
+							</CopyToClipboard>
+						</div>
+					) : ('')
+			}
 			<div className="album-header-wrapper">
 				{
 					currentUser
@@ -114,9 +114,14 @@ const Album = () => {
 			</div>
 			{
 				showUpload
-					? <ImageUpload albumId={albumId}/>
+					? <ImageUpload albumId={albumId} />
 					: ''
 			}
+			{/* {
+				showUpload
+					? <ImageUpload albumId={albumId}/>
+					: ''
+			} */}
 
 			{
 				showEdit
@@ -131,14 +136,6 @@ const Album = () => {
 				loading
 					? <p>Loading...</p>
 					: (<Images images={images} showedit={showEdit}/>)
-			}
-
-			{
-				images.length === 0 && (
-					<div>
-						Click the icon above to add image.
-					</div>
-				)
 			}
 
 			{
