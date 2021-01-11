@@ -60,6 +60,8 @@ const AlbumContextProvider = (props) => {
 		if (!album) {
 			return
 		}
+		setAlbumMessage(null)
+		setAlbumError(null)
 
 		try {
 			const imagesInAlbum = db.collection('images').where('album','==', db.collection('albums').doc(album.id))
@@ -90,7 +92,6 @@ const AlbumContextProvider = (props) => {
 						storage.ref(imageDoc.data().path)
 						.delete()
 						.then(() => {
-							setAlbumMessage('deleted successfully')
 						}).catch((error) => {
 							setAlbumError('Error occurd', error.message)
 						})
@@ -99,6 +100,7 @@ const AlbumContextProvider = (props) => {
 			})
 			// delete album with id
 			await db.collection('albums').doc(album.id).delete()
+			setAlbumMessage('Album is deleted')
 
 		} catch (e) {
 			setAlbumError(e.message)

@@ -1,5 +1,5 @@
 import React from 'react'
-import { Row, Col, Card } from 'react-bootstrap'
+import { Alert, Row, Col, Card } from 'react-bootstrap'
 import './Albums.scss'
 import { IoTrashBin } from 'react-icons/io5'
 import { AiFillEdit } from 'react-icons/ai'
@@ -12,7 +12,7 @@ import useAlbums from '../../hooks/useAlbums'
 const Albums = () => {
 	const { currentUser } = useAuth()
 	const { albums, loading } = useAlbums(currentUser.uid)
-	const { handleDeleteAlbum } = useAlbumContext()
+	const { handleDeleteAlbum, albumMessage, albumError } = useAlbumContext()
 
 	return (
 		<div>
@@ -22,6 +22,12 @@ const Albums = () => {
 					<button className="custom-btn">+ Album</button>
 				</Link>
 			</div>
+			{albumError && (
+				<Alert variant="warning" className="mt-3">{albumError}</Alert>
+			)}
+			{albumMessage && (
+				<Alert variant="success" className="mt-3">{albumMessage}</Alert>
+			)}
 			{
 				loading && currentUser
 					? (<p>Loading...</p>)
