@@ -10,7 +10,8 @@ const useAlbumContext = () => {
 }
 
 const AlbumContextProvider = (props) => {
-	const [error, setError] = useState()
+	const [albumError, setAlbumError] = useState(null)
+	const [albumMessage, setAlbumMessage] = useState(null)
 	const [albumId, setAlbumId] = useState(null)
 	const navigate = useNavigate()
 
@@ -23,51 +24,52 @@ const AlbumContextProvider = (props) => {
 				date: moment().format('L HH:mm'),
 			})
 			setAlbumId(docRef.id)
-			console.log('Successfully created an album with id: ', docRef.id)
+			setAlbumMessage('Album created!')
 		} catch (e) {
-			setError(e.message)
+			setAlbumError(e.message)
 		}
 	}
 
-	const handleCreateSelectionAlbum = async (images, album, user) => {
-		let docRef
+	const handleCreateSelectionAlbum = async (images, album, user, createdBy) => {
+
 		try {
-			docRef = await db.collection('albums').add({
+			const docRef = await db.collection('albums').add({
 				title: album.title,
-				owner: `${user ? user.id : album.owner}`,
-				created_by: `${user ? 'you' : 'guest'}`,
+				owner: user,
+				created_by: createdBy,
 				date: moment().format('L HH:mm')
 			})
 
-			if (user) {
-				navigate(`/albums/${docRef.id}`)
+			images.forEach(async (image, index) => {
+				const img = {
+					name: image.name,
+					owner: image.owner,
+					path: image.path,
+					size: image.size,
+					type: image.type,
+					url: image.url,
+					album: db.collection('albums').doc(docRef.id)
+				}
+				await db.collection('images').add(img)
+	
+				// add first image's url in array to album
+				if (index === 0) {
+					await db.collection('albums').doc(docRef.id).update({
+						img_url: img.url,
+					})
+				}
+			})
+
+			if (user === 'guest') {
+				navigate(`/thank-you`)
 			} else {
-				navigate(`/thank-you`)	
+				navigate(`/albums/${docRef.id}`)
 			}
 			
 		} catch (e) {
-			setError(e.message)
+			setAlbumError(e.message)
 		}
 
-		images.forEach(async (image, index) => {
-			const img = {
-				name: image.name,
-				owner: image.owner,
-				path: image.path,
-				size: image.size,
-				type: image.type,
-				url: image.url,
-				album: db.collection('albums').doc(docRef.id)
-			}
-			await db.collection('images').add(img)
-
-			// add first image's url in array to album
-			if (index === 0) {
-				await db.collection('albums').doc(docRef.id).update({
-					img_url: img.url,
-				})
-			}
-		})
 	}
 
 	const handleDeleteAlbum = async (album) => {
@@ -75,42 +77,47 @@ const AlbumContextProvider = (props) => {
 			return
 		}
 
-		const imagesInAlbum = db.collection('images').where('album','==', db.collection('albums').doc(album.id))
+		try {
+			const imagesInAlbum = db.collection('images').where('album','==', db.collection('albums').doc(album.id))
 		
-		imagesInAlbum.get().then((imagesInAlbumDoc) => {
-		
-			imagesInAlbumDoc.forEach((imageDoc) => {
-				imageDoc.ref.delete();
+			imagesInAlbum.get().then((imagesInAlbumDoc) => {
+			
+				imagesInAlbumDoc.forEach((imageDoc) => {
+					imageDoc.ref.delete();
 
-				const unsubscribe = db.collection('images')
-					.where('path', '==', imageDoc.data().path)
-					.onSnapshot(async snapshot => {
-						const snapshotImgs = []
+					const unsubscribe = db.collection('images')
+						.where('path', '==', imageDoc.data().path)
+						.onSnapshot(async snapshot => {
+							const snapshotImgs = []
 
-						snapshot.forEach(doc => {
-							if (snapshotImgs.includes(doc.data())) {
-								return
-							}
-							snapshotImgs.push({
-								id: doc.id,
-								...doc.data()
+							snapshot.forEach(doc => {
+								if (snapshotImgs.includes(doc.data())) {
+									return
+								}
+								snapshotImgs.push({
+									id: doc.id,
+									...doc.data()
+								})
 							})
+
+							if (snapshotImgs.length === 0 ) {
+								storage.ref(imageDoc.data().path).delete()
+							}
 						})
-
-						if (snapshotImgs.length === 0 ) {
-							storage.ref(imageDoc.data().path).delete()
-						}
-					})
-				return unsubscribe
+					return unsubscribe
+				})
 			})
-		})
 
-		await db.collection('albums').doc(album.id).delete()
+			await db.collection('albums').doc(album.id).delete()
 
+		} catch (e) {
+			setAlbumError(e.message)
+		}
 	}
 
 	const contextValues = {
-		error,
+		albumError,
+		albumMessage,
 		handleCreateSelectionAlbum,
 		handleDeleteAlbum,
 		createNewAlbum,

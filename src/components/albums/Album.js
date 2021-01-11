@@ -69,7 +69,12 @@ const Album = () => {
 	}
 
 	const handleCreateSelected = () => {
-		handleCreateSelectionAlbum(imageToAdd, album, currentUser)
+		if (currentUser) {
+			handleCreateSelectionAlbum(imageToAdd, album, currentUser.uid, 'you')
+		} else {
+			handleCreateSelectionAlbum(imageToAdd, album, album.owner, 'guest')
+		}
+		
 		clearState()
 		clearSelectedImages()
 	}
