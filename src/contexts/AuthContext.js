@@ -37,6 +37,11 @@ const AuthContextProvider = (props) => {
 		return currentUser.updatePassword(password)
 	}
 
+	const forgotPassword = (email) => {
+		console.log(`forgot password`)
+		return auth.sendPasswordResetEmail(email)
+	}
+
 	useEffect(() => {
 		const unsubscribe = auth.onAuthStateChanged(user => {
 			setCurrentUser(user)
@@ -54,6 +59,7 @@ const AuthContextProvider = (props) => {
 		updateUserProfile,
 		updateUserEmail,
 		updateUserPassword,
+		forgotPassword
 	}
 
 	return (
