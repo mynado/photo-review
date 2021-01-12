@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import { IoIosCopy } from 'react-icons/io'
 import { CopyToClipboard } from 'react-copy-to-clipboard'
-import { Alert, Button, Row } from 'react-bootstrap'
+import { Row } from 'react-bootstrap'
 import { useAuth } from '../../contexts/AuthContext'
 import { useImageContext } from '../../contexts/ImageContext'
 import { useAlbumContext } from '../../contexts/AlbumContext'
@@ -19,6 +19,7 @@ const Album = () => {
 	const [showReviewUrl, setShowReviewUrl] = useState(false)
 	const [showUpload, setShowUpload] = useState(false)
 	const [showEdit, setShowEdit] = useState(false)
+	const [copy, setCopy] = useState(false)
 	const { albumId } = useParams()
 	const { album, loading } = useAlbum(albumId)
 	const { images } = useImages(albumId)
@@ -42,6 +43,13 @@ const Album = () => {
 		}
 
 	}, [images, imageToAdd, imageToDelete, currentUser])
+
+	const handleCopy = () => {
+		setCopy(true)
+		setTimeout(() => {
+			setCopy(false)
+		}, 100);
+	}
 
 	const handleShowReviewUrl = () => {
 		setShowReviewUrl(!showReviewUrl)
@@ -88,16 +96,21 @@ const Album = () => {
 				showReviewUrl
 					? (
 						<div className="text-right mr-1 review-url-wrapper">
-							<textarea rows="1" className="review-url-text" defaultValue={`${process.env.REACT_APP_BASE_URL}/albums/review/${albumId}`} muted></textarea>
+							<textarea rows="1" className={`review-url-text ${copy ? 'copied' : ''}`} defaultValue={`${process.env.REACT_APP_BASE_URL}/albums/review/${albumId}`} muted></textarea>
 							<CopyToClipboard text={`${process.env.REACT_APP_BASE_URL}/albums/review/${albumId}`}>
-								<button className="custom-btn" title="Copy url" aria-label="Copy public url to clipboard"><IoIosCopy /></button>
+								<button onClick={handleCopy} className="custom-btn" title="Copy url" aria-label="Copy public url to clipboard"><IoIosCopy /></button>
 							</CopyToClipboard>
 						</div>
 					) : ('')
 			}
-			<div className="album-header-wrapper">
-				<AlbumHeader album={album} onShowUpload={handleShowUpload} onShowReview={handleShowReviewUrl} onShowEdit={handleShowEdit}/>
-			</div>
+			{
+				currentUser && (
+					<div className="album-header-wrapper">
+						<AlbumHeader album={album} onShowUpload={handleShowUpload} onShowReview={handleShowReviewUrl} onShowEdit={handleShowEdit}/>
+					</div>
+				)
+			}
+			
 			{
 				showUpload
 					? <ImageUpload albumId={albumId} />
@@ -122,29 +135,24 @@ const Album = () => {
 			{
 				currentUser
 					? (
-						<>
-							{
-								showEdit ? 
-									(
-										<>
-											{
-												imageToAdd.length > 0
-													? (
-														<>
-															<h5>Selected Images</h5>
-															<p>{imageToAdd.length + '/' + images.length}</p>
-														</>
-													) : ('')
-											}
-											<Row><ThumbNail images={imageToAdd} /></Row>
-											<div className="d-flex justify-content-end">
-												<button className="custom-btn mt-2 mb-3 ml-auto" disabled={btnDisabled} onClick={handleCreateSelected}>Create album</button>
-											</div>
-										</>
-									) : ('')
-							}
-
-						</>
+						showEdit ? 
+							(
+								<>
+									{
+										imageToAdd.length > 0
+											? (
+												<>
+													<h5>Selected Images</h5>
+													<p>{imageToAdd.length + '/' + images.length}</p>
+												</>
+											) : ('')
+									}
+									<Row><ThumbNail images={imageToAdd} /></Row>
+									<div className="d-flex justify-content-end">
+										<button className="custom-btn mt-2 mb-3 ml-auto" disabled={btnDisabled} onClick={handleCreateSelected}>Create album</button>
+									</div>
+								</>
+							) : ('')
 					) : (
 						<>
 							{

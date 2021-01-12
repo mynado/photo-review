@@ -27,8 +27,8 @@ const ImageUpload = ({ albumId }) => {
 			return imgs.push(file)
 		})
 		setAcceptedFiles(imgs)
-		
 	}
+
 	return (
 		<>
 			<Form onSubmit={handleSubmitImages} className="mb-4">
@@ -46,8 +46,17 @@ const ImageUpload = ({ albumId }) => {
 						<p className="input-file-text">Select images to upload</p>
 						</label>	
 					</div>
-				
-					<ul className="list-group">
+				</Form.Group>
+				{ error && (<Alert variant="warning">{error}</Alert>) }
+				{ isSuccess && (
+					<Alert variant="success" className="dropzone-alert">
+							Your upload was successful
+					</Alert>)
+				}
+				<button className={`custom-btn btn-rounded btn-100 mb-3 ${acceptedFiles.length > 0 ? 'active-btn' : ''}`} type="submit">
+					Upload
+				</button>
+				<ul className="list-group upload-list">
 					{
 						acceptedFiles.map(file => (
 							<li key={file.name} className="list-group-item d-flex justify-content-between align-items-center">
@@ -56,25 +65,18 @@ const ImageUpload = ({ albumId }) => {
 							</li>
 						))
 					}
-					</ul>
-				</Form.Group>
-				<button className={`custom-btn btn-100 ${acceptedFiles.length > 0 ? 'active-btn' : ''}`} type="submit">
-					Upload
-				</button>
+				</ul>
 			</Form>
 			{
 				uploadProgress !== null && (
 					<ProgressBar variant="success" animated now={uploadProgress} className="dropzone-progress mb-3"/>
 				)
 			}
-			{ error && (<Alert variant="warning">{error}</Alert>) }
+			
 
 			{
 				isSuccess && (
 					<>
-						<Alert variant="success" className="dropzone-alert">
-							Your upload was successful
-						</Alert>
 						{
 							location.pathname === `/albums/${albumId}`
 								? ('')

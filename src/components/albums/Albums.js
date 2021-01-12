@@ -1,13 +1,13 @@
 import React from 'react'
 import { Alert, Row, Col, Card } from 'react-bootstrap'
-import './Albums.scss'
 import { IoTrashBin } from 'react-icons/io5'
-import { AiFillEdit } from 'react-icons/ai'
-import { FaCheck } from 'react-icons/fa'
+import { AiFillEdit, AiFillLike } from 'react-icons/ai'
+import { FcLike } from 'react-icons/fc'
 import { Link } from 'react-router-dom'
 import { useAuth } from '../../contexts/AuthContext'
 import { useAlbumContext } from '../../contexts/AlbumContext'
 import useAlbums from '../../hooks/useAlbums'
+import './Albums.scss'
 
 const Albums = () => {
 	const { currentUser } = useAuth()
@@ -39,7 +39,7 @@ const Albums = () => {
 									<Card className="mb-3 album-list-card">
 										{
 											album.created_by === 'guest'
-												? <span className="album-list-card-guest"><FaCheck /></span>
+												? <span className="album-list-card-guest"><AiFillLike /></span>
 												: ('')
 										}
 										<Link to={`/albums/${album.id}`}>

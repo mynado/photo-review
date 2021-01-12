@@ -27,6 +27,10 @@
   }
 }
 
+.copied {
+  background-color: rgb(198, 224, 255);
+}
+
 @media (min-width: 768px) {
   .album-header-wrapper {
     display: flex;

@@ -1,6 +1,7 @@
 import { useState, useRef } from 'react'
-import { Link } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { Alert, Form, Row, Col } from 'react-bootstrap'
+import { IoChevronBack } from 'react-icons/io5'
 import { useAuth } from '../../contexts/AuthContext'
 
 const ProfileUpdate = () => {
@@ -10,8 +11,8 @@ const ProfileUpdate = () => {
 	const passwordRef = useRef()
 	const passwordConfirmRef = useRef()
 	const [error, setError] = useState(null)
-	const [loading, setLoading] = useState(false)
 	const [message, setMessage] = useState(null)
+	const navigate = useNavigate()
 
 	const handleSubmit = async (e) => {
 		e.preventDefault()
@@ -23,7 +24,6 @@ const ProfileUpdate = () => {
 		setError(null)
 
 		try {
-			setLoading(true)
 			if (nameRef.current.value !== currentUser.displayName) {
 				await updateUserProfile(nameRef.current.value)
 			}
@@ -38,9 +38,7 @@ const ProfileUpdate = () => {
 			
 			setMessage("Profile successfully updated")
 		} catch (e) {
-			setLoading(true)
 			setError("Error updating profile.")
-			setLoading(false)
 		}
 	}
 
@@ -48,12 +46,8 @@ const ProfileUpdate = () => {
 		<Row className="justify-content-md-center">
 			<Col xs={12} md={6} lg={4}>
 				<h1>Settings</h1>
-				{error && (
-					<Alert variant="warning">{error}</Alert>
-				)}
-				{message && (
-					<Alert variant="success">{message}</Alert>
-				)}
+				{error && (<Alert variant="warning">{error}</Alert>)}
+				{message && (<Alert variant="success">{message}</Alert>)}
 				<Form onSubmit={handleSubmit}>
 					<Form.Group>
 						<Form.Label>Name</Form.Label>
@@ -80,6 +74,7 @@ const ProfileUpdate = () => {
 						Update
 					</button>
 				</Form>
+				<button onClick={() => navigate(-1)} className="custom-btn"><IoChevronBack />Back</button>
 			</Col>
 		</Row>
 	)

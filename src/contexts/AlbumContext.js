@@ -44,10 +44,10 @@ const AlbumContextProvider = (props) => {
 				}
 			})
 
-			if (user === 'guest') {
-				navigate(`/thank-you`)
-			} else {
+			if (createdBy === 'you') {
 				navigate(`/albums/${docRef.id}`)
+			} else {
+				navigate(`/thank-you`)
 			}
 			
 		} catch (e) {

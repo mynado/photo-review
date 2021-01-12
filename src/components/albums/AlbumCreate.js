@@ -1,5 +1,4 @@
 import { useState, useRef } from 'react'
-import { Link } from 'react-router-dom'
 import { Alert, Form, Row, Col } from 'react-bootstrap'
 import moment from 'moment'
 import { db } from '../../firebase'
@@ -38,7 +37,6 @@ const AlbumCreate = () => {
 			setTimeout( () => {
 				setError(null)
 			}, 2000);
-			
 		}
 	}
 

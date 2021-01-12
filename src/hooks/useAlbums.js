@@ -8,7 +8,6 @@ const useAlbums = (userId) => {
 	useEffect(() => {
 		const unsubscribe = db.collection('albums')
 			.where('owner', '==', userId)
-			.orderBy('title')
 			.onSnapshot(snapshot => {
 				setLoading(true)
 				const snapshotAlbums = []
