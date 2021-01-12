@@ -10,7 +10,6 @@ const useImageContext = () => {
 const ImageContextProvider = (props) => {
 	const [imageToAdd, setImageToAdd] = useState([])
 	const [imageToDelete, setImageToDelete] = useState([])
-	const [imagesInDb, setImagesInDb] = useState([])
 
 	const clearSelectedImages = () => {
 		setImageToAdd([])
@@ -20,27 +19,22 @@ const ImageContextProvider = (props) => {
 		if (!image) {
 			return
 		}
-
-		const unsubscribe = db.collection('images')
+		db.collection('images').doc(image.id).delete()
+		db.collection('images')
 		.where('path', '==', image.path)
-		.onSnapshot(snapshot => {
-			const snapShotImages = []
-
-			snapshot.forEach(doc => {
-				snapShotImages.push({
+		.get().then(docs => {
+			console.log(docs)
+			const imgs = []
+			docs.forEach(doc => {
+				imgs.push({
 					id: doc.id,
 					...doc.data()
 				})
 			})
-			setImagesInDb(snapShotImages)
+			if (imgs.length === 0) {
+				storage.ref(image.path).delete()
+			}
 		})
-		
-		await db.collection('images').doc(image.id).delete()
-
-		if (imagesInDb.length === 1) {
-			await storage.ref(image.path).delete()
-		}
-		return unsubscribe
 	}
 
 	const handleLikeImage = (image) => {
