@@ -4,17 +4,15 @@ import { useImageContext } from '../../contexts/ImageContext'
 import './Checkbox.scss'
 
 const Checkbox = ({image}) => {
-	const { handleLikeImage, imageToAdd } = useImageContext()
+	const { imageToAdd, handleLikeImage, handleDislikeImage } = useImageContext()
 
 	return (
 		<>
-			<button className={`checkbox-btn custom-btn`} onClick={() => handleLikeImage(image)}>
-					{
-						imageToAdd.includes(image) && ( 
-							<ImCheckmark className="checkbox-btn-icon" />
-						)
-					}
-			</button>
+			{
+				imageToAdd.includes(image)
+					? (<button className={`checkbox-btn custom-btn`} onClick={() => handleDislikeImage(image)}><ImCheckmark className="checkbox-btn-icon" /></button>)
+					: (<button className={`checkbox-btn custom-btn`} onClick={() => handleLikeImage(image)}></button>)
+			}
 		</>
 	)
 }

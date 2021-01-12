@@ -40,16 +40,13 @@ const ImageContextProvider = (props) => {
 		if (imagesInDb.length === 1) {
 			await storage.ref(image.path).delete()
 		}
-
 		return unsubscribe
-
 	}
 
 	const handleLikeImage = (image) => {
 		if (imageToAdd.includes(image)) {
 			return
 		}
-
 		setImageToAdd(imageToAdd => [...imageToAdd, image])
 		const index = imageToDelete.indexOf(image);
 		if (index > -1) {
