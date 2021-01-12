@@ -20,7 +20,7 @@ const ImageUpload = ({ albumId }) => {
 
 	const handleFileInput = (e) => {
 		if (!albumId) {
-			return console.log('You need to create an album before adding images')
+			return
 		}
 		const imgs = []
 		Array.from(e.target.files).map(file => {
@@ -49,20 +49,12 @@ const ImageUpload = ({ albumId }) => {
 				
 					<ul className="list-group">
 					{
-						isSuccess 
-						 ? ('')
-						 : (
-							<>
-								{
-									acceptedFiles.map(file => (
-										<li key={file.name} className="list-group-item d-flex justify-content-between align-items-center">
-											<img src={URL.createObjectURL(file)} className="img-fluid w-25" alt="preview"/>
-											<small>{file.name} ({Math.round(file.size / 1024)} kb)</small>
-										</li>
-									))
-								}
-							</>
-						)
+						acceptedFiles.map(file => (
+							<li key={file.name} className="list-group-item d-flex justify-content-between align-items-center">
+								<img src={URL.createObjectURL(file)} className="img-fluid w-25" alt="preview"/>
+								<small>{file.name} ({Math.round(file.size / 1024)} kb)</small>
+							</li>
+						))
 					}
 					</ul>
 				</Form.Group>
@@ -86,7 +78,7 @@ const ImageUpload = ({ albumId }) => {
 						{
 							location.pathname === `/albums/${albumId}`
 								? ('')
-								: 	<Link to={`/albums/${albumId}`}><button className="custom-btn btn-100 active-btn">Go to album</button></Link>
+								: <Link to={`/albums/${albumId}`}><button className="custom-btn btn-100 active-btn">Go to album</button></Link>
 						}
 					</>
 				)
