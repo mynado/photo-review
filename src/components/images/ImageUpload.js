@@ -2,13 +2,14 @@ import { useState } from 'react'
 import { Alert, Form, ProgressBar } from 'react-bootstrap'
 import useImageUpload from '../../hooks/useImageUpload'
 
-const ImageUpload2 = ({ albumId }) => {
+const ImageUpload = ({ albumId }) => {
 	const [files, setFiles] = useState([])
 	const [acceptedFiles, setAcceptedFiles] = useState([])
 	const { error, isSuccess, uploadProgress } = useImageUpload(files, albumId)
 
 	const handleSubmitImages = async (e) => {
 		e.preventDefault()
+		setFiles([])
 		if (acceptedFiles.length === 0) {
 			return
 		}
@@ -24,11 +25,12 @@ const ImageUpload2 = ({ albumId }) => {
 			return imgs.push(file)
 		})
 		setAcceptedFiles(imgs)
+		
 	}
 	return (
 		<>
-		<Form onSubmit={handleSubmitImages} className="mb-4">
-			<Form.Group>
+			<Form onSubmit={handleSubmitImages} className="mb-4">
+				<Form.Group>
 					<div>
 						<input 
 							type="file"
@@ -46,33 +48,34 @@ const ImageUpload2 = ({ albumId }) => {
 					<ul className="list-group">
 					{
 						acceptedFiles.map(file => (
-							<li key={file.name} className=" list-group-item d-flex justify-content-between align-items-center">
+							<li key={file.name} className="list-group-item d-flex justify-content-between align-items-center">
 								<img src={URL.createObjectURL(file)} className="img-fluid w-25" alt="preview"/>
 								<small>{file.name} ({Math.round(file.size / 1024)} kb)</small>
 							</li>
 						))
 					}
 					</ul>
-			</Form.Group>
-			<button className="custom-btn btn-100" type="submit">
-				Add photos
-			</button>
-		</Form>
-		{
-						uploadProgress !== null && (
-							<ProgressBar variant="success" animated now={uploadProgress} className="dropzone-progress"/>
-						)
-					}
+				</Form.Group>
+				<button className={`custom-btn btn-100 ${acceptedFiles.length > 0 ? 'active-btn' : ''}`} type="submit">
+					Upload
+				</button>
+			</Form>
+			{
+				uploadProgress !== null && (
+					<ProgressBar variant="success" animated now={uploadProgress} className="dropzone-progress mb-3"/>
+				)
+			}
+			{ error && (<Alert variant="warning">{error}</Alert>) }
 
-					{
-						isSuccess && (
-							<Alert variant="success" className="dropzone-alert">
-								Your upload was successful
-							</Alert>
-						)
-					}
+			{
+				isSuccess && (
+					<Alert variant="success" className="dropzone-alert">
+						Your upload was successful
+					</Alert>
+				)
+			}
 		</>
 	)
 }
 
-export default ImageUpload2
+export default ImageUpload

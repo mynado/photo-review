@@ -10,13 +10,14 @@ const useImageUpload = (files, albumId = null) => {
 	const { currentUser } = useAuth()
 
 	useEffect(() => {
-		if (files.length === 0) {
+		if (!files) {
+			setUploadProgress(null)
 			setUploadedFile(null)
 			setError(null)
 			setIsSuccess(false)
-
 			return
 		}
+		
 		setError(null)
 		setIsSuccess(false)
 
@@ -54,7 +55,6 @@ const useImageUpload = (files, albumId = null) => {
 						img_url: img.url,
 					})
 				}
-				
 
 				setIsSuccess(true)
 				setUploadProgress(null)

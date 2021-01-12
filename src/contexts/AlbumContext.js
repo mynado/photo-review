@@ -71,22 +71,20 @@ const AlbumContextProvider = (props) => {
 
 					// delete image from firestore
 					imageDoc.ref.delete();
-
-					// query matching path 
+					// query all images with matching path as imageDoc
 					const snapshot = await db.collection('images').where('path', '==', imageDoc.data().path).get();
 					const snapshotImgs = []
 					snapshot.forEach(doc => {
 						if (snapshotImgs.includes(doc.data())) {
 							return
 						}
-						console.log('snapshotimgs', snapshotImgs)
 						snapshotImgs.push({
 							id: doc.id,
 							...doc.data()
 						})
 					});
 
-					// if no image exist with the queried path exist in firestore
+					// if no image with the queried path exist in firestore
 					if (snapshotImgs.length === 0) {
 						// delete the image from storage
 						storage.ref(imageDoc.data().path)

@@ -67,7 +67,7 @@ const AlbumCreate = () => {
 					albumId && (
 						<>
 							<h5>2. Add images</h5>
-							<ImageUpload albumId={albumId} images={[]} />
+							<ImageUpload albumId={albumId}/>
 							<Link to={`/albums/${albumId}`}><button className="custom-btn btn-100 active-btn">Go to album</button></Link>
 						</>
 					)
