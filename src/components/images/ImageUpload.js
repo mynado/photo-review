@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { Link, useLocation } from 'react-router-dom'
 import { Alert, Form, ProgressBar } from 'react-bootstrap'
 import useImageUpload from '../../hooks/useImageUpload'
 
@@ -6,6 +7,7 @@ const ImageUpload = ({ albumId }) => {
 	const [files, setFiles] = useState([])
 	const [acceptedFiles, setAcceptedFiles] = useState([])
 	const { error, isSuccess, uploadProgress } = useImageUpload(files, albumId)
+	const location = useLocation()
 
 	const handleSubmitImages = async (e) => {
 		e.preventDefault()
@@ -47,12 +49,20 @@ const ImageUpload = ({ albumId }) => {
 				
 					<ul className="list-group">
 					{
-						acceptedFiles.map(file => (
-							<li key={file.name} className="list-group-item d-flex justify-content-between align-items-center">
-								<img src={URL.createObjectURL(file)} className="img-fluid w-25" alt="preview"/>
-								<small>{file.name} ({Math.round(file.size / 1024)} kb)</small>
-							</li>
-						))
+						isSuccess 
+						 ? ('')
+						 : (
+							<>
+								{
+									acceptedFiles.map(file => (
+										<li key={file.name} className="list-group-item d-flex justify-content-between align-items-center">
+											<img src={URL.createObjectURL(file)} className="img-fluid w-25" alt="preview"/>
+											<small>{file.name} ({Math.round(file.size / 1024)} kb)</small>
+										</li>
+									))
+								}
+							</>
+						)
 					}
 					</ul>
 				</Form.Group>
@@ -69,9 +79,16 @@ const ImageUpload = ({ albumId }) => {
 
 			{
 				isSuccess && (
-					<Alert variant="success" className="dropzone-alert">
-						Your upload was successful
-					</Alert>
+					<>
+						<Alert variant="success" className="dropzone-alert">
+							Your upload was successful
+						</Alert>
+						{
+							location.pathname === `/albums/${albumId}`
+								? ('')
+								: 	<Link to={`/albums/${albumId}`}><button className="custom-btn btn-100 active-btn">Go to album</button></Link>
+						}
+					</>
 				)
 			}
 		</>

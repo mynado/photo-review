@@ -35,6 +35,10 @@ const AlbumCreate = () => {
 			setMessage('Album created!')
 		} catch (e) {
 			setError(e.message)
+			setTimeout( () => {
+				setError(null)
+			}, 2000);
+			
 		}
 	}
 
@@ -43,7 +47,7 @@ const AlbumCreate = () => {
 			<Col xs={12} md={6} lg={4}>
 				<h1 className="mb-4">Create album</h1>
 				{error && (
-					<Alert variant="warning">{error}</Alert>
+					<Alert variant="warning" className="text-center">{error}</Alert>
 				)}
 				<Form onSubmit={handleSubmitAlbum} className="mb-4">
 					<Form.Group>
@@ -57,18 +61,14 @@ const AlbumCreate = () => {
 					</Form.Group>
 
 					<button className="custom-btn btn-100" type="submit" disabled={btnDisabled}>
-						Add album
+						{message ? 'Album created!' : 'Add album'}
 					</button>
-					{message && (
-						<Alert variant="success" className="mt-3">{message}</Alert>
-					)}
 				</Form>
 				{
 					albumId && (
 						<>
 							<h5>2. Add images</h5>
 							<ImageUpload albumId={albumId}/>
-							<Link to={`/albums/${albumId}`}><button className="custom-btn btn-100 active-btn">Go to album</button></Link>
 						</>
 					)
 				}
