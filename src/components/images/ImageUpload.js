@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import { Alert, Form, ProgressBar } from 'react-bootstrap'
 import useImageUpload from '../../hooks/useImageUpload'
@@ -8,6 +8,13 @@ const ImageUpload = ({ albumId }) => {
 	const [acceptedFiles, setAcceptedFiles] = useState([])
 	const { error, isSuccess, uploadProgress } = useImageUpload(files, albumId)
 	const location = useLocation()
+
+	useEffect(() => {
+		if (isSuccess) {
+			setAcceptedFiles([])
+		}
+		
+	}, [isSuccess])
 
 	const handleSubmitImages = async (e) => {
 		e.preventDefault()
@@ -56,10 +63,15 @@ const ImageUpload = ({ albumId }) => {
 				<button className={`custom-btn btn-rounded btn-100 mb-3 ${acceptedFiles.length > 0 ? 'active-btn' : ''}`} type="submit">
 					Upload
 				</button>
-				<ul className="list-group upload-list">
+				{
+					uploadProgress !== null && (
+						<ProgressBar variant="success" animated now={uploadProgress} className="dropzone-progress mb-3"/>
+					)
+				}
+				<ul className="upload-list row">
 					{
-						acceptedFiles.map(file => (
-							<li key={file.name} className="list-group-item d-flex justify-content-between align-items-center">
+							acceptedFiles.map(file => (
+							<li key={file.name} className="list-item col-6 py-2 d-flex flex-column align-items-center">
 								<img src={URL.createObjectURL(file)} className="img-fluid w-25" alt="preview"/>
 								<small>{file.name} ({Math.round(file.size / 1024)} kb)</small>
 							</li>
@@ -67,13 +79,6 @@ const ImageUpload = ({ albumId }) => {
 					}
 				</ul>
 			</Form>
-			{
-				uploadProgress !== null && (
-					<ProgressBar variant="success" animated now={uploadProgress} className="dropzone-progress mb-3"/>
-				)
-			}
-			
-
 			{
 				isSuccess && (
 					<>
