@@ -19,7 +19,7 @@ const Navigation = () => {
 
 	return (
 		<nav className="navbar navbar-expand-lg mb-3">
-			<NavLink className="navbar-brand" to="/">Photo Review App</NavLink>
+			<NavLink className="navbar-brand" to={`${currentUser ? '/albums' : '/'}`}>Photo Review App</NavLink>
 			<button
 				className="navbar-toggler custom-btn"
 				type="button"
