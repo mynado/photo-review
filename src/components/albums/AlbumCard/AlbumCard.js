@@ -3,8 +3,8 @@ import { Link } from 'react-router-dom'
 import { Col, Card } from 'react-bootstrap'
 import { IoTrashBin } from 'react-icons/io5'
 import { AiFillEdit, AiFillLike } from 'react-icons/ai'
-import { useAlbumContext } from '../../contexts/AlbumContext'
-import noImage from '../../assets/images/no-image.jpg'
+import { useAlbumContext } from '../../../contexts/AlbumContext'
+import noImage from '../../../assets/images/no-image.jpg'
 
 const AlbumCard = ({ album }) => {
 	const [imgUrl, setImgUrl] = useState()

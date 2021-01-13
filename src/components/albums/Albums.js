@@ -3,7 +3,7 @@ import { Alert, Row } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 import { useAuth } from '../../contexts/AuthContext'
 import { useAlbumContext } from '../../contexts/AlbumContext'
-import AlbumCard from './AlbumCard'
+import AlbumCard from './AlbumCard/AlbumCard'
 import useAlbums from '../../hooks/useAlbums'
 import './Albums.scss'
 

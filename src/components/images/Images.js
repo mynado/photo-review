@@ -2,7 +2,7 @@ import React from 'react'
 import { Row } from 'react-bootstrap'
 import SimpleReactLightbox, { SRLWrapper } from "simple-react-lightbox";
 import useImages from '../../hooks/useImages'
-import Image from './image/Image'
+import Image from './Image/Image'
 import './Images.scss'
 
 const Images = ({ albumId, showedit }) => {

@@ -2,8 +2,8 @@ import { useState, useRef } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { Alert, Form, Row, Col } from 'react-bootstrap'
 import { IoChevronBack } from 'react-icons/io5'
-import { db } from '../../firebase'
-import useAlbum from '../../hooks/useAlbum'
+import { db } from '../../../firebase'
+import useAlbum from '../../../hooks/useAlbum'
 
 const AlbumUpdate = () => {
 	const { albumId } = useParams()

@@ -10,8 +10,9 @@ const Image = ({ showedit, image }) => {
 	const { handleDeleteImage } = useImageContext()
 	const { currentUser } = useAuth()
 
+
 	return (
-		<Col xs={12} sm={6} md={6} lg={4} key={image.id} className="col-padding image-item">
+		<Col xs={12} sm={6} md={6} lg={4} className="col-padding image-item">
 			<img className="img-fluid" src={image.url} alt="" />
 				{
 					currentUser 
