@@ -15,7 +15,7 @@ const ImageContextProvider = (props) => {
 		setImageToAdd([])
 		setImageToDelete([])
 	}
-	const handleDeleteImage = async (image) => {
+	const handleDeleteImage = (image) => {
 		if (!image) {
 			return
 		}
@@ -23,7 +23,6 @@ const ImageContextProvider = (props) => {
 		db.collection('images')
 		.where('path', '==', image.path)
 		.get().then(docs => {
-			console.log(docs)
 			const imgs = []
 			docs.forEach(doc => {
 				imgs.push({
