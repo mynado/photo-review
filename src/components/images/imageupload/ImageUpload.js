@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import { Alert, Form, ProgressBar } from 'react-bootstrap'
-import useImageUpload from '../../hooks/useImageUpload'
+import useImageUpload from '../../../hooks/useImageUpload'
 
 const ImageUpload = ({ albumId }) => {
 	const [files, setFiles] = useState([])

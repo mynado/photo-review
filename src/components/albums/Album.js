@@ -9,8 +9,8 @@ import { useAlbumContext } from '../../contexts/AlbumContext'
 import useAlbum from '../../hooks/useAlbum'
 import Images from '../images/Images'
 import useImages from '../../hooks/useImages'
-import ThumbNail from '../images/ThumbNail'
-import ImageUpload from '../images/ImageUpload'
+import ThumbNail from '../images/thumbnail/ThumbNail'
+import ImageUpload from '../images/imageupload/ImageUpload'
 import './Album.scss'
 import AlbumHeader from './AlbumHeader'
 
@@ -129,7 +129,7 @@ const Album = () => {
 			{
 				loading
 					? <p>Loading...</p>
-					: (<Images images={images} showedit={showEdit}/>)
+					: (<Images albumId={albumId} showedit={showEdit}/>)
 			}
 
 			{

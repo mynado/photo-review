@@ -1,6 +1,6 @@
 import React from 'react'
 import { ImCheckmark } from 'react-icons/im'
-import { useImageContext } from '../../contexts/ImageContext'
+import { useImageContext } from '../../../contexts/ImageContext'
 import './Checkbox.scss'
 
 const Checkbox = ({image}) => {

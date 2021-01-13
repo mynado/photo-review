@@ -1,7 +1,7 @@
 import React from 'react'
 import { Image, Col } from 'react-bootstrap'
 import { IoRemoveCircle } from 'react-icons/io5'
-import { useImageContext } from '../../contexts/ImageContext'
+import { useImageContext } from '../../../contexts/ImageContext'
 import './ThumbNail.scss'
 
 const ThumbNail = ({ images }) => {
