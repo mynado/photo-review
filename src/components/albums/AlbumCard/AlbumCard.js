@@ -30,28 +30,30 @@ const AlbumCard = ({ album }) => {
 						? <span className="album-list-card-guest"><AiFillLike /></span>
 						: ('')
 				}
-				<button className="ml-auto btn-unstyled" onClick={handleShowEdit}>
-					<HiDotsHorizontal />
-				</button>
+				<div className="my-1 ml-auto">
+					<button className="btn-unstyled" onClick={handleShowEdit}>
+						<HiDotsHorizontal />
+					</button>
+				</div>
 				<Link to={`/albums/${album.id}`}>
 					<Card.Img variant="top" src={imgUrl} onError={() => setImgUrl(noImage)} width="100%" height="300px" />
 				</Link>
-				<Card.Footer className="text-muted d-flex justify-content-between">
-					<div className="d-flex flex-column">
-						{
-							showEdit
-								? (
-									<>
-										<AlbumUpdate albumId={album.id} inAlbum={false}/>
-									</>
-								)
-								: (<Link className="album-list-title" to={`/albums/${album.id}`}>{album.title}</Link>)
-						}
-						<small className="album-list-date"> By {album.created_by} {album.date}</small>
-					</div>
-					<div className="button-wrapper">
-						{ showEdit &&(<button className="btn-unstyled" onClick={() => handleDeleteAlbum(album)}><IoTrashBin /> </button>) }	
-					</div>
+				<Card.Footer className="text-muted d-flex justify-content-between align-items-center">
+					{
+						showEdit
+							? (
+								<>
+									<AlbumUpdate albumId={album.id} inAlbum={false}/>
+									<button className="custom-btn btn-rounded" onClick={() => handleDeleteAlbum(album)}><IoTrashBin /> </button>
+								</>
+							)
+							: (
+								<>
+									<Link className="album-list-title" to={`/albums/${album.id}`}>{album.title}</Link>
+									<small className="album-list-date"> By {album.created_by} {album.date}</small>
+								</>
+							)
+					}
 				</Card.Footer>
 			</Card>
 		</Col>
