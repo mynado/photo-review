@@ -13,7 +13,6 @@ import ProfileUpdate from './components/profile/ProfileUpdate'
 import Albums from './components/albums/Albums'
 import AlbumCreate from './components/albums/AlbumCreate/AlbumCreate'
 import Album from './components/albums/Album/Album'
-import AlbumUpdate from './components/albums/AlbumUpdate/AlbumUpdate'
 import ThankYou from './components/ThankYou'
 import NotFound from './components/NotFound'
 import ForgotPassword from './components/auth/ForgotPassword'
@@ -58,9 +57,6 @@ const App = () => {
 										<Album />
 									</AuthRoute>
 
-									<AuthRoute path="/edit">
-										<AlbumUpdate />
-									</AuthRoute>
 								</AuthRoute>
 
 								<AuthRoute path="/create">

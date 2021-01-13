@@ -16,3 +16,17 @@
     height: 1.5rem;
   }
 }
+
+.album-title-form {
+  margin-bottom: 0 !important;
+  &-group {
+    margin-bottom: 0 !important;
+  }
+
+  &-input {
+    font-size: 2rem !important;
+    padding: 0em 0.75rem;
+    font-weight: 500;
+    height: 3.125rem;
+  }
+}

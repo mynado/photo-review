@@ -104,11 +104,7 @@ const Album = () => {
 					) : ('')
 			}
 			{
-				currentUser && (
-					<div className="album-header-wrapper">
-						<AlbumHeader album={album} onShowUpload={handleShowUpload} onShowReview={handleShowReviewUrl} onShowEdit={handleShowEdit}/>
-					</div>
-				)
+				currentUser && (<AlbumHeader album={album} onShowUpload={handleShowUpload} onShowReview={handleShowReviewUrl} onShowEdit={handleShowEdit} />)
 			}
 			
 			{

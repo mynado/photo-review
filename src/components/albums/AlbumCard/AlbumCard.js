@@ -42,7 +42,7 @@ const AlbumCard = ({ album }) => {
 							showEdit
 								? (
 									<>
-										<AlbumUpdate albumId={album.id}/>
+										<AlbumUpdate albumId={album.id} inAlbum={false}/>
 									</>
 								)
 								: (<Link className="album-list-title" to={`/albums/${album.id}`}>{album.title}</Link>)
