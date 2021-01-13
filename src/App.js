@@ -53,10 +53,7 @@ const App = () => {
 								</AuthRoute>
 
 								<AuthRoute path="/:albumId">
-									<AuthRoute path="/">
-										<Album />
-									</AuthRoute>
-
+									<Album />
 								</AuthRoute>
 
 								<AuthRoute path="/create">
