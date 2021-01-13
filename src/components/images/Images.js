@@ -1,16 +1,12 @@
 import React from 'react'
-import { Image, Row, Col } from 'react-bootstrap'
+import { Row } from 'react-bootstrap'
 import SimpleReactLightbox, { SRLWrapper } from "simple-react-lightbox";
-import { IoTrashBin } from 'react-icons/io5'
-import { useAuth } from '../../contexts/AuthContext'
-import { useImageContext } from '../../contexts/ImageContext'
-import Checkbox from './Checkbox'
-import LikeDislikeButtons from './LikeDislikeButtons'
+import useImages from '../../hooks/useImages'
+import Image from './image/Image'
 import './Images.scss'
 
-const Images = ({ images, showedit }) => {
-	const { handleDeleteImage } = useImageContext()
-	const { currentUser } = useAuth()
+const Images = ({ albumId, showedit }) => {
+	const { images } = useImages(albumId)
 
 	return (
 		<>
@@ -19,24 +15,7 @@ const Images = ({ images, showedit }) => {
 					<Row className="album-list">
 						{
 							images.map(image => (
-								<Col xs={12} sm={6} md={6} lg={4} key={image.id} className="col-padding image-item">
-									<Image src={image.url} alt="" fluid/>
-										{
-											currentUser 
-												? showedit 
-													? (
-														<div className="image-item-edit-buttons d-flex flex-column align-items-center">
-															<Checkbox image={image} />
-															<button className="custom-btn image-item-trash-button" onClick={() => handleDeleteImage(image)}>
-																<IoTrashBin className="trash-icon" />
-															</button>
-														</div>
-													) : ('')
-												: (
-													<LikeDislikeButtons image={image}/>
-												)
-										}
-								</Col>
+								<Image showedit={showedit} image={image} key={image.id}/>
 							))
 						}
 					</Row>
