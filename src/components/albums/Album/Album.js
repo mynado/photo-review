@@ -9,7 +9,7 @@ import { useAlbumContext } from '../../../contexts/AlbumContext'
 import useAlbum from '../../../hooks/useAlbum'
 import Images from '../../images/Images'
 import useImages from '../../../hooks/useImages'
-import ThumbNail from '../../images/ThumbNail/ThumbNail'
+import ThumbNail from '../../images/thumbnail/ThumbNail'
 import ImageUpload from '../../images/ImageUpload/ImageUpload'
 import './Album.scss'
 import AlbumHeader from '../AlbumHeader/AlbumHeader'
@@ -24,7 +24,7 @@ const Album = () => {
 	const { album, loading } = useAlbum(albumId)
 	const { images } = useImages(albumId)
 	const { currentUser } = useAuth()
-	const { imageToAdd, imageToDelete, error, clearSelectedImages } = useImageContext()
+	const { imageToAdd, imageToDelete, clearSelectedImages } = useImageContext()
 	const { handleCreateSelectionAlbum } = useAlbumContext()
 
 	useEffect(() => {
