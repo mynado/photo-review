@@ -41,6 +41,20 @@ a {
   }
 }
 
+.btn-unstyled {
+  outline: none;
+  background-color: transparent;
+  border: none;
+  padding: 0;
+  margin: 0 0.5rem;
+
+  &:hover,
+  &:active,
+  &:focus {
+    outline: none;
+  }
+}
+
 .btn-100 {
   width: 100%;
 }
