@@ -3,7 +3,7 @@ import { Alert, Form, Row, Col } from 'react-bootstrap'
 import moment from 'moment'
 import { db } from '../../../firebase'
 import { useAuth } from '../../../contexts/AuthContext'
-import ImageUpload from '../../images/ImageUpload/ImageUpload'
+import ImageUpload from '../../images/imageupload/ImageUpload'
 
 const AlbumCreate = () => {
 	const titleRef = useRef()

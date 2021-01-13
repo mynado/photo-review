@@ -10,7 +10,7 @@ import useAlbum from '../../../hooks/useAlbum'
 import Images from '../../images/Images'
 import useImages from '../../../hooks/useImages'
 import ThumbNail from '../../images/thumbnail/ThumbNail'
-import ImageUpload from '../../images/ImageUpload/ImageUpload'
+import ImageUpload from '../../images/imageupload/ImageUpload'
 import './Album.scss'
 import AlbumHeader from '../AlbumHeader/AlbumHeader'
 
