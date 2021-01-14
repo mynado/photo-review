@@ -80,24 +80,6 @@ a {
   margin: 0 0 0 auto;
 }
 
-.rate-btn {
-  width: 48%;
-
-  &-selected-like {
-    background-color: rgb(56, 56, 56);
-  }
-
-  &-selected-dislike {
-    background-color: #ff9595;
-    border-color: #ff9595 !important;
-  }
-
-  &-like,
-  &-dislike {
-    color: #eee;
-  }
-}
-
 .active-btn {
   background-color: #000;
   color: #eee;

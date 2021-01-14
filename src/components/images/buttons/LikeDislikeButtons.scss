@@ -1,0 +1,29 @@
+/*
+* Like Dislike Buttons Style
+*/
+
+.rate-btn {
+  &-wrapper {
+    display: flex;
+    justify-content: flex-end;
+    padding: 0.5rem 0.8rem;
+  }
+
+  &-like {
+    margin-bottom: 1px;
+    font-size: 2rem;
+
+    &-placeholder {
+      margin-bottom: 1px;
+    }
+  }
+  &-dislike {
+    color: #000;
+    font-size: 1.9rem;
+    margin-top: 3px;
+
+    &-placeholder {
+      color: #ddd;
+    }
+  }
+}

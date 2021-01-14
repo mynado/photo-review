@@ -1,27 +1,33 @@
 /*
-* Images Style
+* Image Styles
 */
 
 .image-item {
   list-style-type: none;
   margin-bottom: 1rem;
   position: relative;
+  height: fit-content !important;
+
+  &-wrapper {
+    &-guest {
+      border: 1px solid #eee;
+      border-radius: 10px;
+    }
+  }
+
+  &-img {
+    border-top-right-radius: 10px;
+    border-top-left-radius: 10px;
+
+    &:hover {
+      cursor: zoom-in;
+    }
+  }
 
   &-edit-buttons {
     position: absolute;
     top: 0.5rem;
     right: 0.5rem;
-  }
-
-  &-rate-buttons {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 0.5rem;
-  }
-
-  &-like,
-  &-dislike {
-    width: 48%;
   }
 
   &-trash-button {
