@@ -85,7 +85,7 @@ const ImageUpload = ({ albumId }) => {
 						{
 							location.pathname === `/albums/${albumId}`
 								? ('')
-								: <Link to={`/albums/${albumId}`}><button className="custom-btn btn-100 active-btn">Go to album</button></Link>
+								: <Link to={`/albums/${albumId}`}><button className="custom-btn btn-100 btn-rounded active-btn">Go to album</button></Link>
 						}
 					</>
 				)

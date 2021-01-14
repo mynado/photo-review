@@ -16,7 +16,7 @@ const Albums = () => {
 	return (
 		<div>
 			<div className="d-flex justify-content-between mt-3 mb-3 align-items-center">
-				<h2>Hello {currentUser.displayName}</h2>
+				<h2>All Albums</h2>
 				<Link to="/albums/create">
 					<button className="custom-btn btn-rounded px-2">+ Album</button>
 				</Link>

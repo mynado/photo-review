@@ -51,7 +51,7 @@ const Login = () => {
 							autoComplete="on"
 						/>
 					</Form.Group>
-					<button className="custom-btn btn-100" type="submit">
+					<button className="custom-btn btn-rounded btn-100" type="submit">
 						Login
 					</button>
 					<small><Link to="/forgot-password">Forgot your password?</Link></small>

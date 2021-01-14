@@ -58,7 +58,7 @@ const AlbumCreate = () => {
 						/>
 					</Form.Group>
 
-					<button className="custom-btn btn-100" type="submit" disabled={btnDisabled}>
+					<button className="custom-btn btn-rounded btn-100" type="submit" disabled={btnDisabled}>
 						{message ? 'Album created!' : 'Add album'}
 					</button>
 				</Form>
