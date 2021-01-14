@@ -30,7 +30,8 @@ const AlbumCard = ({ album }) => {
 						? <span className="album-list-card-guest"><AiFillLike /></span>
 						: ('')
 				}
-				<div className="my-1 ml-auto">
+				<div className="d-flex justify-content-between align-items-center my-1 mx-2">
+					<small className="album-list-date">{album.date}</small>
 					<button className="btn-unstyled" onClick={handleShowEdit}>
 						<HiDotsHorizontal />
 					</button>
@@ -44,14 +45,14 @@ const AlbumCard = ({ album }) => {
 							? (
 								<>
 									<AlbumUpdate albumId={album.id} inAlbum={false}/>
-									<button className="custom-btn btn-rounded" onClick={() => handleDeleteAlbum(album)}><IoTrashBin /> </button>
+									<button className="custom-btn-fill btn-rounded" onClick={() => handleDeleteAlbum(album)}><IoTrashBin className="mb-1" /> </button>
 								</>
 							)
 							: (
-								<>
+								<div className="d-flex flex-column">
 									<Link className="album-list-title" to={`/albums/${album.id}`}>{album.title}</Link>
-									<small className="album-list-date"> By {album.created_by} {album.date}</small>
-								</>
+									<small className="album-list-date"> By {album.created_by}</small>
+								</div>
 							)
 					}
 				</Card.Footer>

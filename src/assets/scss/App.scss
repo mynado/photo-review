@@ -39,6 +39,12 @@ a {
   &-remove {
     color: red;
   }
+
+  &-fill {
+    background-color: rgb(56, 56, 56);
+    border: 1px solid rgb(56, 56, 56);
+    color: #eee;
+  }
 }
 
 .btn-unstyled {
@@ -46,7 +52,7 @@ a {
   background-color: transparent;
   border: none;
   padding: 0;
-  margin: 0 0.5rem;
+  margin: 0;
 
   &:hover,
   &:active,
