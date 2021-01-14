@@ -66,7 +66,7 @@ const AlbumCreate = () => {
 					albumId && (
 						<>
 							<h5>2. Add images</h5>
-							<ImageUpload albumId={albumId}/>
+							<ImageUpload albumId={albumId} images={[]}/>
 						</>
 					)
 				}

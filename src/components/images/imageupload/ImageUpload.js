@@ -3,25 +3,40 @@ import { Link, useLocation } from 'react-router-dom'
 import { Alert, Form, ProgressBar } from 'react-bootstrap'
 import useImageUpload from '../../../hooks/useImageUpload'
 
-const ImageUpload = ({ albumId }) => {
+const ImageUpload = ({ albumId, images }) => {
 	const [files, setFiles] = useState([])
+	const [message, setMessage] = useState(null)
+	const [success, setSuccess] = useState(false)
 	const [acceptedFiles, setAcceptedFiles] = useState([])
 	const { error, isSuccess, uploadProgress } = useImageUpload(files, albumId)
 	const location = useLocation()
 
 	useEffect(() => {
 		if (isSuccess) {
-			setAcceptedFiles([])
+			setMessage('Your upload was succesful')
+			setSuccess(true)
 		}
-		
 	}, [isSuccess])
+
 
 	const handleSubmitImages = async (e) => {
 		e.preventDefault()
 		setFiles([])
+		setSuccess(false)
+		setMessage(null)
 		if (acceptedFiles.length === 0) {
 			return
 		}
+
+		const result = acceptedFiles.reduce((r, file) => {
+			const found = images.find(image => file.name === image.name)
+			r.push(found ? found : file)
+			return r;
+		  }, [])
+
+		 if (result[0].id) {
+			 return setMessage('One or more images already exists in this album.')
+		 }
 		setFiles(acceptedFiles)
 	}
 
@@ -54,12 +69,8 @@ const ImageUpload = ({ albumId }) => {
 						</label>	
 					</div>
 				</Form.Group>
+				{ message && (<Alert variant={success ? 'success' : 'warning'}>{message}</Alert>) }
 				{ error && (<Alert variant="warning">{error}</Alert>) }
-				{ isSuccess && (
-					<Alert variant="success" className="dropzone-alert">
-							Your upload was successful
-					</Alert>)
-				}
 				<button className={`custom-btn btn-rounded btn-100 mb-3 ${acceptedFiles.length > 0 ? 'active-btn' : ''}`} type="submit">
 					Upload
 				</button>
@@ -70,7 +81,7 @@ const ImageUpload = ({ albumId }) => {
 				}
 				<ul className="upload-list row">
 					{
-							acceptedFiles.map(file => (
+						acceptedFiles.map(file => (
 							<li key={file.name} className="list-item col-6 py-2 d-flex flex-column align-items-center">
 								<img src={URL.createObjectURL(file)} className="img-fluid w-25" alt="preview"/>
 								<small>{file.name} ({Math.round(file.size / 1024)} kb)</small>
