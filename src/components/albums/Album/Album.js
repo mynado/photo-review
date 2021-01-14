@@ -109,7 +109,7 @@ const Album = () => {
 			
 			{
 				showUpload
-					? <ImageUpload albumId={albumId} />
+					? <ImageUpload albumId={albumId} images={images}/>
 					: ''
 			}
 

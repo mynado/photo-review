@@ -14,19 +14,6 @@ const useAlbum = (albumId) => {
 			})
 			setLoading(false)
 		})
-
-		// const unsubscribe = db.collection('albums').doc(albumId)
-		// 	.onSnapshot(snapshot => {
-		// 		setLoading(true)
-		// 		setAlbum({
-		// 			id: snapshot.id,
-		// 			...snapshot.data()
-		// 		})
-		// 		setLoading(false)
-		// 	})
-		// return unsubscribe
-	}, [albumId])
-
 	return { album, loading }
 }
 

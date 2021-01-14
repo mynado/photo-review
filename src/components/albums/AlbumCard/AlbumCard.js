@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import { Col, Card } from 'react-bootstrap'
 import { IoTrashBin } from 'react-icons/io5'
 import { FcLike } from 'react-icons/fc'
-import { HiDotsHorizontal, HiDotsVertical } from 'react-icons/hi'
+import { HiDotsVertical } from 'react-icons/hi'
 import { useAlbumContext } from '../../../contexts/AlbumContext'
 import noImage from '../../../assets/images/no-image.jpg'
 import './AlbumCard.scss'
@@ -30,7 +30,7 @@ const AlbumCard = ({ album }) => {
 						? <span className="album-list-card-guest"><FcLike /></span>
 						: ('')
 				}
-				<div className="d-flex justify-content-between align-items-center my-1 mx-2">
+				<div className="d-flex justify-content-between align-items-center mt-2 mb-1 mx-2">
 					<small className="album-list-date">{album.date}</small>
 					<button className="btn-unstyled" onClick={handleShowEdit}>
 						<HiDotsVertical className="album-list-card-edit-icon" />
@@ -45,7 +45,7 @@ const AlbumCard = ({ album }) => {
 							? (
 								<>
 									<AlbumUpdate albumId={album.id} inAlbum={false}/>
-									<button className="custom-btn-fill btn-rounded" onClick={() => handleDeleteAlbum(album)}><IoTrashBin className="mb-1" /> </button>
+									<button className="custom-btn custom-btn-circle" onClick={() => handleDeleteAlbum(album)}><IoTrashBin className="mb-1" /> </button>
 								</>
 							)
 							: (
