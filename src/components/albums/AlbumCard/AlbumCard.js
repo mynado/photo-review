@@ -2,8 +2,8 @@ import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { Col, Card } from 'react-bootstrap'
 import { IoTrashBin } from 'react-icons/io5'
-import { AiFillLike } from 'react-icons/ai'
-import { HiDotsHorizontal } from 'react-icons/hi'
+import { FcLike } from 'react-icons/fc'
+import { HiDotsHorizontal, HiDotsVertical } from 'react-icons/hi'
 import { useAlbumContext } from '../../../contexts/AlbumContext'
 import noImage from '../../../assets/images/no-image.jpg'
 import './AlbumCard.scss'
@@ -27,13 +27,13 @@ const AlbumCard = ({ album }) => {
 			<Card className="mb-3 album-list-card">
 				{
 					album.created_by === 'guest'
-						? <span className="album-list-card-guest"><AiFillLike /></span>
+						? <span className="album-list-card-guest"><FcLike /></span>
 						: ('')
 				}
 				<div className="d-flex justify-content-between align-items-center my-1 mx-2">
 					<small className="album-list-date">{album.date}</small>
 					<button className="btn-unstyled" onClick={handleShowEdit}>
-						<HiDotsHorizontal />
+						<HiDotsVertical className="album-list-card-edit-icon" />
 					</button>
 				</div>
 				<Link to={`/albums/${album.id}`}>

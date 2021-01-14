@@ -42,11 +42,15 @@
   &-card {
     position: relative;
 
+    &-edit-icon {
+      margin-bottom: 2px;
+      color: rgb(56, 56, 56);
+    }
+
     &-guest {
       position: absolute;
       right: 1rem;
       font-size: 2rem;
-      color: rgb(35, 233, 111);
       top: 1.5rem;
     }
   }

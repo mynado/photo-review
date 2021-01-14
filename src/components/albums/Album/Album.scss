@@ -2,8 +2,15 @@
 * Album styles
 */
 
+.album-header {
+  &-icon {
+    color: rgb(56, 56, 56);
+  }
+}
+
 .button-wrapper {
   margin: 0;
+  font-size: 1.5rem;
 }
 
 .review-url {

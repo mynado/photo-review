@@ -36,24 +36,6 @@ const Image = ({ showedit, image }) => {
 						</div>
 					)
 			}
-			{/* <div className="p-5">
-				<img className="img-fluid" src={image.url} alt="" />
-					{
-						currentUser 
-							? showedit 
-								? (
-									<div className="image-item-edit-buttons d-flex flex-column align-items-center">
-										<Checkbox image={image} />
-										<button className="custom-btn image-item-trash-button" onClick={() => handleDeleteImage(image)}>
-											<IoTrashBin className="trash-icon" />
-										</button>
-									</div>
-								) : ('')
-							: (
-								<LikeDislikeButtons image={image}/>
-							)
-					}
-				</div> */}
 		</Col>
 	)
 }
