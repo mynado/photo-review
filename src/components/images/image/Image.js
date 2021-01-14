@@ -18,7 +18,7 @@ const Image = ({ showedit, image }) => {
 				currentUser
 					? (
 						<div className="image-item-wrapper-auth">
-							<img className="img-fluid image-item-img" src={image.url} alt="" />
+							<img className="img-fluid" src={image.url} alt="" />
 								{showedit &&(
 									<div className="image-item-edit-buttons d-flex flex-column align-items-center">
 										<Checkbox image={image} />
