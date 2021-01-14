@@ -14,6 +14,8 @@ const useAlbum = (albumId) => {
 			})
 			setLoading(false)
 		})
+	}, [albumId])
+
 	return { album, loading }
 }
 
