@@ -22,6 +22,7 @@ const ImageContextProvider = (props) => {
 		db.collection('images').doc(image.id).delete()
 		db.collection('images')
 		.where('path', '==', image.path)
+		.where('owner', '==', image.owner)
 		.get().then(docs => {
 			const imgs = []
 			docs.forEach(doc => {
