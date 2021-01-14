@@ -28,15 +28,16 @@ const ImageUpload = ({ albumId, images }) => {
 			return
 		}
 
+		// check if file already exist
 		const result = acceptedFiles.reduce((r, file) => {
 			const found = images.find(image => file.name === image.name)
 			r.push(found ? found : file)
 			return r;
 		  }, [])
-
-		 if (result[0].id) {
-			 return setMessage('One or more images already exists in this album.')
-		 }
+		if (result.some(img => img.hasOwnProperty('id'))) {
+			return setMessage('One or more images already exists in this album.')
+		}
+	
 		setFiles(acceptedFiles)
 	}
 

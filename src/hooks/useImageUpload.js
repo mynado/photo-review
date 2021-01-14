@@ -19,6 +19,7 @@ const useImageUpload = (files, albumId = null) => {
 		}
 		
 		setError(null)
+		setIsSuccess(false)
 
 		files.forEach((file, index) => {
 			// create image reference in storage and upload

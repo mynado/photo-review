@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { AiFillEdit } from 'react-icons/ai'
 import { RiImageAddFill } from 'react-icons/ri'
+import { IoMdShare } from 'react-icons/io'
 
 const AlbumHeader = ({ album, onShowUpload, onShowReview, onShowEdit }) => {
 	const [title, setTitle] = useState()
